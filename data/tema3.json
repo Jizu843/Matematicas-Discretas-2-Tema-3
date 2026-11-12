@@ -1,0 +1,2015 @@
+{
+  "tema_id": "tema3",
+  "titulo": "Álgebras de Boole",
+  "descripcion": "Reticulados acotados, complementados y distributivos. Axiomas abstractos, principio de dualidad, representación de funciones booleanas, formas normales y minimización.",
+  "subtemas": [
+    {
+      "subtema_id": "3.1",
+      "titulo": "Álgebra de Boole como reticulado",
+      "teoria": {
+        "introduccion": "Una Álgebra de Boole puede entenderse como un reticulado con propiedades adicionales: debe ser acotado (tener máximo y mínimo), complementado (cada elemento tiene complemento) y distributivo (las operaciones se distribuyen mutuamente). Estas tres condiciones juntas caracterizan completamente a las Álgebras de Boole.",
+        "definiciones": [
+          {
+            "nombre": "Reticulado acotado",
+            "contenido": "Un reticulado $[L, \\leq]$ (o $[L, \\vee, \\wedge]$) está **acotado** si tiene elemento máximo $M$ y elemento mínimo $m$. Es decir, existe $M \\in L$ tal que $x \\leq M$ para todo $x \\in L$, y existe $m \\in L$ tal que $m \\leq x$ para todo $x \\in L$.",
+            "nota": "Todo reticulado finito es acotado (Lema 3.1). Un reticulado infinito también puede serlo: $[\\mathbb{R}, \\leq]$ no lo es, pero $[\\mathcal{P}(S), \\subseteq]$ sí lo es con $M = S$ y $m = \\emptyset$."
+          },
+          {
+            "nombre": "Reticulado complementado",
+            "contenido": "Sea $[L, \\leq]$ un reticulado acotado con máximo $M$ y mínimo $m$. Para $x \\in L$, se dice que $\\bar{x} \\in L$ es el **complemento** de $x$ si: $x \\vee \\bar{x} = M$ y $x \\wedge \\bar{x} = m$. El reticulado es **complementado** si todo $x \\in L$ tiene complemento.",
+            "nota": "El complemento no siempre es único. Sin embargo, en un reticulado distributivo sí lo es (Lema 3.2)."
+          },
+          {
+            "nombre": "Álgebra de Boole",
+            "contenido": "Una **Álgebra de Boole** es un reticulado acotado, complementado y distributivo.",
+            "nota": "Esta es la definición 'como reticulado'. Más adelante veremos una definición puramente algebraica mediante axiomas."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 3.1 — $[\\mathcal{P}(U), \\subseteq]$ es Álgebra de Boole",
+            "descripcion": "Para cualquier conjunto universal $U$:",
+            "items": [
+              "Es reticulado: $A \\vee B = A \\cup B$, $A \\wedge B = A \\cap B$.",
+              "Es acotado: máximo $U$, mínimo $\\emptyset$.",
+              "Es complementado: el complemento de $A$ es $A^C = U \\setminus A$.",
+              "Es distributivo: $\\cup$ y $\\cap$ se distribuyen mutuamente."
+            ],
+            "observacion": "Este es el ejemplo canónico de Álgebra de Boole finita."
+          },
+          {
+            "titulo": "Ejemplo 3.2 — Proposiciones lógicas",
+            "descripcion": "El reticulado de proposiciones lógicas con $P \\preceq Q \\iff P \\implies Q$ es Álgebra de Boole:",
+            "items": [
+              "Mínimo: contradicción ($F$). Máximo: tautología ($V$).",
+              "Complemento: negación $\\neg P$.",
+              "Operaciones: disyunción $\\vee$ y conjunción $\\wedge$.",
+              "Distributividad: ambas operaciones son distributivas."
+            ],
+            "observacion": "Conecta la lógica proposicional con la teoría de reticulados."
+          },
+          {
+            "titulo": "Ejemplo — Un reticulado que NO es Álgebra de Boole",
+            "descripcion": "El reticulado $D_{12} = \\{1, 2, 3, 4, 6, 12\\}$ con divisibilidad no es complementado:",
+            "items": [
+              "Máximo: 12, mínimo: 1.",
+              "El elemento 2 no tiene complemento: necesitaría $x$ tal que $\\gcd(2,x) = 1$ y $\\operatorname{mcm}(2,x) = 12$. Esto da $x = 3$, pero $\\operatorname{mcm}(2,3) = 6 \\neq 12$."
+            ],
+            "observacion": "Por tanto, $[D_{12}, \\mid]$ no es Álgebra de Boole."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Lema 3.1 — Reticulados finitos son acotados",
+            "contenido": "Sea $[L, \\preceq]$ un reticulado con $L$ finito. Entonces $[L, \\preceq]$ es acotado.",
+            "esquema_demostracion": "El máximo es el supremo de todos los elementos (existe porque $L$ es finito y cerrado bajo supremos binarios). Análogo para el mínimo como ínfimo de todo $L$."
+          },
+          {
+            "nombre": "Lema 3.2 — Unicidad del complemento (distributivo)",
+            "contenido": "Sea $[L, \\preceq]$ un reticulado acotado y distributivo. Si $x \\in L$ tiene complemento, entonces el complemento es único.",
+            "esquema_demostracion": "Supongamos $x_1$ y $x_2$ complementos de $x$. Entonces: $x_1 = x_1 \\vee m = x_1 \\vee (x \\wedge x_2) = (x_1 \\vee x) \\wedge (x_1 \\vee x_2) = M \\wedge (x_1 \\vee x_2) = x_1 \\vee x_2$. Análogamente $x_2 = x_1 \\vee x_2$. Luego $x_1 = x_2$."
+          }
+        ],
+        "nota_previa": "La distributividad es crucial para la unicidad del complemento. En reticulados no distributivos, un elemento puede tener varios complementos distintos."
+      },
+      "ejercicios": [
+        {
+          "id": "3.1-ej-01",
+          "nivel": 1,
+          "etiquetas": [
+            "teoria",
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[\\mathcal{P}(\\{1,2,3\\}), \\subseteq]$. Determine el complemento de $A = \\{1,2\\}$ y verifique las leyes del complemento.",
+          "tips": [
+            {
+              "titulo": "Complemento en el álgebra de conjuntos",
+              "contenido": "En $[\\mathcal{P}(U), \\subseteq]$, el complemento de $A$ es $A^C = U \\setminus A$."
+            },
+            {
+              "titulo": "Leyes del complemento",
+              "contenido": "Debes verificar que $A \\cup A^C = U$ y $A \\cap A^C = \\emptyset$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Calcular el complemento",
+                "contenido": "El universo es $U = \\{1,2,3\\}$. El complemento de $A = \\{1,2\\}$ es:",
+                "formula": "\\bar{A} = A^C = U \\setminus A = \\{3\\}"
+              },
+              {
+                "titulo": "Verificar $A \\vee \\bar{A} = M$",
+                "contenido": "El supremo es la unión:",
+                "formula": "A \\cup \\bar{A} = \\{1,2\\} \\cup \\{3\\} = \\{1,2,3\\} = U = M"
+              },
+              {
+                "titulo": "Verificar $A \\wedge \\bar{A} = m$",
+                "contenido": "El ínfimo es la intersección:",
+                "formula": "A \\cap \\bar{A} = \\{1,2\\} \\cap \\{3\\} = \\emptyset = m"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.1-ej-02",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Demuestre que en cualquier Álgebra de Boole se cumple $\\bar{\\bar{x}} = x$ (doble complementación).",
+          "tips": [
+            {
+              "titulo": "Definición de complemento",
+              "contenido": "$\\bar{x}$ es el único elemento tal que $x \\vee \\bar{x} = M$ y $x \\wedge \\bar{x} = m$."
+            },
+            {
+              "titulo": "Estrategia",
+              "contenido": "Demuestra que $x$ satisface las leyes del complemento respecto a $\\bar{x}$. Por unicidad, $x = \\bar{\\bar{x}}$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$x$ es complemento de $\\bar{x}$",
+                "contenido": "Por definición de $\\bar{x}$: $x \\vee \\bar{x} = M$ y $x \\wedge \\bar{x} = m$. Pero estas mismas ecuaciones, intercambiando $x$ y $\\bar{x}$, dicen que $x$ es el complemento de $\\bar{x}$.",
+                "formula": "\\bar{x} \\vee x = M \\quad \\text{y} \\quad \\bar{x} \\wedge x = m"
+              },
+              {
+                "titulo": "Aplicar unicidad",
+                "contenido": "Como el complemento es único en una Álgebra de Boole (por ser distributiva), y $x$ es complemento de $\\bar{x}$, se tiene:",
+                "formula": "\\bar{\\bar{x}} = x"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.1-ej-03",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Demuestre el Lema 3.2: en un reticulado acotado y distributivo, si $x$ tiene complemento entonces es único.",
+          "tips": [
+            {
+              "titulo": "Supón dos complementos",
+              "contenido": "Sean $x_1$ y $x_2$ dos complementos de $x$. Debes probar $x_1 = x_2$."
+            },
+            {
+              "titulo": "Usa distributividad",
+              "contenido": "Escribe $x_1 = x_1 \\vee m$ y sustituye $m = x \\wedge x_2$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Primera cadena de igualdades",
+                "contenido": "Como $x_1$ es complemento de $x$: $x_1 \\vee x = M$ y $x_1 \\wedge x = m$. Como $x_2$ también es complemento: $x_2 \\vee x = M$ y $x_2 \\wedge x = m$.",
+                "formula": "x_1 = x_1 \\vee m = x_1 \\vee (x \\wedge x_2)"
+              },
+              {
+                "titulo": "Aplicar distributividad",
+                "contenido": "Por distributividad: $x_1 \\vee (x \\wedge x_2) = (x_1 \\vee x) \\wedge (x_1 \\vee x_2) = M \\wedge (x_1 \\vee x_2) = x_1 \\vee x_2$.",
+                "formula": "x_1 = (x_1 \\vee x) \\wedge (x_1 \\vee x_2) = M \\wedge (x_1 \\vee x_2) = x_1 \\vee x_2"
+              },
+              {
+                "titulo": "Simetría",
+                "contenido": "Análogamente, $x_2 = x_2 \\vee m = x_2 \\vee (x \\wedge x_1) = (x_2 \\vee x) \\wedge (x_2 \\vee x_1) = M \\wedge (x_2 \\vee x_1) = x_1 \\vee x_2$.",
+                "formula": "x_2 = x_1 \\vee x_2"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Por tanto $x_1 = x_1 \\vee x_2 = x_2$.",
+                "formula": "x_1 = x_2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "3.2",
+      "titulo": "Definición abstracta y propiedades",
+      "teoria": {
+        "introduccion": "Además de la definición como reticulado, las Álgebras de Boole pueden definirse puramente algebraicas mediante un conjunto de axiomas. Esta perspectiva permite derivar todas las propiedades conocidas y revela el poderoso Principio de Dualidad.",
+        "definiciones": [
+          {
+            "nombre": "Axiomas de un Álgebra de Boole (Definición 3.4)",
+            "contenido": "Un Álgebra de Boole es un conjunto $B$ con dos operaciones binarias $+$ y $\\cdot$, elementos $0$ y $1$, y una operación unaria $\\bar{(\\cdot)}$, tales que para todo $x, y, z \\in B$: (1) **Neutros**: $x + 0 = x$, $x \\cdot 1 = x$; (2) **Complemento**: $x + \\bar{x} = 1$, $x \\cdot \\bar{x} = 0$; (3) **Asociativas**: $(x + y) + z = x + (y + z)$, $(x \\cdot y) \\cdot z = x \\cdot (y \\cdot z)$; (4) **Conmutativas**: $x + y = y + x$, $x \\cdot y = y \\cdot x$; (5) **Distributivas**: $x + (y \\cdot z) = (x + y) \\cdot (x + z)$, $x \\cdot (y + z) = (x \\cdot y) + (x \\cdot z)$.",
+            "nota": "Nota que las leyes distributivas vienen en pareja: cada una es la dual de la otra."
+          },
+          {
+            "nombre": "Dual de una expresión booleana",
+            "contenido": "El **dual** de una expresión booleana se obtiene intercambiando $+$ con $\\cdot$, y $0$ con $1$.",
+            "nota": "Por ejemplo, el dual de $x + (y \\cdot z)$ es $x \\cdot (y + z)$."
+          },
+          {
+            "nombre": "Principio de Dualidad (Teorema 3.1)",
+            "contenido": "A toda ley lógica le corresponde su dual, también como ley lógica.",
+            "nota": "Esto significa que si demostramos una propiedad, su dual está automáticamente demostrada."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 3.3 — Fórmulas proposicionales",
+            "descripcion": "El conjunto $B$ de todas las fórmulas proposicionales en $n$ variables, con $\\wedge$, $\\vee$, constantes $V$ (tautología) y $F$ (contradicción), y negación $\\neg$, forma un Álgebra de Boole.",
+            "items": [],
+            "observacion": "Aquí $+$ es $\\vee$, $\\cdot$ es $\\wedge$, $1$ es $V$, $0$ es $F$, y $\\bar{x}$ es $\\neg x$."
+          },
+          {
+            "titulo": "Ejemplo 3.4 — Álgebra de conjuntos",
+            "descripcion": "$[\\mathcal{P}(U), \\cap, \\cup, U, \\emptyset, ()^c]$ es Álgebra de Boole.",
+            "items": [],
+            "observacion": "Aquí $+$ es $\\cup$, $\\cdot$ es $\\cap$, $1$ es $U$, $0$ es $\\emptyset$, y $\\bar{A}$ es $A^c$."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Lema 3.3 — Propiedades derivadas",
+            "contenido": "En toda Álgebra de Boole se cumplen: (1) Doble complementación: $\\bar{\\bar{x}} = x$; (2) Idempotencia: $x + x = x$, $x \\cdot x = x$; (3) Acotación: $x + 1 = 1$, $x \\cdot 0 = 0$; (4) Absorción: $x + (x \\cdot y) = x$, $x \\cdot (x + y) = x$; (5) Leyes de De Morgan: $\\overline{x + y} = \\bar{x} \\cdot \\bar{y}$, $\\overline{x \\cdot y} = \\bar{x} + \\bar{y}$.",
+            "esquema_demostracion": "Todas se derivan de los axiomas. Por ejemplo, idempotencia: $x = x \\cdot 1 = x \\cdot (x + \\bar{x}) = (x \\cdot x) + (x \\cdot \\bar{x}) = (x \\cdot x) + 0 = x \\cdot x$."
+          },
+          {
+            "nombre": "Teorema 3.2 — Isomorfismo",
+            "contenido": "Toda Álgebra de Boole finita $[B, +, \\cdot, 1, 0, \\bar{()}]$ es isomorfa a $[\\mathcal{P}(X), \\cup, \\cap, X, \\emptyset, ()^c]$ para algún conjunto $X$.",
+            "esquema_demostracion": "Teorema de representación de Stone. Consecuencia: toda Álgebra de Boole finita tiene cardinalidad $2^n$."
+          }
+        ],
+        "nota_previa": "El Principio de Dualidad es una herramienta extremadamente poderosa: nos permite deducir la mitad de las propiedades 'gratis' una vez demostrada la otra mitad."
+      },
+      "ejercicios": [
+        {
+          "id": "3.2-ej-01",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Demuestre que en toda Álgebra de Boole se cumple $x + x = x$ (idempotencia de la suma).",
+          "tips": [
+            {
+              "titulo": "Empieza con $x = x \\cdot 1$",
+              "contenido": "Usa el elemento neutro del producto y la ley del complemento."
+            },
+            {
+              "titulo": "Distributividad",
+              "contenido": "$x \\cdot (x + \\bar{x}) = x \\cdot x + x \\cdot \\bar{x}$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Sustituir el 1",
+                "contenido": "$x = x \\cdot 1 = x \\cdot (x + \\bar{x})$ por la ley del complemento.",
+                "formula": "x = x \\cdot (x + \\bar{x})"
+              },
+              {
+                "titulo": "Aplicar distributividad",
+                "contenido": "$x \\cdot (x + \\bar{x}) = (x \\cdot x) + (x \\cdot \\bar{x}) = (x \\cdot x) + 0$.",
+                "formula": "= (x \\cdot x) + (x \\cdot \\bar{x}) = (x \\cdot x) + 0"
+              },
+              {
+                "titulo": "Simplificar",
+                "contenido": "$(x \\cdot x) + 0 = x \\cdot x$. Por tanto $x = x \\cdot x$. La demostración de $x + x = x$ es análoga (o por dualidad).",
+                "formula": "x = x \\cdot x \\quad \\text{y por dualidad} \\quad x = x + x"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.2-ej-02",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Demuestre la ley de acotación: $x + 1 = 1$ en toda Álgebra de Boole.",
+          "tips": [
+            {
+              "titulo": "Sustituye el 1",
+              "contenido": "$1 = x + \\bar{x}$ por la ley del complemento."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Sustituir",
+                "contenido": "$x + 1 = x + (x + \\bar{x})$ por la ley del complemento.",
+                "formula": "x + 1 = x + (x + \\bar{x})"
+              },
+              {
+                "titulo": "Asociatividad e idempotencia",
+                "contenido": "$x + (x + \\bar{x}) = (x + x) + \\bar{x} = x + \\bar{x} = 1$.",
+                "formula": "= (x + x) + \\bar{x} = x + \\bar{x} = 1"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.2-ej-03",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Demuestre la primera ley de De Morgan: $\\overline{x + y} = \\bar{x} \\cdot \\bar{y}$.",
+          "tips": [
+            {
+              "titulo": "Verifica las leyes del complemento",
+              "contenido": "Para probar que $\\bar{x} \\cdot \\bar{y}$ es el complemento de $x + y$, verifica: $(x + y) + (\\bar{x} \\cdot \\bar{y}) = 1$ y $(x + y) \\cdot (\\bar{x} \\cdot \\bar{y}) = 0$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Primera ley del complemento",
+                "contenido": "$(x + y) \\cdot (\\bar{x} \\cdot \\bar{y}) = (x \\cdot \\bar{x} \\cdot \\bar{y}) + (y \\cdot \\bar{x} \\cdot \\bar{y}) = (0 \\cdot \\bar{y}) + (\\bar{x} \\cdot 0) = 0 + 0 = 0$.",
+                "formula": "(x + y) \\cdot (\\bar{x} \\cdot \\bar{y}) = 0"
+              },
+              {
+                "titulo": "Segunda ley del complemento",
+                "contenido": "$(x + y) + (\\bar{x} \\cdot \\bar{y}) = (x + y + \\bar{x}) \\cdot (x + y + \\bar{y}) = (1 + y) \\cdot (x + 1) = 1 \\cdot 1 = 1$.",
+                "formula": "(x + y) + (\\bar{x} \\cdot \\bar{y}) = 1"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Como $\\bar{x} \\cdot \\bar{y}$ satisface ambas leyes del complemento respecto a $x + y$, y el complemento es único, se tiene:",
+                "formula": "\\overline{x + y} = \\bar{x} \\cdot \\bar{y}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.2-ej-04",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Principio de cancelación: demuestre que si $x \\cdot y_1 = x \\cdot y_2$ y $x + y_1 = x + y_2$, entonces $y_1 = y_2$.",
+          "tips": [
+            {
+              "titulo": "Despeja $y_1$",
+              "contenido": "Escribe $y_1 = y_1 \\cdot (x + \\bar{x})$ y usa distributividad."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Expandir $y_1$",
+                "contenido": "$y_1 = y_1 \\cdot 1 = y_1 \\cdot (x + \\bar{x}) = (y_1 \\cdot x) + (y_1 \\cdot \\bar{x})$.",
+                "formula": "y_1 = (y_1 \\cdot x) + (y_1 \\cdot \\bar{x})"
+              },
+              {
+                "titulo": "Sustituir hipótesis",
+                "contenido": "Por hipótesis $y_1 \\cdot x = y_2 \\cdot x$. Además, $y_1 \\cdot \\bar{x} = y_1 \\cdot \\bar{x} \\cdot (x + \\bar{x}) = ...$ mejor: de $x + y_1 = x + y_2$, multiplicando por $\\bar{x}$: $\\bar{x} \\cdot (x + y_1) = \\bar{x} \\cdot (x + y_2)$, luego $\\bar{x} \\cdot y_1 = \\bar{x} \\cdot y_2$.",
+                "formula": "\\bar{x} \\cdot y_1 = \\bar{x} \\cdot y_2"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "$y_1 = (x \\cdot y_1) + (\\bar{x} \\cdot y_1) = (x \\cdot y_2) + (\\bar{x} \\cdot y_2) = y_2 \\cdot (x + \\bar{x}) = y_2$.",
+                "formula": "y_1 = y_2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "3.3",
+      "titulo": "Funciones booleanas y representación",
+      "teoria": {
+        "introduccion": "Como toda Álgebra de Boole finita es isomorfa a $[\\mathcal{P}(X), \\cup, \\cap, \\dots]$, podemos representarlas mediante el álgebra de n-uplas binarias. Esto nos lleva a las funciones booleanas, tablas de verdad, formas normales y técnicas de minimización.",
+        "definiciones": [
+          {
+            "nombre": "Álgebra de Boole binaria",
+            "contenido": "Sea $B = \\{0, 1\\}$ con operaciones: $1 + 1 = 1$, $1 + 0 = 1$, $0 + 1 = 1$, $0 + 0 = 0$ (OR); $1 \\cdot 1 = 1$, $1 \\cdot 0 = 0$, $0 \\cdot 1 = 0$, $0 \\cdot 0 = 0$ (AND); $\\bar{1} = 0$, $\\bar{0} = 1$ (NOT).",
+            "nota": "Esta es el Álgebra de Boole más pequeña posible (cardinalidad 2)."
+          },
+          {
+            "nombre": "Función booleana",
+            "contenido": "Una **función booleana de grado $n$** es una función $f: B^n \\to B$ donde $B = \\{0, 1\\}$.",
+            "nota": "Hay $2^{2^n}$ funciones booleanas de grado $n$."
+          },
+          {
+            "nombre": "Minitérmino (mintérmino)",
+            "contenido": "Un **literal** es una variable booleana $x_i$ o su complemento $\\bar{x_i}$. Un **minitérmino** en $x_1, \\dots, x_n$ es un producto booleano $y_1 \\cdot y_2 \\cdots y_n$ donde $y_i = x_i$ o $y_i = \\bar{x_i}$.",
+            "nota": "Un minitérmino vale 1 solo para una combinación específica de valores de las variables."
+          },
+          {
+            "nombre": "Forma Normal Disyuntiva (FND)",
+            "contenido": "La **FND** de una función booleana es la suma (OR) de los minitérminos correspondientes a las filas de la tabla de verdad donde la función vale 1.",
+            "nota": "Toda función booleana puede expresarse en FND. El conjunto $\\{+, \\cdot, \\bar{\\;}\\}$ es funcionalmente completo."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 3.5 — Función $F(x,y) = x \\cdot \\bar{y}$",
+            "descripcion": "Tabla de verdad:",
+            "items": [
+              "$F(1,1) = 1 \\cdot 0 = 0$",
+              "$F(1,0) = 1 \\cdot 1 = 1$",
+              "$F(0,1) = 0 \\cdot 0 = 0$",
+              "$F(0,0) = 0 \\cdot 1 = 0$"
+            ],
+            "observacion": "Solo vale 1 cuando $x=1$ e $y=0$."
+          },
+          {
+            "titulo": "Ejemplo 3.7 — Construcción de FND",
+            "descripcion": "Dada una tabla de verdad con $F=1$ en las filas $(1,1,0)$, $(1,0,1)$, $(0,1,0)$, $(0,0,1)$:",
+            "items": [
+              "Minitérmino para $(1,1,0)$: $x_1 \\cdot x_2 \\cdot \\bar{x_3}$",
+              "Minitérmino para $(1,0,1)$: $x_1 \\cdot \\bar{x_2} \\cdot x_3$",
+              "Minitérmino para $(0,1,0)$: $\\bar{x_1} \\cdot x_2 \\cdot \\bar{x_3}$",
+              "Minitérmino para $(0,0,1)$: $\\bar{x_1} \\cdot \\bar{x_2} \\cdot x_3$"
+            ],
+            "observacion": "La FND es: $F = x_1 x_2 \\bar{x_3} + x_1 \\bar{x_2} x_3 + \\bar{x_1} x_2 \\bar{x_3} + \\bar{x_1} \\bar{x_2} x_3$."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Cardinalidad de funciones booleanas",
+            "contenido": "Hay $2^{2^n}$ funciones booleanas de grado $n$.",
+            "esquema_demostracion": "$B^n$ tiene $2^n$ elementos. Una función $f: B^n \\to B$ asigna 0 o 1 a cada uno de esos $2^n$ elementos. Hay 2 opciones para cada uno: $2^{2^n}$ funciones totales."
+          },
+          {
+            "nombre": "Corolario 3.2 — Cardinalidad de Álgebras de Boole finitas",
+            "contenido": "La cardinalidad de cualquier Álgebra de Boole finita es $2^n$ para algún $n$.",
+            "esquema_demostracion": "Consecuencia directa del Teorema de representación (isomorfismo con $\\mathcal{P}(X)$ donde $|X| = n$)."
+          }
+        ],
+        "nota_previa": "La FND es útil para construir circuitos lógicos, pero generalmente no es minimal. Técnicas como los mapas de Karnaugh o el algoritmo de Quine-McCluskey permiten encontrar expresiones equivalentes con menos operaciones."
+      },
+      "ejercicios": [
+        {
+          "id": "3.3-ej-01",
+          "nivel": 1,
+          "etiquetas": [
+            "teoria",
+            "ejercicio"
+          ],
+          "enunciado": "Construya la tabla de verdad de la función booleana $F(x,y,z) = x \\cdot y \\cdot \\bar{z} + \\bar{x} \\cdot \\bar{y} \\cdot z$.",
+          "tips": [
+            {
+              "titulo": "Evalúa por partes",
+              "contenido": "Para cada fila, calcula primero $x \\cdot y \\cdot \\bar{z}$ y $\\bar{x} \\cdot \\bar{y} \\cdot z$, luego suma (OR)."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Tabla de verdad",
+                "contenido": "Evaluamos los 8 casos:",
+                "formula": "\\begin{array}{ccc|c|c|c} x & y & z & xy\\bar{z} & \\bar{x}\\bar{y}z & F \\\\ \\hline 1&1&1&0&0&0 \\\\ 1&1&0&1&0&1 \\\\ 1&0&1&0&0&0 \\\\ 1&0&0&0&0&0 \\\\ 0&1&1&0&0&0 \\\\ 0&1&0&0&0&0 \\\\ 0&0&1&0&1&1 \\\\ 0&0&0&0&0&0 \\end{array}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.3-ej-02",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "¿Cuántas funciones booleanas de grado $n$ existen? Justifique.",
+          "tips": [
+            {
+              "titulo": "Conteo",
+              "contenido": "Una función booleana de grado $n$ asigna un valor en $\\{0,1\\}$ a cada elemento de $B^n$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cardinalidad del dominio",
+                "contenido": "$B^n$ tiene $2^n$ elementos (todas las n-uplas de 0s y 1s).",
+                "formula": "|B^n| = 2^n"
+              },
+              {
+                "titulo": "Contar funciones",
+                "contenido": "Para cada uno de los $2^n$ elementos del dominio, hay 2 posibles valores (0 o 1). Por el principio de multiplicación:",
+                "formula": "\\text{Total de funciones} = 2^{2^n}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.3-ej-03",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Halle la Forma Normal Disyuntiva de $F(x,y,z) = x + y + z$.",
+          "tips": [
+            {
+              "titulo": "Identifica las filas con $F=1$",
+              "contenido": "$x + y + z = 0$ solo cuando $x=y=z=0$. Por tanto, $F=1$ en las otras 7 filas."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Fila con $F=0$",
+                "contenido": "Solo $(0,0,0)$ da $F=0$. Todas las demás dan $F=1$.",
+                "formula": "F(0,0,0) = 0"
+              },
+              {
+                "titulo": "Minitérminos",
+                "contenido": "Los 7 minitérminos correspondientes a las filas con $F=1$ son: $xy\\bar{z}, x\\bar{y}z, x\\bar{y}\\bar{z}, \\bar{x}yz, \\bar{x}y\\bar{z}, \\bar{x}\\bar{y}z, x y z$.",
+                "formula": "F = xy\\bar{z} + x\\bar{y}z + x\\bar{y}\\bar{z} + \\bar{x}yz + \\bar{x}y\\bar{z} + \\bar{x}\\bar{y}z + xyz"
+              },
+              {
+                "titulo": "Simplificación alternativa",
+                "contenido": "Nota que $F = x + y + z$ ya está en una forma minimal. La FND es útil para construcción pero no siempre es la expresión más simple.",
+                "formula": "F = x + y + z \\quad \\text{(ya minimal)}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.3-ej-04",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Simplifique la expresión $F(x_1,x_2,x_3) = x_1 x_2 \\bar{x_3} + x_1 \\bar{x_2} x_3 + \\bar{x_1} x_2 \\bar{x_3} + \\bar{x_1} \\bar{x_2} x_3$ usando las leyes del Álgebra de Boole.",
+          "tips": [
+            {
+              "titulo": "Agrupa términos",
+              "contenido": "Agrupa los términos con $x_1$ y los términos con $\\bar{x_1}$."
+            },
+            {
+              "titulo": "Factoriza",
+              "contenido": "$x_1(x_2 \\bar{x_3} + \\bar{x_2} x_3) + \\bar{x_1}(x_2 \\bar{x_3} + \\bar{x_2} x_3)$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Factorizar por $x_1$ y $\\bar{x_1}$",
+                "contenido": "$F = x_1(x_2 \\bar{x_3} + \\bar{x_2} x_3) + \\bar{x_1}(x_2 \\bar{x_3} + \\bar{x_2} x_3)$.",
+                "formula": "F = x_1(x_2\\bar{x_3} + \\bar{x_2}x_3) + \\bar{x_1}(x_2\\bar{x_3} + \\bar{x_2}x_3)"
+              },
+              {
+                "titulo": "Factor común",
+                "contenido": "El factor $(x_2 \\bar{x_3} + \\bar{x_2} x_3)$ es común. Por distributividad:",
+                "formula": "F = (x_1 + \\bar{x_1})(x_2\\bar{x_3} + \\bar{x_2}x_3)"
+              },
+              {
+                "titulo": "Simplificar",
+                "contenido": "$x_1 + \\bar{x_1} = 1$, así que:",
+                "formula": "F = 1 \\cdot (x_2\\bar{x_3} + \\bar{x_2}x_3) = x_2\\bar{x_3} + \\bar{x_2}x_3"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "3.4",
+      "titulo": "Ejercicios adicionales de Álgebras de Boole",
+      "teoria": {
+        "introduccion": "Esta sección recopila ejercicios adicionales de profundización sobre Álgebras de Boole, abarcando demostraciones de identidades, formas normales disyuntivas y conjuntivas, la función de Peirce y propiedades estructurales como la cardinalidad.",
+        "definiciones": [],
+        "ejemplos": [],
+        "lemas": [],
+        "nota_previa": "Estos ejercicios complementan los vistos en los subtemas anteriores y preparan para evaluaciones integrales. Se recomienda aplicar sistemáticamente los axiomas, el Principio de Dualidad y las leyes derivadas (De Morgan, absorción, idempotencia, etc.)."
+      },
+      "ejercicios": [
+        {
+          "id": "3.4-ej-01",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "identidades"
+          ],
+          "enunciado": "Muestre que para cualesquiera elementos $a,b,c$ de un álgebra de Boole se cumplen las siguientes identidades:\n1. $(ac + bc')' = a'c + b'c'$\n2. $((a+c)(b+c'))' = (a'+c)(b'+c')$\n3. $(a+b)(a'+c) = ac + a'b$",
+          "tips": [
+            {
+              "titulo": "Leyes de De Morgan",
+              "contenido": "Recuerde que $(x+y)' = x' \\cdot y'$ y $(x \\cdot y)' = x' + y'$. Aplíquelas para descomponer los complementos de sumas y productos."
+            },
+            {
+              "titulo": "Distributividad y consenso",
+              "contenido": "Para el inciso 3, expanda el producto y use la ley de consenso: $xy + x'z + yz = xy + x'z$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Inciso 3 — Expansión directa",
+                "contenido": "Desarrollamos el lado izquierdo usando distributividad:",
+                "formula": "(a+b)(a'+c) = aa' + ac + ba' + bc = 0 + ac + a'b + bc"
+              },
+              {
+                "titulo": "Inciso 3 — Ley de consenso",
+                "contenido": "Por la ley de consenso, el término $bc$ es redundante ante la presencia de $ac$ y $a'b$:",
+                "formula": "ac + a'b + bc = ac + a'b \\implies (a+b)(a'+c) = ac + a'b"
+              },
+              {
+                "titulo": "Incisos 1 y 2",
+                "contenido": "Aplicar sistemáticamente De Morgan, distributividad y simplificación con $x \\cdot x' = 0$ para verificar las igualdades propuestas."
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-02",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "identidades"
+          ],
+          "enunciado": "Muestre las siguientes identidades en cualquier álgebra de Boole:\n1. $(a+b)(a'+b) = b$\n2. $ab'd + a'bc = (ad+bc)(a'+b')$",
+          "tips": [
+            {
+              "titulo": "Inciso 1 — Factor común",
+              "contenido": "Agrupe $(a+a')$ como factor común usando distributividad inversa."
+            },
+            {
+              "titulo": "Inciso 2 — Expandir el lado derecho",
+              "contenido": "Desarrolle $(ad+bc)(a'+b')$ y compare término a término con el lado izquierdo."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Inciso 1",
+                "contenido": "Aplicando distributividad:",
+                "formula": "(a+b)(a'+b) = aa' + ab + a'b + bb = 0 + ab + a'b + b = (a+a')b + b = 1 \\cdot b + b = b + b = b"
+              },
+              {
+                "titulo": "Inciso 2 — Lado derecho",
+                "contenido": "Expandiendo el lado derecho:",
+                "formula": "(ad+bc)(a'+b') = ada' + adb' + a'bc + bcb' = 0 + adb' + a'bc + 0 = adb' + a'bc"
+              },
+              {
+                "titulo": "Inciso 2 — Comparación",
+                "contenido": "Notemos que $ab'd = adb'$ (conmutatividad). Por tanto ambos lados coinciden.",
+                "formula": "ab'd + a'bc = adb' + a'bc = (ad+bc)(a'+b')"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-03",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "FND"
+          ],
+          "enunciado": "Halle la Forma Normal Disyuntiva de las siguientes expresiones:\n1. $F(x,y,z) = x + y + z$\n2. $F(x,y,z) = (x+z)y$",
+          "tips": [
+            {
+              "titulo": "FND de una suma",
+              "contenido": "Para $x+y+z$, recuerde que la FND se construye con los minitérminos donde la función vale 1."
+            },
+            {
+              "titulo": "FND de un producto",
+              "contenido": "Para $(x+z)y$, primero construya la tabla de verdad o aplique distributividad y luego complete los minitérminos."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Inciso 1 — Tabla de verdad",
+                "contenido": "$F(x,y,z)=x+y+z$ vale 0 únicamente en $(0,0,0)$. Por tanto la FND contiene los 7 minitérminos restantes.",
+                "formula": "F = xy\bar{z} + x\bar{y}z + x\bar{y}\bar{z} + \bar{x}yz + \bar{x}y\bar{z} + \bar{x}\bar{y}z + xyz"
+              },
+              {
+                "titulo": "Inciso 2 — Expansión",
+                "contenido": "Desarrollando: $(x+z)y = xy + zy = xy(z+\bar{z}) + (x+\bar{x})yz = xyz + xy\bar{z} + xyz + \bar{x}yz$",
+                "formula": "F = xyz + xy\bar{z} + \bar{x}yz"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-04",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "FND"
+          ],
+          "enunciado": "Halle la Forma Normal Disyuntiva de la función booleana $F(x,y,z,w)$ que vale 1, si y sólo si, un número impar de variables entre $x,y,z,w$ toman el valor de 1.",
+          "tips": [
+            {
+              "titulo": "Número impar de unos",
+              "contenido": "Un número impar de unos significa que la función vale 1 cuando hay exactamente 1 o exactamente 3 variables en 1."
+            },
+            {
+              "titulo": "Conteo de filas",
+              "contenido": "Hay $\binom{4}{1}=4$ filas con un solo 1, y $\binom{4}{3}=4$ filas con tres unos."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Minitérminos con exactamente un 1",
+                "contenido": "Corresponden a las filas: $(1,0,0,0), (0,1,0,0), (0,0,1,0), (0,0,0,1)$.",
+                "formula": "x\bar{y}\bar{z}\bar{w} + \bar{x}y\bar{z}\bar{w} + \bar{x}\bar{y}z\bar{w} + \bar{x}\bar{y}\bar{z}w"
+              },
+              {
+                "titulo": "Minitérminos con exactamente tres 1s",
+                "contenido": "Corresponden a las filas: $(1,1,1,0), (1,1,0,1), (1,0,1,1), (0,1,1,1)$.",
+                "formula": "xyz\bar{w} + xy\bar{z}w + x\bar{y}zw + \bar{x}yzw"
+              },
+              {
+                "titulo": "FND completa",
+                "contenido": "Sumando ambos grupos de minitérminos se obtiene la FND:",
+                "formula": "F = x\bar{y}\bar{z}\bar{w} + \bar{x}y\bar{z}\bar{w} + \bar{x}\bar{y}z\bar{w} + \bar{x}\bar{y}\bar{z}w + xyz\bar{w} + xy\bar{z}w + x\bar{y}zw + \bar{x}yzw"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-05",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "contraejemplo"
+          ],
+          "enunciado": "De un ejemplo de un álgebra de Boole en la cual existan tres elementos $a,b$ y $c$ que satisfagan las siguientes condiciones:\n1. $ab = ac$, pero $b \neq c$\n2. $a+b = a+c$, pero $b \neq c$",
+          "tips": [
+            {
+              "titulo": "Álgebra de conjuntos",
+              "contenido": "Considere $[\\mathcal{P}(S), \\cap, \\cup]$ con $|S| \\geq 2$."
+            },
+            {
+              "titulo": "Elección de elementos",
+              "contenido": "Busque conjuntos donde la intersección con $a$ 'pierda' la información que distingue a $b$ de $c$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Elección del universo",
+                "contenido": "Sea $U = \\{1,2\\}$ y considere el álgebra $[\\mathcal{P}(U), \\cup, \\cap, U, \\emptyset, ()^c]$."
+              },
+              {
+                "titulo": "Inciso 1 — Intersección",
+                "contenido": "Tome $a = \\{1\\}$, $b = \\{1,2\\}$, $c = \\{1\\}$. Entonces $ab = a \\cap b = \\{1\\} = a \\cap c = ac$, pero $b = \\{1,2\\} \\neq \\{1\\} = c$. (Nota: ajustando para $b \\neq c$ use $b=\\{1\\}, c=\\{1,2\\}$... mejor: $a=\\emptyset, b=\\{1\\}, c=\\{2\\}$ da $ab=ac=\\emptyset$).",
+                "formula": "a = \\emptyset,\\; b = \\{1\\},\\; c = \\{2\\} \\implies ab = ac = \\emptyset,\\; b \\neq c"
+              },
+              {
+                "titulo": "Inciso 2 — Unión",
+                "contenido": "Con $a = U = \\{1,2\\}$, $b = \\{1\\}$, $c = \\{2\\}$: $a+b = a+c = U$ pero $b \\neq c$.",
+                "formula": "a = \\{1,2\\},\\; b = \\{1\\},\\; c = \\{2\\} \\implies a+b = a+c = \\{1,2\\},\\; b \\neq c"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-06",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "FNC",
+            "maxterminos"
+          ],
+          "enunciado": "Un maxitérmino o maxtérmino en las variables booleanas $x_1, x_2, \\dots, x_n$ es una suma booleana de literales, es decir, una suma booleana $y_1 + y_2 + \\dots + y_n$ donde $y_i = x_i$ o $y_i = \\bar{x_i}$. Demuestre que cualquier expresión booleana puede escribirse como un producto de maxtérminos. A esto se le conoce como Forma Normal Conjuntiva (FNC), y a veces es conveniente cuando el número de ceros en $F(x_1, x_2, \\dots, x_n)$ supera al número de unos.",
+          "tips": [
+            {
+              "titulo": "Dualidad FND-FNC",
+              "contenido": "Aplique el Principio de Dualidad a la construcción de la FND: en lugar de sumar los minitérminos donde $F=1$, multiplique los maxtérminos donde $F=0$."
+            },
+            {
+              "titulo": "Complemento de minitérminos",
+              "contenido": "Un maxtérmino es el complemento de un minitérmino (salvo por De Morgan). Use que $F = \\prod_{F=0} M_i$ donde $M_i$ es el maxtérmino correspondiente."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Idea central",
+                "contenido": "Sea $f: B^n \\to B$. Para cada fila donde $f=0$ con valores $(a_1, \\dots, a_n)$, construimos el maxtérmino $M = y_1 + \\dots + y_n$ donde $y_i = x_i$ si $a_i = 0$ y $y_i = \\bar{x_i}$ si $a_i = 1$."
+              },
+              {
+                "titulo": "Propiedad del maxtérmino",
+                "contenido": "Este maxtérmino vale 0 exactamente en la fila $(a_1, \\dots, a_n)$ y vale 1 en todas las demás."
+              },
+              {
+                "titulo": "Producto de maxtérminos",
+                "contenido": "El producto (AND) de todos los maxtérminos asociados a filas con $f=0$ vale 0 exactamente en esas filas y 1 en el resto, reproduciendo así la función $f$.",
+                "formula": "F = \\prod_{F(a_1,\\dots,a_n)=0} \\big( \\sum_{i=1}^n y_i \\big)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-07",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "Peirce",
+            "funcionalmente-completo"
+          ],
+          "enunciado": "En cualquier álgebra de Boole, definimos la función de Peirce (en honor al lógico C.S. Peirce) como $f \\downarrow g = f' \\cdot g'$. Muestre que cualquier expresión booleana $f(x_1, x_2, \\dots, x_n)$ puede ser expresada en términos de la función de Peirce.",
+          "tips": [
+            {
+              "titulo": "Funcionalmente completo",
+              "contenido": "Basta demostrar que $\\{\\downarrow\\}$ puede simular $\\{+, \\cdot, '\\}$ (o cualquier conjunto funcionalmente completo como $\\{+, '\\}$ o $\\{\\cdot, '\\}$)."
+            },
+            {
+              "titulo": "Expresar NOT, AND y OR",
+              "contenido": "Observe que $x \\downarrow x = x'$, luego $x' = x \\downarrow x$. A partir de ahí derive $x+y$ y $x\\cdot y$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Negación",
+                "contenido": "Tomando $f = g = x$:",
+                "formula": "x \\downarrow x = x' \\cdot x' = x'"
+              },
+              {
+                "titulo": "OR",
+                "contenido": "Usando De Morgan: $x + y = (x' \\cdot y')' = (x \\downarrow y)' = (x \\downarrow y) \\downarrow (x \\downarrow y)$.",
+                "formula": "x + y = (x \\downarrow y) \\downarrow (x \\downarrow y)"
+              },
+              {
+                "titulo": "AND",
+                "contenido": "De forma similar: $x \\cdot y = (x' + y')' = (x \\downarrow x) \\downarrow (y \\downarrow y)$.",
+                "formula": "x \\cdot y = (x \\downarrow x) \\downarrow (y \\downarrow y)"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Como $\\{+, \\cdot, '\\}$ es funcionalmente completo y cada operación puede expresarse con $\\downarrow$, cualquier función booleana puede construirse únicamente con la función de Peirce."
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-08",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "Peirce"
+          ],
+          "enunciado": "Exprese $ab' + a'bc$ solamente utilizando la función de Peirce ($\\downarrow$).",
+          "tips": [
+            {
+              "titulo": "Sustitución paso a paso",
+              "contenido": "Reemplace primero cada complemento $x'$ por $x \\downarrow x$, luego cada suma $x+y$ por $(x \\downarrow y) \\downarrow (x \\downarrow y)$, y cada producto $x\\cdot y$ por $(x \\downarrow x) \\downarrow (y \\downarrow y)$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Complementos",
+                "contenido": "$b' = b \\downarrow b$ y $a' = a \\downarrow a$.",
+                "formula": "b' = b \\downarrow b,\\quad a' = a \\downarrow a"
+              },
+              {
+                "titulo": "Productos",
+                "contenido": "$ab' = (a \\downarrow a) \\downarrow (b' \\downarrow b') = (a \\downarrow a) \\downarrow ((b \\downarrow b) \\downarrow (b \\downarrow b))$. Análogamente para $a'bc$.",
+                "formula": "ab' = (a \\downarrow a) \\downarrow ((b \\downarrow b) \\downarrow (b \\downarrow b))"
+              },
+              {
+                "titulo": "Suma final",
+                "contenido": "La suma $ab' + a'bc$ se reemplaza por la fórmula de OR con $\\downarrow$:",
+                "formula": "ab' + a'bc = \\big((ab') \\downarrow (a'bc)\\big) \\downarrow \\big((ab') \\downarrow (a'bc)\\big)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.4-ej-09",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "cardinalidad",
+            "teoria"
+          ],
+          "enunciado": "Muestre que no puede haber un Álgebra de Boole de 3 elementos.",
+          "tips": [
+            {
+              "titulo": "Teorema de representación",
+              "contenido": "Use el Teorema 3.2 (Stone): toda álgebra de Boole finita es isomorfa a $[\\mathcal{P}(X), \\cup, \\cap, \\dots]$ para algún $X$ finito."
+            },
+            {
+              "titulo": "Cardinalidad potencia de 2",
+              "contenido": "Si $|X| = n$, entonces $|\\mathcal{P}(X)| = 2^n$. Por tanto toda álgebra de Boole finita tiene cardinalidad potencia de 2."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cardinalidad de álgebras finitas",
+                "contenido": "Por el Teorema de representación de Stone, toda álgebra de Boole finita $B$ es isomorfa al álgebra de partes $\\mathcal{P}(X)$ de algún conjunto $X$ con $|X| = n$."
+              },
+              {
+                "titulo": "Cálculo",
+                "contenido": "La cardinalidad de $\\mathcal{P}(X)$ es $2^n$. Por tanto $|B| = 2^n$ para algún $n \\geq 0$."
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Como $3$ no es una potencia de 2, no existe ningún $n$ tal que $2^n = 3$. En consecuencia, no puede existir un Álgebra de Boole de 3 elementos.",
+                "formula": "\\nexists n \\in \\mathbb{N} : 2^n = 3 \\implies \\nexists B : |B| = 3"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "3.5",
+      "titulo": "Átomos, subálgebras y anillos booleanos",
+      "teoria": {
+        "introduccion": "Más allá de la definición básica, el estudio profundo de las Álgebras de Boole requiere comprender tres conceptos estructurales fundamentales: los átomos (elementos minimales no nulos que determinan la estructura de álgebras finitas), las subálgebras (subestructuras cerradas bajo las operaciones) y la equivalencia con anillos booleanos (una perspectiva algebraica alternativa que enriquece el entendimiento). Estos temas aparecen frecuentemente en parciales y evaluaciones integrales.",
+        "definiciones": [
+          {
+            "nombre": "Átomo de un Álgebra de Boole",
+            "contenido": "Sea $B$ un Álgebra de Boole. Un elemento $a \\in B$ es un **átomo** si $a \\neq 0$ y no existe ningún elemento $x \\in B$ tal que $0 \\prec x \\prec a$. Equivalentemente, $a$ es átomo si $a \\neq 0$ y para todo $x \\in B$: $x \\leq a \\implies x = 0$ o $x = a$.",
+            "nota": "Los átomos son los elementos que cubren directamente al mínimo $0$ en el diagrama de Hasse."
+          },
+          {
+            "nombre": "Álgebra de Boole atómica",
+            "contenido": "Una Álgebra de Boole es **atómica** si todo elemento $x \\neq 0$ es mayor o igual que algún átomo. Es decir, para todo $x \\neq 0$, existe un átomo $a$ tal que $a \\leq x$.",
+            "nota": "Toda Álgebra de Boole finita es atómica. Esto no es cierto en general para álgebras infinitas."
+          },
+          {
+            "nombre": "Subálgebra de Boole",
+            "contenido": "Sea $(B, +, \\cdot, \\bar{\\ }, 0, 1)$ un Álgebra de Boole. Un subconjunto $S \\subseteq B$ es una **subálgebra de Boole** si: (1) $0 \\in S$ y $1 \\in S$; (2) $S$ es cerrado bajo $+$ y $\\cdot$; (3) $S$ es cerrado bajo complemento: si $x \\in S$, entonces $\\bar{x} \\in S$.",
+            "nota": "Equivalentemente, $S$ es subálgebra si y solo si es un reticulado subacotado, complementado y distributivo."
+          },
+          {
+            "nombre": "Subálgebra generada",
+            "contenido": "Dado un subconjunto $X \\subseteq B$, la **subálgebra generada por $X$**, denotada $\\langle X \\rangle$, es la menor subálgebra de $B$ que contiene a $X$. Se obtiene como la intersección de todas las subálgebras que contienen a $X$.",
+            "nota": "La intersección de cualquier familia de subálgebras es una subálgebra (ejercicio)."
+          },
+          {
+            "nombre": "Anillo booleano",
+            "contenido": "Un **anillo booleano** es un anillo con unidad $(R, +, \\cdot, 0, 1)$ tal que $x^2 = x$ para todo $x \\in R$ (idempotencia multiplicativa).",
+            "nota": "Todo anillo booleano es conmutativo y tiene característica 2 (es decir, $x + x = 0$ para todo $x$)."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo  Átomos en $\\mathcal{P}(\\{1,2,3\\})$",
+            "descripcion": "En el álgebra de conjuntos:",
+            "items": [
+              "Los átomos son los conjuntos unitarios: $\\{1\\}, \\{2\\}, \\{3\\}$.",
+              "Cualquier conjunto no vacío contiene al menos un átomo.",
+              "Por ejemplo, $\\{1,2\\} = \\{1\\} \\cup \\{2\\}$ es el supremo de los átomos que lo preceden."
+            ],
+            "observacion": "En general, en $\\mathcal{P}(X)$ los átomos son exactamente los singletons $\\{x\\}$ con $x \\in X$."
+          },
+          {
+            "titulo": "Ejemplo  Subálgebras de $\\mathcal{P}(\\{1,2\\})$",
+            "descripcion": "El álgebra $\\mathcal{P}(\\{1,2\\}) = \\{\\emptyset, \\{1\\}, \\{2\\}, \\{1,2\\}\\}$ tiene las siguientes subálgebras:",
+            "items": [
+              "$\\{\\emptyset, \\{1,2\\}\\}$ (subálgebra trivial)",
+              "$\\{\\emptyset, \\{1\\}, \\{2\\}, \\{1,2\\}\\}$ (la propia álgebra)"
+            ],
+            "observacion": "De hecho, las únicas subálgebras son la trivial y la total. Esto se debe a que si una subálgebra contiene un átomo, por cerradura bajo complemento debe contener también el otro átomo."
+          },
+          {
+            "titulo": "Ejemplo  Equivalencia anillo-álgebra",
+            "descripcion": "Dada el Álgebra de Boole $[\\mathcal{P}(S), \\cup, \\cap, \\emptyset, S, ()^c]$:",
+            "items": [
+              "La suma del anillo es la diferencia simétrica: $A + B = (A \\setminus B) \\cup (B \\setminus A) = (A \\cap B^c) \\cup (A^c \\cap B)$.",
+              "El producto del anillo es la intersección: $A \\cdot B = A \\cap B$.",
+              "Se verifica que $(A + B) + C = A + (B + C)$, $A \\cdot B = B \\cdot A$, y $A \\cdot A = A$."
+            ],
+            "observacion": "Recíprocamente, dado un anillo booleano, se recupera el álgebra definiendo $x \\vee y = x + y + x \\cdot y$, $x \\wedge y = x \\cdot y$, y $\\bar{x} = 1 + x$."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Teorema de estructura de álgebras finitas",
+            "contenido": "Toda Álgebra de Boole finita es atómica. Si $A$ es el conjunto de átomos de $B$, entonces $B \\cong \\mathcal{P}(A)$. En particular, $|B| = 2^{|A|}$.",
+            "esquema_demostracion": "Todo elemento $x \\neq 0$ contiene al menos un átomo (por inducción en la longitud de cadenas descendentes, posible porque $B$ es finita). La función $f: B \\to \\mathcal{P}(A)$ definida por $f(x) = \\{a \\in A : a \\leq x\\}$ es un isomorfismo de álgebras de Boole."
+          },
+          {
+            "nombre": "Teorema de equivalencia anillo-álgebra",
+            "contenido": "Las categorías de Álgebras de Boole y anillos booleanos son equivalentes. Dada una Álgebra de Boole $(B, \\vee, \\wedge, \\bar{\\ }, 0, 1)$, el anillo asociado tiene $x + y = (x \\wedge \\bar{y}) \\vee (\\bar{x} \\wedge y)$ (XOR) y $x \\cdot y = x \\wedge y$. Recíprocamente, dado un anillo booleano $(R, +, \\cdot, 0, 1)$, el álgebra asociada tiene $x \\vee y = x + y + x \\cdot y$, $x \\wedge y = x \\cdot y$, $\\bar{x} = 1 + x$.",
+            "esquema_demostracion": "Se verifica que las operaciones definidas satisfacen todos los axiomas correspondientes. Las construcciones son mutuamente inversas."
+          },
+          {
+            "nombre": "Corolario  Cardinalidad potencia de 2",
+            "contenido": "Toda Álgebra de Boole finita tiene cardinalidad $2^n$ para algún $n \\geq 0$.",
+            "esquema_demostracion": "Consecuencia directa del teorema de estructura: si hay $n$ átomos, el álgebra es isomorfa a $\\mathcal{P}(\\{1,\\dots,n\\})$ que tiene $2^n$ elementos."
+          }
+        ],
+        "nota_previa": "Los átomos son la clave para entender la estructura interna de cualquier álgebra de Boole finita. La equivalencia con anillos booleanos proporciona una perspectiva algebraica poderosa: muchas propiedades de álgebras de Boole pueden demostrarse más fácilmente usando la estructura de anillo."
+      },
+      "ejercicios": [
+        {
+          "id": "3.5-ej-01",
+          "nivel": 2,
+          "etiquetas": [
+            "teoria",
+            "ejercicio",
+            "atomos"
+          ],
+          "enunciado": "Encuentre todos los átomos del álgebra de Boole de los divisores de 30 ordenados por divisibilidad (con MCD como $\\wedge$ y MCM como $\\vee$).",
+          "tips": [
+            {
+              "titulo": "Identificar el orden",
+              "contenido": "En este orden, $a \\leq b$ significa $a \\mid b$ (divisibilidad). El mínimo es 1, el máximo es 30."
+            },
+            {
+              "titulo": "Definición de átomo",
+              "contenido": "Un átomo es un divisor $d$ de 30 tal que $d \\neq 1$ y no existe $x$ con $1 \\prec x \\prec d$ (es decir, $d$ es primo)."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Divisores de 30",
+                "contenido": "Los divisores de 30 son: $1, 2, 3, 5, 6, 10, 15, 30$.",
+                "formula": "D_{30} = \\{1, 2, 3, 5, 6, 10, 15, 30\\}"
+              },
+              {
+                "titulo": "Identificar átomos",
+                "contenido": "Un elemento $d$ es átomo si cubre a 1 en el orden de divisibilidad, es decir, si $d$ es primo. Los primos que dividen a 30 son 2, 3 y 5.",
+                "formula": "\\text{Átomos} = \\{2, 3, 5\\}"
+              },
+              {
+                "titulo": "Verificación",
+                "contenido": "Por ejemplo, 6 no es átomo porque $1 \\prec 2 \\prec 6$. Los átomos son exactamente los primos.",
+                "formula": "|D_{30}| = 8 = 2^3 \\quad \\text{(3 átomos)}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.5-ej-02",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "atomos"
+          ],
+          "enunciado": "Demuestre que en un Álgebra de Boole finita, todo elemento $x$ puede escribirse como supremo de los átomos que preceden a $x$: $x = \\bigvee\\{a \\in \\text{At}(B) : a \\leq x\\}$.",
+          "tips": [
+            {
+              "titulo": "Inducción",
+              "contenido": "Use inducción en la 'altura' del elemento sobre el mínimo."
+            },
+            {
+              "titulo": "Átomos debajo de $x$",
+              "contenido": "Si $x \\neq 0$, entonces $x$ contiene al menos un átomo (por ser atómica)."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Caso $x = 0$",
+                "contenido": "Si $x = 0$, el conjunto de átomos debajo de $x$ es vacío, y el supremo del conjunto vacío es 0 por definición.",
+                "formula": "\\bigvee \\emptyset = 0 = x"
+              },
+              {
+                "titulo": "Caso $x \\neq 0$",
+                "contenido": "Sea $A_x = \\{a \\in \\text{At}(B) : a \\leq x\\}$. Como $B$ es finita, $A_x$ es finito. Sea $y = \\bigvee A_x$. Claramente $y \\leq x$ (pues cada $a \\leq x$).",
+                "formula": "y = \\bigvee_{a \\leq x} a \\leq x"
+              },
+              {
+                "titulo": "Probar $x \\leq y$",
+                "contenido": "Supongamos $x \\nleq y$. Entonces $x \\wedge \\bar{y} \\neq 0$. Como $B$ es atómica, existe un átomo $a \\leq x \\wedge \\bar{y}$. Entonces $a \\leq x$ (así que $a \\in A_x$) y $a \\leq \\bar{y}$. Pero $a \\in A_x$ implica $a \\leq y$, luego $a \\leq y \\wedge \\bar{y} = 0$, contradicción.",
+                "formula": "a \\leq y \\wedge \\bar{y} = 0 \\implies a = 0 \\quad \\text{(contradicción)}"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Por antisimetría, $x = y = \\bigvee A_x$.",
+                "formula": "x = \\bigvee\\{a \\in \\text{At}(B) : a \\leq x\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.5-ej-03",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "subalgebras"
+          ],
+          "enunciado": "Determine todas las subálgebras de $\\mathcal{P}(\\{1,2\\})$ y verifique que hay exactamente 2 subálgebras propias no triviales (la trivial $\\{\\emptyset, \\{1,2\\}\\}$ y la total).",
+          "tips": [
+            {
+              "titulo": "Cerradura bajo complemento",
+              "contenido": "Si una subálgebra contiene $\\{1\\}$, debe contener $\\{2\\} = \\overline{\\{1\\}}$."
+            },
+            {
+              "titulo": "Cerradura bajo unión",
+              "contenido": "Si contiene $\\{1\\}$ y $\\{2\\}$, debe contener $\\{1\\} \\cup \\{2\\} = \\{1,2\\}$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Subálgebra trivial",
+                "contenido": "$S_0 = \\{\\emptyset, \\{1,2\\}\\}$ es subálgebra: cerrada bajo complemento, unión e intersección.",
+                "formula": "S_0 = \\{\\emptyset, \\{1,2\\}\\}"
+              },
+              {
+                "titulo": "¿Puede haber otra?",
+                "contenido": "Supongamos $S$ subálgebra con $\\{1\\} \\in S$. Por complemento: $\\{2\\} \\in S$. Por unión: $\\{1,2\\} \\in S$. Por contener el mínimo: $\\emptyset \\in S$. Entonces $S = \\mathcal{P}(\\{1,2\\})$.",
+                "formula": "\\{1\\} \\in S \\implies \\{2\\} \\in S \\implies \\{1,2\\} \\in S \\implies S = \\mathcal{P}(\\{1,2\\})"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Las únicas subálgebras son $S_0$ y la total. No hay subálgebras propias no triviales.",
+                "formula": "\\text{Subálgebras} = \\{\\{\\emptyset, \\{1,2\\}\\}, \\mathcal{P}(\\{1,2\\})\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.5-ej-04",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "subalgebras"
+          ],
+          "enunciado": "Sea $B = \\{0, a, b, c, \\bar{a}, \\bar{b}, \\bar{c}, 1\\}$ un Álgebra de Boole. Determine si $\\{0, a, \\bar{a}, 1\\}$ es una subálgebra. ¿Y $\\{0, a, b, 1\\}$?",
+          "tips": [
+            {
+              "titulo": "Verificar los tres axiomas",
+              "contenido": "Para ser subálgebra debe contener 0 y 1, ser cerrada bajo suma y producto, y ser cerrada bajo complemento."
+            },
+            {
+              "titulo": "Segundo conjunto",
+              "contenido": "Verifique si $a + b$ y $a \\cdot b$ están en $\\{0, a, b, 1\\}$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Primer conjunto: $\\{0, a, \\bar{a}, 1\\}$",
+                "contenido": "Contiene 0 y 1. Es cerrado bajo complemento: $\\bar{0} = 1$, $\\bar{1} = 0$, $\\bar{a} = \\bar{a}$, $\\overline{\\bar{a}} = a$. Verificamos cerradura bajo suma y producto:",
+                "formula": "a + \\bar{a} = 1 \\in S, \\quad a \\cdot \\bar{a} = 0 \\in S, \\quad a + a = a \\in S, \\quad a \\cdot a = a \\in S"
+              },
+              {
+                "titulo": "Tabla de operaciones",
+                "contenido": "Todas las combinaciones dan elementos de $S$: $0+a=a$, $0+\\bar{a}=\\bar{a}$, $1+a=1$, $1+\\bar{a}=1$, $a+\\bar{a}=1$. Análogo para producto.",
+                "formula": "\\{0, a, \\bar{a}, 1\\} \\text{ es subálgebra} \\quad \\checkmark"
+              },
+              {
+                "titulo": "Segundo conjunto: $\\{0, a, b, 1\\}$",
+                "contenido": "Contiene 0 y 1. Pero ¿es cerrado bajo complemento? $\\bar{a} \\notin \\{0, a, b, 1\\}$ (a menos que $\\bar{a} = b$, pero entonces $a \\vee b = a \\vee \\bar{a} = 1$ y $a \\wedge b = 0$, lo que haría que $b = \\bar{a}$, pero entonces faltaría $\\bar{b} = a$... verifiquemos operaciones).",
+                "formula": "\\bar{a} \\notin \\{0, a, b, 1\\} \\implies \\text{NO es subálgebra}"
+              },
+              {
+                "titulo": "Verificación adicional",
+                "contenido": "Incluso si $\\bar{a} = b$, entonces $\\bar{b} = a$ y el conjunto sería $\\{0, a, \\bar{a}, 1\\}$, que sí es subálgebra. Pero como $B$ tiene 8 elementos, $a$ y $b$ son átomos distintos, así que $\\bar{a} \\neq b$.",
+                "formula": "\\{0, a, b, 1\\} \\text{ NO es subálgebra} \\quad \\times"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.5-ej-05",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "anillos-booleanos"
+          ],
+          "enunciado": "En el álgebra de Boole $\\mathcal{P}(\\{1,2\\})$, calcule $\\{1\\} + \\{2\\}$ y $\\{1\\} \\cdot \\{2\\}$ usando la estructura de anillo booleano (donde $A + B = (A \\setminus B) \\cup (B \\setminus A)$ es la diferencia simétrica y $A \\cdot B = A \\cap B$). Verifique que $(\\{1\\} + \\{2\\})^2 = \\{1\\} + \\{2\\}$.",
+          "tips": [
+            {
+              "titulo": "Diferencia simétrica",
+              "contenido": "$A + B = (A \\cap B^c) \\cup (A^c \\cap B)$."
+            },
+            {
+              "titulo": "Idempotencia",
+              "contenido": "En un anillo booleano, todo elemento satisface $x^2 = x$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Calcular $\\{1\\} + \\{2\\}$",
+                "contenido": "La diferencia simétrica:",
+                "formula": "\\{1\\} + \\{2\\} = (\\{1\\} \\setminus \\{2\\}) \\cup (\\{2\\} \\setminus \\{1\\}) = \\{1\\} \\cup \\{2\\} = \\{1,2\\}"
+              },
+              {
+                "titulo": "Calcular $\\{1\\} \\cdot \\{2\\}$",
+                "contenido": "La intersección:",
+                "formula": "\\{1\\} \\cdot \\{2\\} = \\{1\\} \\cap \\{2\\} = \\emptyset"
+              },
+              {
+                "titulo": "Verificar idempotencia",
+                "contenido": "$(\\{1\\} + \\{2\\})^2 = (\\{1\\} + \\{2\\}) \\cdot (\\{1\\} + \\{2\\}) = \\{1,2\\} \\cap \\{1,2\\} = \\{1,2\\} = \\{1\\} + \\{2\\}$.",
+                "formula": "(\\{1\\} + \\{2\\})^2 = \\{1,2\\} \\cap \\{1,2\\} = \\{1,2\\} = \\{1\\} + \\{2\\} \\quad \\checkmark"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.5-ej-06",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "anillos-booleanos"
+          ],
+          "enunciado": "Demuestre que en el anillo booleano asociado a un Álgebra de Boole, $x + x = 0$ para todo $x \\in B$.",
+          "tips": [
+            {
+              "titulo": "Definición de suma",
+              "contenido": "$x + y = (x \\wedge \\bar{y}) \\vee (\\bar{x} \\wedge y)$."
+            },
+            {
+              "titulo": "Sustituya $y = x$",
+              "contenido": "$x + x = (x \\wedge \\bar{x}) \\vee (\\bar{x} \\wedge x) = 0 \\vee 0 = 0$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Aplicar definición",
+                "contenido": "En el anillo booleano asociado:",
+                "formula": "x + x = (x \\wedge \\bar{x}) \\vee (\\bar{x} \\wedge x)"
+              },
+              {
+                "titulo": "Simplificar",
+                "contenido": "Como $x \\wedge \\bar{x} = 0$ y $\\bar{x} \\wedge x = 0$:",
+                "formula": "x + x = 0 \\vee 0 = 0"
+              },
+              {
+                "titulo": "Interpretación",
+                "contenido": "Esto significa que en un anillo booleano, todo elemento es su propio inverso aditivo. La característica del anillo es 2.",
+                "formula": "x + x = 0 \\implies -x = x \\quad \\text{(en un anillo booleano)}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.5-ej-07",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "cardinalidad"
+          ],
+          "enunciado": "Sea $B$ un Álgebra de Boole con exactamente 4 átomos. ¿Cuántos elementos tiene $B$? ¿Cuántas subálgebras tiene?",
+          "tips": [
+            {
+              "titulo": "Teorema de estructura",
+              "contenido": "$|B| = 2^n$ donde $n$ es el número de átomos."
+            },
+            {
+              "titulo": "Subálgebras",
+              "contenido": "Las subálgebras de $B$ corresponden a particiones del conjunto de átomos."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cardinalidad",
+                "contenido": "Con 4 átomos, $B \\cong \\mathcal{P}(\\{1,2,3,4\\})$, así que $|B| = 2^4 = 16$.",
+                "formula": "|B| = 2^4 = 16"
+              },
+              {
+                "titulo": "Subálgebras",
+                "contenido": "Las subálgebras de $B$ están en correspondencia con las particiones del conjunto de átomos $A = \\{a_1, a_2, a_3, a_4\\}$. Cada subálgebra se genera agrupando átomos en 'bloques'.",
+                "formula": "\\text{Subálgebras} \\leftrightarrow \\text{particiones de } A"
+              },
+              {
+                "titulo": "Contar particiones",
+                "contenido": "El número de particiones de un conjunto de 4 elementos es el número de Bell $B_4 = 15$. Incluyendo la subálgebra trivial y la total.",
+                "formula": "\\text{Número de subálgebras} = B_4 = 15"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "3.6",
+      "titulo": "Homomorfismos, ideales y filtros",
+      "teoria": {
+        "introduccion": "Los homomorfismos, ideales y filtros constituyen el núcleo estructural avanzado de la teoría de Álgebras de Boole. Los homomorfismos preservan la estructura algebraica; los ideales y filtros son subestructuras fundamentales que permiten construir cocientes y están íntimamente ligados a la teoría de la lógica y los espacios topológicos (espacios de Stone). Estos temas son recurrentes en parciales de nivel avanzado.",
+        "definiciones": [
+          {
+            "nombre": "Homomorfismo de Álgebras de Boole",
+            "contenido": "Sean $(B_1, +_1, \\cdot_1, \\bar{\\ }, 0_1, 1_1)$ y $(B_2, +_2, \\cdot_2, \\bar{\\ }, 0_2, 1_2)$ dos Álgebras de Boole. Una función $f: B_1 \\to B_2$ es un **homomorfismo de Álgebras de Boole** si preserva las tres operaciones: $f(x +_1 y) = f(x) +_2 f(y)$, $f(x \\cdot_1 y) = f(x) \\cdot_2 f(y)$, y $f(\\bar{x}) = \\overline{f(x)}$.",
+            "nota": "Como consecuencia, también preserva los elementos neutros: $f(0_1) = 0_2$ y $f(1_1) = 1_2$. Basta verificar que preserva dos de las tres operaciones."
+          },
+          {
+            "nombre": "Núcleo de un homomorfismo",
+            "contenido": "El **núcleo** de un homomorfismo $f: B_1 \\to B_2$ es $\\ker(f) = \\{x \\in B_1 : f(x) = 0_2\\}$. El núcleo es siempre un ideal de $B_1$.",
+            "nota": "Un homomorfismo es inyectivo si y solo si $\\ker(f) = \\{0_1\\}$."
+          },
+          {
+            "nombre": "Ideal de un Álgebra de Boole",
+            "contenido": "Un subconjunto $I \\subseteq B$ es un **ideal** si: (1) $0 \\in I$; (2) Si $x, y \\in I$, entonces $x + y \\in I$ (cerrado bajo suma); (3) Si $x \\in I$ y $y \\leq x$, entonces $y \\in I$ (cerrado hacia abajo). Un ideal es **propio** si $I \\neq B$ (equivalentemente, $1 \\notin I$).",
+            "nota": "La condición (3) puede reemplazarse por: si $x \\in I$ y $y \\in B$, entonces $x \\cdot y \\in I$."
+          },
+          {
+            "nombre": "Filtro de un Álgebra de Boole",
+            "contenido": "Un subconjunto $F \\subseteq B$ es un **filtro** si: (1) $1 \\in F$; (2) Si $x, y \\in F$, entonces $x \\cdot y \\in F$ (cerrado bajo producto); (3) Si $x \\in F$ y $x \\leq y$, entonces $y \\in F$ (cerrado hacia arriba). Un filtro es **propio** si $F \\neq B$ (equivalentemente, $0 \\notin F$).",
+            "nota": "Dualidad: si $I$ es un ideal, entonces $F = \\{\\bar{x} : x \\in I\\}$ es un filtro, y viceversa."
+          },
+          {
+            "nombre": "Ideal principal",
+            "contenido": "Dado $a \\in B$, el **ideal principal generado por $a$** es $\\langle a \\rangle = \\{x \\in B : x \\leq a\\} = \\{x \\cdot a : x \\in B\\}$.",
+            "nota": "En un Álgebra de Boole finita, todo ideal es principal."
+          },
+          {
+            "nombre": "Ideal maximal / Filtro maximal (Ultrafiltro)",
+            "contenido": "Un ideal propio $M$ es **maximal** si no existe otro ideal propio $I$ tal que $M \\subsetneq I \\subsetneq B$. Un filtro propio $U$ es **ultrafiltro** (o maximal) si es maximal respecto a la inclusión. Equivalentemente, $U$ es ultrafiltro si para todo $x \\in B$: $x \\in U$ o $\\bar{x} \\in U$ (pero no ambos).",
+            "nota": "En Álgebras de Boole: filtro primo $\\iff$ filtro maximal $\\iff$ ultrafiltro."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo  Homomorfismo desde P({1,2,3})",
+            "descripcion": "Sea $f: \\mathcal{P}(\\{1,2,3\\}) \\to \\{0,1\\}$ definida por $f(X) = 1$ si $2 \\in X$, y $f(X) = 0$ en caso contrario.",
+            "items": [
+              "$f$ es homomorfismo: preserva unión, intersección y complemento.",
+              "Núcleo: $\\ker(f) = \\{X \\subseteq \\{1,2,3\\} : 2 \\notin X\\} = \\{\\emptyset, \\{1\\}, \\{3\\}, \\{1,3\\}\\}$.",
+              "Este núcleo es el ideal principal generado por $\\{1,3\\} = \\overline{\\{2\\}}$."
+            ],
+            "observacion": "Los homomorfismos a {0,1} corresponden exactamente a los ultrafiltros."
+          },
+          {
+            "titulo": "Ejemplo  Ideales maximales en P({1,2,3})",
+            "descripcion": "En $\\mathcal{P}(\\{1,2,3\\})$, los ideales maximales son:",
+            "items": [
+              "$M_1 = \\{X \\subseteq \\{1,2,3\\} : 1 \\notin X\\}$",
+              "$M_2 = \\{X \\subseteq \\{1,2,3\\} : 2 \\notin X\\}$",
+              "$M_3 = \\{X \\subseteq \\{1,2,3\\} : 3 \\notin X\\}$"
+            ],
+            "observacion": "Cada ideal maximal es de la forma 'conjuntos que no contienen a i' para algún $i \\in \\{1,2,3\\}$. Los ultrafiltros correspondientes son los filtros principales generados por los átomos {1}, {2}, {3}."
+          },
+          {
+            "titulo": "Ejemplo  Ideal que no es principal (infinito)",
+            "descripcion": "Sea $B$ el álgebra de Boole de los subconjuntos finitos y cofinitos de $\\mathbb{N}$.",
+            "items": [
+              "El conjunto $I = \\{X \\subseteq \\mathbb{N} : X \\text{ es finito}\\}$ es un ideal propio.",
+              "$I$ no es principal: no existe $a \\in B$ tal que $I = \\langle a \\rangle$."
+            ],
+            "observacion": "Esto muestra que en álgebras infinitas pueden existir ideales no principales."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Teorema fundamental del homomorfismo",
+            "contenido": "Si $f: B_1 \\to B_2$ es un homomorfismo sobreyectivo de Álgebras de Boole, entonces $B_1/\\ker(f) \\cong B_2$. El cociente $B_1/I$ se define como el conjunto de clases de equivalencia $[x] = \\{y : x \\oplus y \\in I\\}$ donde $\\oplus$ es la suma del anillo booleano (diferencia simétrica).",
+            "esquema_demostracion": "Se define $\\phi: B_1/\\ker(f) \\to B_2$ por $\\phi([x]) = f(x)$. Se verifica que está bien definida, es homomorfismo biyectivo."
+          },
+          {
+            "nombre": "Correspondencia de ideales",
+            "contenido": "Sea $f: B_1 \\to B_2$ un homomorfismo sobreyectivo. Entonces los ideales de $B_2$ están en correspondencia biyectiva con los ideales de $B_1$ que contienen a $\\ker(f)$.",
+            "esquema_demostracion": "La correspondencia es $J \\mapsto f^{-1}(J)$ con inversa $I \\mapsto f(I)$."
+          },
+          {
+            "nombre": "Teorema del ideal primo",
+            "contenido": "Todo Álgebra de Boole con más de un elemento tiene al menos un ideal maximal (equivalente al Axioma de Elección / Lema de Zorn).",
+            "esquema_demostracion": "Aplicar el Lema de Zorn a la familia de ideales propios ordenados por inclusión."
+          }
+        ],
+        "nota_previa": "Los homomorfismos de Álgebras de Boole a {0,1} (es decir, los ultrafiltros) son fundamentales para el Teorema de Representación de Stone. Cada ultrafiltro puede verse como un 'punto' en el espacio de Stone, y la topología de ese espacio codifica toda la estructura del álgebra."
+      },
+      "ejercicios": [
+        {
+          "id": "3.6-ej-01",
+          "nivel": 2,
+          "etiquetas": [
+            "teoria",
+            "ejercicio",
+            "homomorfismos"
+          ],
+          "enunciado": "Sea $f: \\mathcal{P}(\\{1,2,3\\}) \\to \\{0,1\\}$ definida por $f(X) = 1$ si $2 \\in X$, y $f(X) = 0$ en caso contrario. Demuestre que $f$ es un homomorfismo de Álgebras de Boole y determine su núcleo.",
+          "tips": [
+            {
+              "titulo": "Verificar las tres operaciones",
+              "contenido": "Compruebe que $f(A \\cup B) = f(A) + f(B)$, $f(A \\cap B) = f(A) \\cdot f(B)$, y $f(A^c) = \\overline{f(A)}$."
+            },
+            {
+              "titulo": "Núcleo",
+              "contenido": "El núcleo son los conjuntos $X$ tales que $f(X) = 0$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Preserva unión (suma)",
+                "contenido": "$f(A \\cup B) = 1 \\iff 2 \\in A \\cup B \\iff 2 \\in A \\text{ o } 2 \\in B \\iff f(A) = 1 \\text{ o } f(B) = 1 \\iff f(A) + f(B) = 1$.",
+                "formula": "f(A \\cup B) = f(A) + f(B)"
+              },
+              {
+                "titulo": "Preserva intersección (producto)",
+                "contenido": "$f(A \\cap B) = 1 \\iff 2 \\in A \\cap B \\iff 2 \\in A \\text{ y } 2 \\in B \\iff f(A) = 1 \\text{ y } f(B) = 1 \\iff f(A) \\cdot f(B) = 1$.",
+                "formula": "f(A \\cap B) = f(A) \\cdot f(B)"
+              },
+              {
+                "titulo": "Preserva complemento",
+                "contenido": "$f(A^c) = 1 \\iff 2 \\notin A \\iff f(A) = 0 \\iff \\overline{f(A)} = 1$.",
+                "formula": "f(A^c) = \\overline{f(A)}"
+              },
+              {
+                "titulo": "Núcleo",
+                "contenido": "$\\ker(f) = \\{X \\subseteq \\{1,2,3\\} : f(X) = 0\\} = \\{X : 2 \\notin X\\} = \\{\\emptyset, \\{1\\}, \\{3\\}, \\{1,3\\}\\}$.",
+                "formula": "\\ker(f) = \\{\\emptyset, \\{1\\}, \\{3\\}, \\{1,3\\}\\} = \\langle \\{1,3\\} \\rangle"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.6-ej-02",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "homomorfismos"
+          ],
+          "enunciado": "Sean $B_1 = \\{0, a, \\bar{a}, 1\\}$ y $B_2 = \\{0, 1\\}$. Defina $f(0)=0$, $f(a)=1$, $f(\\bar{a})=0$, $f(1)=1$. Verifique si $f$ es homomorfismo. Si no lo es, modifique la definición para que lo sea.",
+          "tips": [
+            {
+              "titulo": "Verificar preservación de complemento",
+              "contenido": "$f(\\bar{a}) = 0$ pero $\\overline{f(a)} = \\bar{1} = 0$. Esto parece funcionar. Pero verifique $f(\\bar{\\bar{a}}) = f(a) = 1$ y $\\overline{f(\\bar{a})} = \\bar{0} = 1$."
+            },
+            {
+              "titulo": "Verificar preservación de suma",
+              "contenido": "$f(a + \\bar{a}) = f(1) = 1$. ¿Es igual a $f(a) + f(\\bar{a}) = 1 + 0 = 1$? Sí. Pero verifique $f(a + a) = f(a) = 1$ vs $f(a) + f(a) = 1 + 1 = 1$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Verificación de complemento",
+                "contenido": "$f(\\bar{0}) = f(1) = 1 = \\bar{0} = \\overline{f(0)}$ ?, $f(\\bar{a}) = 0 = \\bar{1} = \\overline{f(a)}$ ?, $f(\\bar{\\bar{a}}) = f(a) = 1 = \\bar{0} = \\overline{f(\\bar{a})}$ ?, $f(\\bar{1}) = f(0) = 0 = \\bar{1} = \\overline{f(1)}$ ?.",
+                "formula": "f(\\bar{x}) = \\overline{f(x)} \\quad \\forall x \\in B_1"
+              },
+              {
+                "titulo": "Verificación de suma",
+                "contenido": "Tabla completa: $f(0+0)=f(0)=0=0+0$, $f(0+a)=f(a)=1=0+1$, $f(0+\\bar{a})=f(\\bar{a})=0=0+0$, $f(0+1)=f(1)=1=0+1$, $f(a+a)=f(a)=1=1+1$, $f(a+\\bar{a})=f(1)=1=1+0$, $f(a+1)=f(1)=1=1+1$, $f(\\bar{a}+\\bar{a})=f(\\bar{a})=0=0+0$, $f(\\bar{a}+1)=f(1)=1=0+1$, $f(1+1)=f(1)=1=1+1$.",
+                "formula": "f(x+y) = f(x) + f(y) \\quad \\forall x,y \\in B_1 \\quad \\checkmark"
+              },
+              {
+                "titulo": "Verificación de producto",
+                "contenido": "Análogamente se verifica que $f(x \\cdot y) = f(x) \\cdot f(y)$ para todo $x, y$. Por ejemplo, $f(a \\cdot \\bar{a}) = f(0) = 0 = 1 \\cdot 0 = f(a) \\cdot f(\\bar{a})$.",
+                "formula": "f(x \\cdot y) = f(x) \\cdot f(y) \\quad \\checkmark"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "$f$ SÍ es un homomorfismo de Álgebras de Boole. No necesita modificación.",
+                "formula": "f \\text{ es homomorfismo} \\quad \\checkmark"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.6-ej-03",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "ideales"
+          ],
+          "enunciado": "Sea $B = \\mathcal{P}(\\{1,2,3\\})$. Determine: a) El ideal principal generado por $\\{1,2\\}$; b) Todos los ideales maximales de $B$; c) Verifique que cada ideal maximal es de la forma $\\{X \\subseteq \\{1,2,3\\} : i \\notin X\\}$ para algún $i \\in \\{1,2,3\\}$.",
+          "tips": [
+            {
+              "titulo": "Ideal principal",
+              "contenido": "$\\langle A \\rangle = \\{X \\subseteq \\{1,2,3\\} : X \\subseteq A\\}$."
+            },
+            {
+              "titulo": "Ideales maximales",
+              "contenido": "En $\\mathcal{P}(S)$ finito, los ideales maximales corresponden a los puntos de $S$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Inciso a",
+                "contenido": "El ideal principal generado por $\\{1,2\\}$ es:",
+                "formula": "\\langle \\{1,2\\} \\rangle = \\{\\emptyset, \\{1\\}, \\{2\\}, \\{1,2\\}\\}"
+              },
+              {
+                "titulo": "Inciso b",
+                "contenido": "Los ideales maximales son:",
+                "formula": "M_1 = \\{X : 1 \\notin X\\} = \\{\\emptyset, \\{2\\}, \\{3\\}, \\{2,3\\}\\}"
+              },
+              {
+                "titulo": "Inciso b (continuación)",
+                "contenido": "",
+                "formula": "M_2 = \\{X : 2 \\notin X\\} = \\{\\emptyset, \\{1\\}, \\{3\\}, \\{1,3\\}\\}"
+              },
+              {
+                "titulo": "Inciso b (final)",
+                "contenido": "",
+                "formula": "M_3 = \\{X : 3 \\notin X\\} = \\{\\emptyset, \\{1\\}, \\{2\\}, \\{1,2\\}\\}"
+              },
+              {
+                "titulo": "Inciso c",
+                "contenido": "Cada $M_i$ es ideal: contiene $\\emptyset$, es cerrado bajo unión, y si $X \\in M_i$ e $Y \\subseteq X$, entonces $i \\notin Y$ así que $Y \\in M_i$. Es maximal porque si agregamos cualquier conjunto que contenga a $i$, por unión con $\\{1,2,3\\} \\setminus \\{i\\} \\in M_i$ obtenemos $\\{1,2,3\\} = 1$.",
+                "formula": "\\text{Ideales maximales} = \\{M_1, M_2, M_3\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.6-ej-04",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "ideales"
+          ],
+          "enunciado": "Demuestre que en un Álgebra de Boole finita, todo ideal es principal.",
+          "tips": [
+            {
+              "titulo": "Elemento máximo del ideal",
+              "contenido": "Sea $I$ un ideal finito (pues $B$ es finita). Sea $a$ el supremo de todos los elementos de $I$."
+            },
+            {
+              "titulo": "$a \\in I$",
+              "contenido": "Como $I$ es finito y cerrado bajo suma (unión), el supremo de elementos de $I$ pertenece a $I$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Sea $I$ un ideal de $B$ finita",
+                "contenido": "Como $B$ es finita, $I$ es finito. Sea $I = \\{i_1, i_2, \\dots, i_k\\}$.",
+                "formula": "I = \\{i_1, i_2, \\dots, i_k\\}"
+              },
+              {
+                "titulo": "Definir candidato",
+                "contenido": "Sea $a = i_1 \\vee i_2 \\vee \\dots \\vee i_k$. Como $I$ es cerrado bajo suma (unión finita), $a \\in I$.",
+                "formula": "a = \\bigvee_{j=1}^k i_j \\in I"
+              },
+              {
+                "titulo": "$I \\subseteq \\langle a \\rangle$",
+                "contenido": "Para todo $x \\in I$, tenemos $x \\leq a$ (pues $a$ es supremo de todos los elementos de $I$). Por definición de ideal, $x \\in \\langle a \\rangle$.",
+                "formula": "x \\in I \\implies x \\leq a \\implies x \\in \\langle a \\rangle"
+              },
+              {
+                "titulo": "$\\langle a \\rangle \\subseteq I$",
+                "contenido": "Si $x \\in \\langle a \\rangle$, entonces $x \\leq a$. Como $a \\in I$ e $I$ es cerrado hacia abajo, $x \\in I$.",
+                "formula": "x \\leq a \\in I \\implies x \\in I"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "$I = \\langle a \\rangle$. Todo ideal es principal.",
+                "formula": "I = \\langle a \\rangle \\quad \\checkmark"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.6-ej-05",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "filtros"
+          ],
+          "enunciado": "Demuestre que un filtro $F$ es maximal si y solo si para todo $x \\in B$: exactamente uno de $x$ o $\\bar{x}$ pertenece a $F$.",
+          "tips": [
+            {
+              "titulo": "Ida ($\\Rightarrow$)",
+              "contenido": "Si $F$ es maximal y $x \\notin F$, considere el filtro generado por $F \\cup \\{x\\}$."
+            },
+            {
+              "titulo": "Vuelta ($\\Leftarrow$)",
+              "contenido": "Si la propiedad se cumple, muestre que cualquier filtro que contenga propiamente a $F$ debe contener a $0$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Ida: $F$ maximal $\\Rightarrow$ propiedad",
+                "contenido": "Sea $F$ maximal. Supongamos $x \\notin F$. El filtro generado por $F \\cup \\{x\\}$ contiene propiamente a $F$, así que por maximalidad debe ser $B$. Entonces $0 \\in \\langle F \\cup \\{x\\} \\rangle$, lo que significa que existen $f_1, \\dots, f_n \\in F$ tales que $f_1 \\cdot \\dots \\cdot f_n \\cdot x = 0$. Sea $f = f_1 \\cdot \\dots \\cdot f_n \\in F$. Entonces $f \\cdot x = 0$, así que $f \\leq \\bar{x}$. Como $f \\in F$ y $F$ es cerrado hacia arriba, $\\bar{x} \\in F$.",
+                "formula": "x \\notin F \\implies \\bar{x} \\in F"
+              },
+              {
+                "titulo": "No pueden estar ambos",
+                "contenido": "Si $x \\in F$ y $\\bar{x} \\in F$, entonces $x \\cdot \\bar{x} = 0 \\in F$, así que $F = B$, contradiciendo que es propio.",
+                "formula": "x, \\bar{x} \\in F \\implies 0 \\in F \\implies F = B \\quad \\text{(contradicción)}"
+              },
+              {
+                "titulo": "Vuelta: propiedad $\\Rightarrow$ maximal",
+                "contenido": "Supongamos que para todo $x$, exactamente uno de $x$ o $\\bar{x}$ está en $F$. Sea $G$ un filtro con $F \\subsetneq G$. Tome $x \\in G \\setminus F$. Entonces $\\bar{x} \\in F \\subseteq G$. Así que $x, \\bar{x} \\in G$, luego $0 = x \\cdot \\bar{x} \\in G$, así que $G = B$. Por tanto $F$ es maximal.",
+                "formula": "F \\subsetneq G \\implies G = B \\implies F \\text{ maximal} \\quad \\checkmark"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.6-ej-06",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "homomorfismos"
+          ],
+          "enunciado": "Demuestre que si $f: B_1 \\to B_2$ es un homomorfismo de Álgebras de Boole, entonces la imagen $f(B_1)$ es una subálgebra de Boole de $B_2$.",
+          "tips": [
+            {
+              "titulo": "Verificar los tres axiomas de subálgebra",
+              "contenido": "Debe contener 0 y 1, ser cerrada bajo suma y producto, y ser cerrada bajo complemento."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Contiene 0 y 1",
+                "contenido": "$f(0_1) = 0_2 \\in f(B_1)$ y $f(1_1) = 1_2 \\in f(B_1)$.",
+                "formula": "0_2, 1_2 \\in f(B_1)"
+              },
+              {
+                "titulo": "Cerrada bajo suma",
+                "contenido": "Sean $y_1, y_2 \\in f(B_1)$. Entonces $y_1 = f(x_1)$ y $y_2 = f(x_2)$ para algún $x_1, x_2 \\in B_1$. Luego $y_1 + y_2 = f(x_1) + f(x_2) = f(x_1 + x_2) \\in f(B_1)$.",
+                "formula": "y_1 + y_2 = f(x_1 + x_2) \\in f(B_1)"
+              },
+              {
+                "titulo": "Cerrada bajo producto y complemento",
+                "contenido": "Análogamente: $y_1 \\cdot y_2 = f(x_1 \\cdot x_2) \\in f(B_1)$. Y $\\bar{y_1} = \\overline{f(x_1)} = f(\\bar{x_1}) \\in f(B_1)$.",
+                "formula": "\\bar{y_1} = f(\\bar{x_1}) \\in f(B_1)"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "$f(B_1)$ satisface todos los axiomas de subálgebra.",
+                "formula": "f(B_1) \\text{ es subálgebra de } B_2 \\quad \\checkmark"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "3.7",
+      "titulo": "Formas normales, minimización y conjuntos funcionalmente completos",
+      "teoria": {
+        "introduccion": "Más allá de la Forma Normal Disyuntiva (FND), el estudio completo de funciones booleanas requiere dominar la Forma Normal Conjuntiva (FNC), las técnicas de minimización como los mapas de Karnaugh, y la noción de conjuntos funcionalmente completos. Estos temas son esenciales tanto para la teoría como para aplicaciones prácticas en diseño de circuitos lógicos.",
+        "definiciones": [
+          {
+            "nombre": "Maxtérmino (Maxitérmino)",
+            "contenido": "Un **maxtérmino** en las variables booleanas $x_1, x_2, \\ldots, x_n$ es una suma booleana de literales $y_1 + y_2 + \\ldots + y_n$ donde $y_i = x_i$ o $y_i = \\bar{x_i}$. Un maxtérmino vale 0 en exactamente una fila de la tabla de verdad.",
+            "nota": "El maxtérmino correspondiente a la fila $(a_1, \\ldots, a_n)$ se construye poniendo $x_i$ si $a_i = 0$ y $\\bar{x_i}$ si $a_i = 1$."
+          },
+          {
+            "nombre": "Forma Normal Conjuntiva (FNC)",
+            "contenido": "La **FNC** de una función booleana es el producto (AND) de los maxtérminos correspondientes a las filas de la tabla de verdad donde la función vale 0. También se conoce como producto de sumas.",
+            "nota": "La FNC es dual de la FND. Es especialmente útil cuando el número de ceros en la tabla es menor que el número de unos."
+          },
+          {
+            "nombre": "Mapa de Karnaugh",
+            "contenido": "Un **mapa de Karnaugh** es una representación gráfica de una función booleana en una cuadrícula donde celdas adyacentes (incluyendo bordes opuestos) difieren en exactamente una variable. Permite identificar visualmente grupos de minitérminos para simplificación.",
+            "nota": "Las celdas se ordenan usando código Gray para garantizar adyacencia de celdas que difieren en una sola variable."
+          },
+          {
+            "nombre": "Implicante primo",
+            "contenido": "Un **implicante primo** es un término producto que implica la función (es decir, cuando el término vale 1, la función vale 1) y no puede simplificarse más eliminando ningún literal. Un implicante primo es **esencial** si cubre al menos un minitérmino que ningún otro implicante primo cubre.",
+            "nota": "La expresión minimal como suma de productos es una suma de implicantes primos esenciales."
+          },
+          {
+            "nombre": "Conjunto funcionalmente completo",
+            "contenido": "Un conjunto de operadores booleanos es **funcionalmente completo** si toda función booleana puede expresarse usando solo operadores de ese conjunto.",
+            "nota": "Los conjuntos {NAND}, {NOR}, {$\\cdot$, complemento} y {$+$, complemento} son funcionalmente completos."
+          },
+          {
+            "nombre": "Función NAND (Sheffer stroke)",
+            "contenido": "La función **NAND** se define como $x \\uparrow y = \\overline{x \\cdot y} = \\bar{x} + \\bar{y}$. También denotada $x \\mid y$.",
+            "nota": "{$\\uparrow$} es funcionalmente completo: $\\bar{x} = x \\uparrow x$, $x \\cdot y = (x \\uparrow y) \\uparrow (x \\uparrow y)$, $x + y = (x \\uparrow x) \\uparrow (y \\uparrow y)$."
+          },
+          {
+            "nombre": "Función NOR (Peirce arrow)",
+            "contenido": "La función **NOR** se define como $x \\downarrow y = \\overline{x + y} = \\bar{x} \\cdot \\bar{y}$. También denotada función de Peirce.",
+            "nota": "{$\\downarrow$} es funcionalmente completo: $\\bar{x} = x \\downarrow x$, $x + y = (x \\downarrow y) \\downarrow (x \\downarrow y)$, $x \\cdot y = (x \\downarrow x) \\downarrow (y \\downarrow y)$."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo  FNC de una función",
+            "descripcion": "Sea $F(x,y,z)$ con tabla de verdad que vale 0 únicamente en las filas $(0,0,0)$ y $(1,1,1)$.",
+            "items": [
+              "Maxtérmino para $(0,0,0)$: $x + y + z$ (ponemos $x_i$ cuando $a_i = 0$).",
+              "Maxtérmino para $(1,1,1)$: $\\bar{x} + \\bar{y} + \\bar{z}$ (ponemos $\\bar{x_i}$ cuando $a_i = 1$).",
+              "FNC: $F = (x + y + z)(\\bar{x} + \\bar{y} + \\bar{z})$."
+            ],
+            "observacion": "La FND tendría 6 minitérminos; la FNC solo 2 maxtérminos. Es más eficiente."
+          },
+          {
+            "titulo": "Ejemplo  Mapa de Karnaugh de 4 variables",
+            "descripcion": "Para minimizar $F(a,b,c,d) = \\sum m(0,1,2,5,8,9,10)$:",
+            "items": [
+              "Se construye una cuadrícula 4x4 con $ab$ en filas y $cd$ en columnas (código Gray).",
+              "Se marcan las celdas correspondientes a los minitérminos.",
+              "Se identifican grupos de 1s adyacentes de tamaño $2^k$: grupo de 4 en esquinas ($\\bar{b}\\bar{d}$), grupo de 2, etc.",
+              "La expresión minimizada es la suma de los términos correspondientes a cada grupo."
+            ],
+            "observacion": "Las esquinas del mapa son adyacentes (topología toroidal)."
+          },
+          {
+            "titulo": "Ejemplo  Solo NAND",
+            "descripcion": "Exprese $F(x,y,z) = x \\cdot y + \\bar{y} \\cdot z$ usando solo NAND:",
+            "items": [
+              "Paso 1: $\\bar{y} = y \\uparrow y$",
+              "Paso 2: $x \\cdot y = (x \\uparrow y) \\uparrow (x \\uparrow y)$",
+              "Paso 3: $\\bar{y} \\cdot z = ((y \\uparrow y) \\uparrow z) \\uparrow ((y \\uparrow y) \\uparrow z)$",
+              "Paso 4: $A + B = (A \\uparrow A) \\uparrow (B \\uparrow B)$ donde $A = x \\cdot y$ y $B = \\bar{y} \\cdot z$"
+            ],
+            "observacion": "La expresión resultante es larga pero demuestra que NAND solo es suficiente."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Equivalencia FND-FNC por dualidad",
+            "contenido": "Si $F = \\sum m_i$ en FND, entonces $\\bar{F} = \\sum M_j$ donde $M_j$ son los minitérminos restantes. Aplicando De Morgan: $F = \\prod \\bar{M_j}$, que es la FNC.",
+            "esquema_demostracion": "Directo por dualidad y leyes de De Morgan."
+          },
+          {
+            "nombre": "NAND es funcionalmente completo",
+            "contenido": "El conjunto {$\\uparrow$} es funcionalmente completo porque: $\\bar{x} = x \\uparrow x$, $x \\cdot y = (x \\uparrow y) \\uparrow (x \\uparrow y)$, y $x + y = (x \\uparrow x) \\uparrow (y \\uparrow y)$.",
+            "esquema_demostracion": "Verificación directa usando las definiciones. Como {+, \\cdot, complemento} es funcionalmente completo y cada operación se expresa con NAND, {$\\uparrow$} también lo es."
+          },
+          {
+            "nombre": "NOR es funcionalmente completo",
+            "contenido": "El conjunto {$\\downarrow$} es funcionalmente completo porque: $\\bar{x} = x \\downarrow x$, $x + y = (x \\downarrow y) \\downarrow (x \\downarrow y)$, y $x \\cdot y = (x \\downarrow x) \\downarrow (y \\downarrow y)$.",
+            "esquema_demostracion": "Análogo al caso NAND, por dualidad."
+          }
+        ],
+        "nota_previa": "Los mapas de Karnaugh son herramientas visuales poderosas para minimización manual de funciones con hasta 4-6 variables. Para más variables se usa el algoritmo de Quine-McCluskey. La noción de conjuntos funcionalmente completos es fundamental en diseño de circuitos: las compuertas NAND y NOR son las más usadas en electrónica porque son más baratas de fabricar."
+      },
+      "ejercicios": [
+        {
+          "id": "3.7-ej-01",
+          "nivel": 2,
+          "etiquetas": [
+            "teoria",
+            "ejercicio",
+            "FNC"
+          ],
+          "enunciado": "Dada la función $F(x,y,z)$ con tabla de verdad que vale 1 en las filas 1, 2, 4, 7 (numerando desde 0), escriba $F$ en Forma Normal Conjuntiva (FNC).",
+          "tips": [
+            {
+              "titulo": "Identificar filas con F=0",
+              "contenido": "Las filas donde $F=0$ son: 0, 3, 5, 6. Construya un maxtérmino para cada una."
+            },
+            {
+              "titulo": "Construcción de maxtérminos",
+              "contenido": "Para la fila $(a_1,a_2,a_3)$, el maxtérmino es $y_1 + y_2 + y_3$ donde $y_i = x_i$ si $a_i = 0$ y $y_i = \\bar{x_i}$ si $a_i = 1$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Filas con F=0",
+                "contenido": "Fila 0: $(0,0,0)$, Fila 3: $(1,1,0)$, Fila 5: $(1,0,1)$, Fila 6: $(0,1,1)$.",
+                "formula": "F=0 \\text{ en filas } 0, 3, 5, 6"
+              },
+              {
+                "titulo": "Maxtérminos",
+                "contenido": "Fila 0: $M_0 = x + y + z$. Fila 3: $M_3 = \\bar{x} + \\bar{y} + z$. Fila 5: $M_5 = \\bar{x} + y + \\bar{z}$. Fila 6: $M_6 = x + \\bar{y} + \\bar{z}$.",
+                "formula": "M_0 = x+y+z,\\; M_3 = \\bar{x}+\\bar{y}+z,\\; M_5 = \\bar{x}+y+\\bar{z},\\; M_6 = x+\\bar{y}+\\bar{z}"
+              },
+              {
+                "titulo": "FNC",
+                "contenido": "La FNC es el producto de estos maxtérminos:",
+                "formula": "F = (x+y+z)(\\bar{x}+\\bar{y}+z)(\\bar{x}+y+\\bar{z})(x+\\bar{y}+\\bar{z})"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.7-ej-02",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "FNC"
+          ],
+          "enunciado": "Dada $F(x,y,z) = x\\bar{y} + \\bar{x}z$, conviértala a Forma Normal Conjuntiva (FNC).",
+          "tips": [
+            {
+              "titulo": "Método 1: Construir tabla de verdad",
+              "contenido": "Evalúe $F$ en las 8 filas y aplique la definición de FNC."
+            },
+            {
+              "titulo": "Método 2: Usar dualidad",
+              "contenido": "Calcule $\\bar{F}$, escríbala en FND, aplique De Morgan."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Tabla de verdad",
+                "contenido": "Evaluando $F = x\\bar{y} + \\bar{x}z$:",
+                "formula": "\\begin{array}{ccc|c} x & y & z & F \\\\ \\hline 0&0&0&0 \\\\ 0&0&1&1 \\\\ 0&1&0&0 \\\\ 0&1&1&1 \\\\ 1&0&0&1 \\\\ 1&0&1&1 \\\\ 1&1&0&0 \\\\ 1&1&1&0 \\end{array}"
+              },
+              {
+                "titulo": "Filas con F=0",
+                "contenido": "Las filas 0, 2, 6, 7 tienen $F=0$.",
+                "formula": "F=0 \\text{ en } (0,0,0), (0,1,0), (1,1,0), (1,1,1)"
+              },
+              {
+                "titulo": "Maxtérminos",
+                "contenido": "$M_0 = x+y+z$, $M_2 = x+\\bar{y}+z$, $M_6 = \\bar{x}+\\bar{y}+z$, $M_7 = \\bar{x}+\\bar{y}+\\bar{z}$.",
+                "formula": "F = (x+y+z)(x+\\bar{y}+z)(\\bar{x}+\\bar{y}+z)(\\bar{x}+\\bar{y}+\\bar{z})"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.7-ej-03",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "Karnaugh"
+          ],
+          "enunciado": "Minimice la función $F(x,y,z,w) = \\sum m(0,1,2,5,8,9,10)$ usando un mapa de Karnaugh de 4 variables. Identifique los implicantes primos esenciales.",
+          "tips": [
+            {
+              "titulo": "Mapa 4x4",
+              "contenido": "Filas: $xy$ en código Gray (00, 01, 11, 10). Columnas: $zw$ en código Gray (00, 01, 11, 10)."
+            },
+            {
+              "titulo": "Grupos de tamaño $2^k$",
+              "contenido": "Busque grupos de 4, 2 celdas adyacentes (incluyendo esquinas)."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Mapa de Karnaugh",
+                "contenido": "Marcando los minitérminos en el mapa (filas $xy$, columnas $zw$):",
+                "formula": "\\begin{array}{c|cccc} xy \\backslash zw & 00 & 01 & 11 & 10 \\\\ \\hline 00 & 1 & 1 & 0 & 1 \\\\ 01 & 0 & 1 & 0 & 0 \\\\ 11 & 0 & 0 & 0 & 0 \\\\ 10 & 1 & 1 & 0 & 1 \\end{array}"
+              },
+              {
+                "titulo": "Grupo de 4 (esquinas)",
+                "contenido": "Las celdas $(0,0,0,0), (0,0,0,1), (1,0,0,0), (1,0,0,1)$ forman un grupo de 4. Estas corresponden a $x=0$ o $1$, $y=0$, $z=0$, $w=0$ o $1$. La variable que cambia se elimina: queda $\\bar{y}\\bar{z}$.",
+                "formula": "\\text{Grupo 1: } \\bar{y}\\bar{z} \\quad (m_0, m_1, m_8, m_9)"
+              },
+              {
+                "titulo": "Grupo de 2",
+                "contenido": "Las celdas $(0,0,1,0)$ y $(1,0,1,0)$ forman un grupo: $\\bar{y}z\\bar{w}$.",
+                "formula": "\\text{Grupo 2: } \\bar{y}z\\bar{w} \\quad (m_2, m_{10})"
+              },
+              {
+                "titulo": "Grupo de 2 para $m_5$",
+                "contenido": "$m_5 = (0,1,0,1)$. Es adyacente a $m_1=(0,0,0,1)$ difiriendo en $y$. Grupo de 2: $\\bar{x}\\bar{z}w$.",
+                "formula": "\\text{Grupo 3: } \\bar{x}\\bar{z}w \\quad (m_1, m_5)"
+              },
+              {
+                "titulo": "Expresión minimizada",
+                "contenido": "Los implicantes primos esenciales son: $\\bar{y}\\bar{z}$, $\\bar{y}z\\bar{w}$, y $\\bar{x}\\bar{z}w$.",
+                "formula": "F = \\bar{y}\\bar{z} + \\bar{y}z\\bar{w} + \\bar{x}\\bar{z}w"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.7-ej-04",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "Karnaugh"
+          ],
+          "enunciado": "Una función booleana de 4 variables vale 1 cuando el número de variables que valen 1 es impar. Construya su mapa de Karnaugh y minimícela.",
+          "tips": [
+            {
+              "titulo": "Función XOR de 4 variables",
+              "contenido": "$F = x \\oplus y \\oplus z \\oplus w$. Vale 1 cuando hay 1 o 3 unos."
+            },
+            {
+              "titulo": "Minitérminos",
+              "contenido": "1 uno: filas con peso 1. 3 unos: filas con peso 3."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Minitérminos",
+                "contenido": "Peso 1: $m_1, m_2, m_4, m_8$. Peso 3: $m_7, m_{11}, m_{13}, m_{14}$.",
+                "formula": "F = \\sum m(1,2,4,7,8,11,13,14)"
+              },
+              {
+                "titulo": "Mapa de Karnaugh",
+                "contenido": "Distribuyendo en el mapa 4x4, se observa un patrón de ajedrez. No hay grupos de 4 posibles. Solo grupos de 2 dispersos.",
+                "formula": "\\text{Mapa con patrón de XOR  no simplifica más allá de pares}"
+              },
+              {
+                "titulo": "Minimización",
+                "contenido": "La función XOR de 4 variables no tiene simplificación significativa en suma de productos. La expresión minimal es la propia suma de los 8 minitérminos, o equivalentemente $x \\oplus y \\oplus z \\oplus w$.",
+                "formula": "F = x \\oplus y \\oplus z \\oplus w"
+              },
+              {
+                "titulo": "Observación",
+                "contenido": "Esta función es 'anti-simétrica': no admite agrupación en Karnaugh porque no hay celdas adyacentes con 1 que difieran en una sola variable.",
+                "formula": "\\text{No hay implicantes primos de tamaño > 1}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.7-ej-05",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "funcionalmente-completo"
+          ],
+          "enunciado": "Exprese $F(x,y,z) = x \\oplus y \\oplus z$ (XOR de tres variables) usando solo operadores NAND ($\\uparrow$).",
+          "tips": [
+            {
+              "titulo": "XOR en términos de AND, OR, NOT",
+              "contenido": "$x \\oplus y = x\\bar{y} + \\bar{x}y$. Luego $x \\oplus y \\oplus z = (x \\oplus y)\\bar{z} + \\overline{(x \\oplus y)}z$."
+            },
+            {
+              "titulo": "Convertir cada operación a NAND",
+              "contenido": "Use: $\\bar{a} = a \\uparrow a$, $a \\cdot b = (a \\uparrow b) \\uparrow (a \\uparrow b)$, $a + b = (a \\uparrow a) \\uparrow (b \\uparrow b)$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "XOR de dos variables",
+                "contenido": "$x \\oplus y = x\\bar{y} + \\bar{x}y$.",
+                "formula": "x \\oplus y = x\\bar{y} + \\bar{x}y"
+              },
+              {
+                "titulo": "NOT con NAND",
+                "contenido": "$\\bar{x} = x \\uparrow x$, $\\bar{y} = y \\uparrow y$.",
+                "formula": "\\bar{x} = x \\uparrow x, \\quad \\bar{y} = y \\uparrow y"
+              },
+              {
+                "titulo": "AND con NAND",
+                "contenido": "$x \\cdot \\bar{y} = (x \\uparrow \\bar{y}) \\uparrow (x \\uparrow \\bar{y}) = (x \\uparrow (y \\uparrow y)) \\uparrow (x \\uparrow (y \\uparrow y))$.",
+                "formula": "x \\cdot \\bar{y} = (x \\uparrow (y \\uparrow y)) \\uparrow (x \\uparrow (y \\uparrow y))"
+              },
+              {
+                "titulo": "OR con NAND",
+                "contenido": "$x\\bar{y} + \\bar{x}y = ((x\\bar{y}) \\uparrow (x\\bar{y})) \\uparrow ((\\bar{x}y) \\uparrow (\\bar{x}y))$... mejor: $A + B = (A \\uparrow A) \\uparrow (B \\uparrow B)$.",
+                "formula": "A + B = (A \\uparrow A) \\uparrow (B \\uparrow B)"
+              },
+              {
+                "titulo": "XOR de tres variables",
+                "contenido": "$x \\oplus y \\oplus z = (x \\oplus y) \\oplus z$. Primero calcule $w = x \\oplus y$ con NAND, luego $w \\oplus z$.",
+                "formula": "x \\oplus y \\oplus z = \\text{expresión extensa con solo } \\uparrow"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.7-ej-06",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "funcionalmente-completo"
+          ],
+          "enunciado": "Demuestre que {OR, XOR} NO es funcionalmente completo. (Pista: considere la función constante 0).",
+          "tips": [
+            {
+              "titulo": "Propiedad de preservación",
+              "contenido": "Muestre que cualquier función construida con OR y XOR, evaluada en $(0,0,\\dots,0)$, da 0."
+            },
+            {
+              "titulo": "Función constante 1",
+              "contenido": "La función constante 1 no puede expresarse, pues OR y XOR dan 0 cuando todas las entradas son 0."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Caso base",
+                "contenido": "Las variables $x_i$ satisfacen $x_i(0,\\dots,0) = 0$.",
+                "formula": "x_i(0,\\dots,0) = 0"
+              },
+              {
+                "titulo": "Inducción",
+                "contenido": "Si $f$ y $g$ satisfacen $f(0,\\dots,0) = g(0,\\dots,0) = 0$, entonces: $(f \\text{ OR } g)(0,\\dots,0) = 0 \\text{ OR } 0 = 0$, y $(f \\text{ XOR } g)(0,\\dots,0) = 0 \\text{ XOR } 0 = 0$.",
+                "formula": "(f + g)(0) = 0, \\quad (f \\oplus g)(0) = 0"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Toda función construida con OR y XOR evalúa a 0 en $(0,\\dots,0)$. Por tanto, la función constante 1 (que evalúa a 1) no puede expresarse.",
+                "formula": "\\{+, \\oplus\\} \\text{ NO es funcionalmente completo} \\quad \\checkmark"
+              }
+            ]
+          }
+        },
+        {
+          "id": "3.7-ej-07",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "Peirce",
+            "funcionalmente-completo"
+          ],
+          "enunciado": "Exprese la función $F(x,y,z,w)$ que vale 1 si y sólo si un número impar de variables entre $x,y,z,w$ toman el valor de 1 (del Ejercicio 3.4 de la guía) usando solo operadores NOR ($\\downarrow$).",
+          "tips": [
+            {
+              "titulo": "FND ya conocida",
+              "contenido": "Del ejercicio 3.4: $F = \\sum$ de 8 minitérminos con peso 1 o 3."
+            },
+            {
+              "titulo": "Convertir a NOR",
+              "contenido": "$\\bar{x} = x \\downarrow x$, $x + y = (x \\downarrow y) \\downarrow (x \\downarrow y)$, $x \\cdot y = (x \\downarrow x) \\downarrow (y \\downarrow y)$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Expresión base",
+                "contenido": "$F = x \\oplus y \\oplus z \\oplus w$ (XOR de 4 variables).",
+                "formula": "F = x \\oplus y \\oplus z \\oplus w"
+              },
+              {
+                "titulo": "XOR en términos básicos",
+                "contenido": "$x \\oplus y = x\\bar{y} + \\bar{x}y$. Expresamos esto con NOR:",
+                "formula": "x \\oplus y = \\text{(expresión con solo } \\downarrow \\text{)}"
+              },
+              {
+                "titulo": "Procedimiento sistemático",
+                "contenido": "1. Escribir $F$ en FND (8 minitérminos). 2. Convertir cada complemento: $\\bar{x_i} = x_i \\downarrow x_i$. 3. Convertir cada producto (AND) de 4 literales. 4. Convertir la suma (OR) de los 8 términos. La expresión final es muy extensa pero demuestra la completitud funcional de NOR.",
+                "formula": "F = \\text{expresión extensa usando solo } \\downarrow"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

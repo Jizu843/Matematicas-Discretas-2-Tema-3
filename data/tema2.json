@@ -1,0 +1,1204 @@
+{
+  "tema_id": "tema2",
+  "titulo": "Reticulados",
+  "descripcion": "Definición formal de reticulado como orden parcial donde todo par de elementos tiene ínfimo y supremo. Propiedades algebraicas, reticulados distributivos y no distributivos, construcción de un reticulado a partir de axiomas algebraicos, subreticulados, elementos irreducibles, átomos y aplicaciones.",
+  "subtemas": [
+    {
+      "subtema_id": "2.1",
+      "titulo": "Definición de reticulado y primeros resultados",
+      "teoria": {
+        "introduccion": "Un reticulado es la estructura de orden más rica que estudiaremos. No basta con que existan cotas: exigimos que cada par de elementos tenga una mayor cota inferior (ínfimo) y una menor cota superior (supremo) bien definidas. Además, estudiaremos elementos especiales como átomos e irreducibles que caracterizan la estructura del reticulado.",
+        "definiciones": [
+          {
+            "nombre": "Reticulado",
+            "contenido": "Sea $[L, \\leq]$ un orden parcial. Se dice que $[L, \\leq]$ es un reticulado si para todo par de elementos $x, y \\in L$ existen: (a) $\\inf\\{x,y\\} = x \\wedge y$ (ínfimo o meet), y (b) $\\sup\\{x,y\\} = x \\vee y$ (supremo o join).",
+            "nota": "De manera resumida: un reticulado es un orden parcial en el cual todo par de elementos tiene ínfimo y supremo. Por tanto, $\\vee$ y $\\wedge$ son operaciones binarias sobre $L$."
+          },
+          {
+            "nombre": "Relación de cobertura",
+            "contenido": "En un orden parcial $[L, \\leq]$, se dice que $y$ cubre a $x$ (o $x$ es cubierto por $y$), denotado $x \\prec y$, si $x \\leq y$, $x \\neq y$, y no existe $z \\in L$ tal que $x \\leq z \\leq y$ con $z \\neq x$ y $z \\neq y$.",
+            "nota": "El diagrama de Hasse solo dibuja las aristas de cobertura. Es fundamental para visualizar reticulados."
+          },
+          {
+            "nombre": "Elemento irreducible",
+            "contenido": "Un elemento $x \\in L$ es join-irreducible (irreducible por join) si $x = a \\vee b$ implica $x = a$ o $x = b$. Es decir, no puede expresarse como supremo de dos elementos estrictamente menores. Análogamente, $x$ es meet-irreducible si $x = a \\wedge b$ implica $x = a$ o $x = b$.",
+            "nota": "En un reticulado finito, los join-irreducibles son exactamente los elementos que cubren exactamente un elemento."
+          },
+          {
+            "nombre": "Átomo",
+            "contenido": "En un reticulado acotado con mínimo $0$, un átomo es un elemento $a \\in L$ tal que $0 \\prec a$ (es decir, $a$ cubre al mínimo).",
+            "nota": "Los átomos son los join-irreducibles minimales (distintos de 0). Son fundamentales en álgebras de Boole."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 2.1 — $[\\mathcal{P}(S), \\subseteq]$ es un reticulado",
+            "descripcion": "Sea $S$ un conjunto cualquiera. En $[\\mathcal{P}(S), \\subseteq]$ se tiene para todo par $A, B \\in \\mathcal{P}(S)$:",
+            "items": [
+              "$A \\vee B = A \\cup B$ (supremo).",
+              "$A \\wedge B = A \\cap B$ (ínfimo)."
+            ],
+            "observacion": "La demostración consiste en verificar que $A \\cup B$ es la menor cota superior y $A \\cap B$ la mayor cota inferior, usando propiedades de teoría de conjuntos."
+          },
+          {
+            "titulo": "Ejemplo 2.2 — $[\\mathbb{Z}^+, \\mid]$ es un reticulado",
+            "descripcion": "En el orden por divisibilidad, para cualesquiera $a, b \\in \\mathbb{Z}^+$:",
+            "items": [
+              "$a \\wedge b = \\gcd(a,b)$ (máximo común divisor).",
+              "$a \\vee b = \\operatorname{mcm}(a,b)$ (mínimo común múltiplo)."
+            ],
+            "observacion": "Como todo par de enteros positivos tiene $\\gcd$ y $\\operatorname{mcm}$, este orden siempre tiene ínfimo y supremo."
+          },
+          {
+            "titulo": "Ejemplo 2.3 — Átomos en $[\\mathcal{P}(\\{1,2,3\\}), \\subseteq]$",
+            "descripcion": "El mínimo es $\\emptyset$. Los átomos son los conjuntos que cubren a $\\emptyset$:",
+            "items": [
+              "$\\{1\\}, \\{2\\}, \\{3\\}$ son átomos.",
+              "$\\{1,2\\}$ no es átomo porque $\\emptyset \\subset \\{1\\} \\subset \\{1,2\\}$."
+            ],
+            "observacion": "En este reticulado, los átomos son exactamente los singletons."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Lema 2.1 — Propiedad de cotas y supremo/ínfimo",
+            "contenido": "Sea $[L, \\leq]$ un reticulado y sean $x, y, z \\in L$. Si $x \\leq z$ e $y \\leq z$, entonces $x \\vee y \\leq z$. Si $z \\leq x$ y $z \\leq y$, entonces $z \\leq x \\wedge y$.",
+            "esquema_demostracion": "Si $x \\leq z$ e $y \\leq z$, entonces $z$ es una cota superior del conjunto $\\{x,y\\}$. Como $x \\vee y$ es la menor cota superior, $x \\vee y \\leq z$. Análogo para el ínfimo."
+          },
+          {
+            "nombre": "Lema 2.2 — Equivalencias en reticulados",
+            "contenido": "Sea $[L, \\preceq]$ un reticulado y sean $x, z \\in L$. Las siguientes proposiciones son equivalentes: (1) $z \\preceq x$, (2) $x \\wedge z = z$, (3) $x \\vee z = x$.",
+            "esquema_demostracion": "Se demuestra $(1) \\Rightarrow (2) \\Rightarrow (3) \\Rightarrow (1)$ usando las definiciones de ínfimo y supremo como mayor cota inferior y menor cota superior respectivamente, junto con la antisimetría del orden."
+          }
+        ],
+        "nota_previa": "Observa que en un reticulado las operaciones $\\wedge$ y $\\vee$ no son independientes: están ligadas por la relación de orden. Este lema 2.2 será fundamental para construir un orden a partir de operaciones algebraicas más adelante."
+      },
+      "ejercicios": [
+        {
+          "id": "2.1-ej-01",
+          "nivel": 1,
+          "etiquetas": ["teoria", "ejercicio"],
+          "enunciado": "Sea $[L, \\leq]$ un reticulado y sean $x, y, z \\in L$. Demuestre que si $x \\leq z$ e $y \\leq z$, entonces $x \\vee y \\leq z$.",
+          "tips": [
+            {
+              "titulo": "¿Qué significa $x \\vee y$?",
+              "contenido": "Recuerda que $x \\vee y$ es la menor cota superior del conjunto $\\{x,y\\}$. Si encuentras otra cota superior, el supremo debe ser menor o igual que ella."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Identificar cotas superiores",
+                "contenido": "Por hipótesis, $x \\leq z$ e $y \\leq z$. Esto significa que $z$ es una cota superior del conjunto $\\{x, y\\}$.",
+                "formula": "x \\leq z \\quad \\text{y} \\quad y \\leq z \\implies z \\in C_S(\\{x,y\\})"
+              },
+              {
+                "titulo": "Aplicar definición de supremo",
+                "contenido": "Por definición, $x \\vee y = \\sup\\{x,y\\}$ es la menor de las cotas superiores. Como $z$ es una cota superior, el supremo debe precederla.",
+                "formula": "x \\vee y = \\sup\\{x,y\\} \\leq z"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.1-ej-02",
+          "nivel": 2,
+          "etiquetas": ["ejercicio"],
+          "enunciado": "Demuestre el Lema 2.2: en un reticulado $[L, \\preceq]$, $z \\preceq x \\iff x \\wedge z = z \\iff x \\vee z = x$.",
+          "tips": [
+            {
+              "titulo": "Estrategia: ciclo de implicaciones",
+              "contenido": "Demuestra $(1) \\Rightarrow (2) \\Rightarrow (3) \\Rightarrow (1)$. Para cada paso, usa la definición de ínfimo o supremo."
+            },
+            {
+              "titulo": "Paso $(1) \\Rightarrow (2)$",
+              "contenido": "Si $z \\preceq x$, entonces $z$ es cota inferior de $\\{x,z\\}$. Como $x \\wedge z$ es la mayor cota inferior..."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$(1) \\Rightarrow (2)$: $z \\preceq x \\implies x \\wedge z = z$",
+                "contenido": "Como $z \\preceq x$ y $z \\preceq z$ (reflexividad), $z$ es cota inferior de $\\{x,z\\}$. Como $x \\wedge z$ es la mayor cota inferior, $z \\preceq x \\wedge z$. Además, $x \\wedge z \\preceq z$ por definición de ínfimo. Por antisimetría, $x \\wedge z = z$.",
+                "formula": "z \\preceq x \\wedge z \\preceq z \\implies x \\wedge z = z"
+              },
+              {
+                "titulo": "$(2) \\Rightarrow (3)$: $x \\wedge z = z \\implies x \\vee z = x$",
+                "contenido": "Sabemos $x \\preceq x \\vee z$ y $z = x \\wedge z \\preceq x$. Como $x \\preceq x$ y $z \\preceq x$, entonces $x$ es cota superior de $\\{x,z\\}$. Como $x \\vee z$ es la menor cota superior, $x \\vee z \\preceq x$. Con $x \\preceq x \\vee z$, por antisimetría $x \\vee z = x$.",
+                "formula": "x \\preceq x \\vee z \\preceq x \\implies x \\vee z = x"
+              },
+              {
+                "titulo": "$(3) \\Rightarrow (1)$: $x \\vee z = x \\implies z \\preceq x$",
+                "contenido": "Si $x = x \\vee z$, entonces $x$ es cota superior de $\\{x,z\\}$. En particular, $z \\preceq x$.",
+                "formula": "x = x \\vee z \\implies z \\preceq x"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.1-ej-03",
+          "nivel": 2,
+          "etiquetas": ["ejercicio"],
+          "enunciado": "Sea $L$ el conjunto de todas las proposiciones lógicas y sea $P \\preceq Q$ si $P \\implies Q$. Demuestre que $[L, \\preceq]$ es un orden parcial y determine si es un reticulado.",
+          "tips": [
+            {
+              "titulo": "Orden parcial",
+              "contenido": "Verifica reflexividad ($P \\implies P$), antisimetría (si $P \\implies Q$ y $Q \\implies P$ entonces $P \\equiv Q$) y transitividad."
+            },
+            {
+              "titulo": "Ínfimo y supremo de proposiciones",
+              "contenido": "¿Qué operador lógico actúa como 'máximo' entre dos proposiciones? ¿Y como 'mínimo'?"
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Orden parcial",
+                "contenido": "Reflexividad: $P \\implies P$ es tautología. Antisimetría: si $P \\implies Q$ y $Q \\implies P$, entonces $P \\equiv Q$ (misma tabla de verdad). Transitividad: si $P \\implies Q$ y $Q \\implies R$, entonces $P \\implies R$. Por tanto, es orden parcial.",
+                "formula": "[L, \\preceq] \\text{ es orden parcial}"
+              },
+              {
+                "titulo": "Ínfimo y supremo",
+                "contenido": "El ínfimo de $\\{P,Q\\}$ es la proposición más fuerte que implica tanto a $P$ como a $Q$: la conjunción $P \\wedge Q$. El supremo es la proposición más débil que es implicada por ambas: la disyunción $P \\vee Q$.",
+                "formula": "\\inf\\{P,Q\\} = P \\wedge Q \\quad \\text{y} \\quad \\sup\\{P,Q\\} = P \\vee Q"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Como todo par de proposiciones tiene ínfimo (conjunción) y supremo (disyunción), $[L, \\preceq]$ es un reticulado. El mínimo es la contradicción ($F$) y el máximo la tautología ($V$).",
+                "formula": "[L, \\preceq] \\text{ es un reticulado}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.1-ej-04",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Demuestre que en $[\\mathcal{P}(S), \\subseteq]$, $A \\cup B = \\sup\\{A,B\\}$ y $A \\cap B = \\inf\\{A,B\\}$.",
+          "tips": [
+            {
+              "titulo": "Verifica las dos condiciones",
+              "contenido": "Para supremo: (1) $A \\cup B$ es cota superior, (2) es la menor cota superior."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$A \\cup B$ es cota superior",
+                "contenido": "$A \\subseteq A \\cup B$ y $B \\subseteq A \\cup B$ por definición de unión. Por tanto, $A \\cup B$ es cota superior de $\\{A,B\\}$.",
+                "formula": "A \\subseteq A \\cup B \\quad \\text{y} \\quad B \\subseteq A \\cup B"
+              },
+              {
+                "titulo": "$A \\cup B$ es la menor cota superior",
+                "contenido": "Sea $C$ una cota superior de $\\{A,B\\}$. Entonces $A \\subseteq C$ y $B \\subseteq C$. Si $x \\in A \\cup B$, entonces $x \\in A$ o $x \\in B$, luego $x \\in C$. Por tanto, $A \\cup B \\subseteq C$.",
+                "formula": "A \\subseteq C \\wedge B \\subseteq C \\implies A \\cup B \\subseteq C"
+              },
+              {
+                "titulo": "$A \\cap B$ es cota inferior",
+                "contenido": "$A \\cap B \\subseteq A$ y $A \\cap B \\subseteq B$ por definición de intersección.",
+                "formula": "A \\cap B \\subseteq A \\quad \\text{y} \\quad A \\cap B \\subseteq B"
+              },
+              {
+                "titulo": "$A \\cap B$ es la mayor cota inferior",
+                "contenido": "Sea $D$ una cota inferior de $\\{A,B\\}$. Entonces $D \\subseteq A$ y $D \\subseteq B$. Si $x \\in D$, entonces $x \\in A$ y $x \\in B$, luego $x \\in A \\cap B$. Por tanto, $D \\subseteq A \\cap B$.",
+                "formula": "D \\subseteq A \\wedge D \\subseteq B \\implies D \\subseteq A \\cap B"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.1-ej-05",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Sea $D_{30} = \\{1, 2, 3, 5, 6, 10, 15, 30\\}$ con el orden de divisibilidad. Dibuje el diagrama de Hasse, identifique los átomos y los elementos join-irreducibles.",
+          "tips": [
+            {
+              "titulo": "Factorización",
+              "contenido": "$30 = 2 \\cdot 3 \\cdot 5$. Los divisores se forman con combinaciones de estos primos."
+            },
+            {
+              "titulo": "Átomos",
+              "contenido": "Los átomos son los elementos que cubren a 1 (los números primos que dividen a 30)."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Diagrama de Hasse",
+                "contenido": "Nivel 0: 1. Nivel 1: 2, 3, 5 (primos). Nivel 2: 6, 10, 15 (productos de dos primos). Nivel 3: 30. Aristas: 1-2, 1-3, 1-5; 2-6, 3-6; 2-10, 5-10; 3-15, 5-15; 6-30, 10-30, 15-30.",
+                "formula": "\\text{Hasse: } 1 \\to \\{2,3,5\\} \\to \\{6,10,15\\} \\to 30"
+              },
+              {
+                "titulo": "Átomos",
+                "contenido": "Los átomos son los elementos que cubren a 1: 2, 3 y 5.",
+                "formula": "\\text{Átomos} = \\{2, 3, 5\\}"
+              },
+              {
+                "titulo": "Join-irreducibles",
+                "contenido": "Un elemento es join-irreducible si cubre exactamente un elemento. 2, 3, 5 cubren solo a 1. 6 cubre a 2 y 3 (dos elementos), así que 6 = 2 \\vee 3 no es join-irreducible. Análogamente 10 = 2 \\vee 5 y 15 = 3 \\vee 5. El 30 cubre a tres elementos.",
+                "formula": "\\text{Join-irreducibles} = \\{2, 3, 5, 30\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.1-ej-06",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Demuestre que en un reticulado finito $[L, \\leq]$, todo elemento distinto del mínimo puede expresarse como supremo de átomos si y solo si el reticulado es atómico (todo elemento contiene un átomo).",
+          "tips": [
+            {
+              "titulo": "Inducción",
+              "contenido": "Usa inducción sobre la longitud de la cadena desde el mínimo hasta el elemento."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "($\\Rightarrow$) Si todo elemento es supremo de átomos",
+                "contenido": "Sea $x \\neq 0$. Si $x = a_1 \\vee \\dots \\vee a_k$ con $a_i$ átomos, entonces $a_1 \\leq x$, así que $x$ contiene un átomo."
+              },
+              {
+                "titulo": "($\\Leftarrow$) Si todo elemento contiene un átomo",
+                "contenido": "Sea $x \\neq 0$. Como $L$ es finito, existe una cadena maximal $0 = x_0 \\prec x_1 \\prec \\dots \\prec x_n = x$. Entonces $x_1$ es un átomo $a_1 \\leq x$. Si $x = a_1$, listo. Si no, considera $x' = x \\wedge \\bar{a_1}$ (complemento relativo) y repite. Como $L$ es finito, el proceso termina y $x = a_1 \\vee \\dots \\vee a_k$."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "2.2",
+      "titulo": "Propiedades algebraicas del reticulado",
+      "teoria": {
+        "introduccion": "Las operaciones $\\wedge$ y $\\vee$ de un reticulado satisfacen un conjunto notable de propiedades algebraicas. Algunas son universales (idempotencia, asociatividad, conmutatividad, absorción), pero la distributividad no lo es: existen reticulados distributivos y no distributivos. Estudiaremos los contraejemplos canónicos y el teorema de caracterización.",
+        "definiciones": [
+          {
+            "nombre": "Propiedades universales de $\\wedge$ y $\\vee$",
+            "contenido": "En cualquier reticulado $[L, \\leq]$, para todo $x, y, z \\in L$ se cumplen: (1) Idempotencia: $x \\vee x = x$ y $x \\wedge x = x$; (2) Asociativa: $(x \\vee y) \\vee z = x \\vee (y \\vee z)$ y $(x \\wedge y) \\wedge z = x \\wedge (y \\wedge z)$; (3) Conmutativa: $x \\vee y = y \\vee x$ y $x \\wedge y = y \\wedge x$; (4) Absorción: $x \\vee (x \\wedge y) = x$ y $x \\wedge (x \\vee y) = x$.",
+            "nota": "Estas cuatro propiedades caracterizan completamente a los reticulados (Teorema 2.3)."
+          },
+          {
+            "nombre": "Propiedad semidistributiva",
+            "contenido": "En cualquier reticulado se cumple: (1) $(x \\wedge y) \\vee (x \\wedge z) \\preceq x \\wedge (y \\vee z)$; (2) $x \\vee (y \\wedge z) \\preceq (x \\vee y) \\wedge (x \\vee z)$."
+          },
+          {
+            "nombre": "Reticulado distributivo",
+            "contenido": "Un reticulado es distributivo si cumple las leyes distributivas: $x \\wedge (y \\vee z) = (x \\wedge y) \\vee (x \\wedge z)$ y $x \\vee (y \\wedge z) = (x \\vee y) \\wedge (x \\vee z)$.",
+            "nota": "Basta con que se cumpla una de las dos leyes; la otra se deduce por dualidad."
+          },
+          {
+            "nombre": "Subreticulado",
+            "contenido": "Sea $[L, \\wedge, \\vee]$ un reticulado. Un subconjunto $S \\subseteq L$ es un subreticulado si $S$ es cerrado bajo $\\wedge$ y $\\vee$ (es decir, para todo $x, y \\in S$: $x \\wedge y \\in S$ y $x \\vee y \\in S$).",
+            "nota": "Un subreticulado hereda las operaciones del reticulado original."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo — $[\\mathcal{P}(S), \\subseteq]$ es distributivo",
+            "descripcion": "Las operaciones $\\cup$ y $\\cap$ satisfacen las leyes distributivas de conjuntos. Por tanto, $[\\mathcal{P}(S), \\subseteq]$ es un reticulado distributivo.",
+            "items": [],
+            "observacion": "Este es el ejemplo canónico de reticulado distributivo."
+          },
+          {
+            "titulo": "Ejemplo — Reticulado $N_5$ (no distributivo)",
+            "descripcion": "El siguiente diagrama de Hasse representa el reticulado pentagonal $N_5$, el ejemplo mínimo de reticulado no distributivo.",
+            "items": [
+              "Nodos: $\\{0, a, b, c, 1\\}$ con $0$ mínimo y $1$ máximo.",
+              "$a \\wedge (b \\vee c) = a \\wedge 1 = a$, pero $(a \\wedge b) \\vee (a \\wedge c) = 0 \\vee 0 = 0$.",
+              "Como $a \\neq 0$, la distributividad falla."
+            ],
+            "diagrama": {
+              "tipo": "hasse",
+              "nodos": [
+                {"id": "1", "etiqueta": "1", "nivel": 0},
+                {"id": "a", "etiqueta": "a", "nivel": 1},
+                {"id": "c", "etiqueta": "c", "nivel": 1},
+                {"id": "b", "etiqueta": "b", "nivel": 2},
+                {"id": "0", "etiqueta": "0", "nivel": 3}
+              ],
+              "aristas": [
+                ["1", "a"], ["1", "c"], ["a", "b"], ["c", "b"], ["b", "0"]
+              ],
+              "destacados": ["a", "b", "c"]
+            },
+            "observacion": "$N_5$ tiene 5 elementos y es el reticulado no distributivo más pequeño posible."
+          },
+          {
+            "titulo": "Ejemplo — Reticulado $M_3$ (diamante, no distributivo)",
+            "descripcion": "El reticulado $M_3$ (también llamado diamante) tiene 5 elementos: $\\{0, a, b, c, 1\\}$ donde $a, b, c$ son incomparables entre sí, pero todos comparables con 0 y 1.",
+            "items": [
+              "$a \\wedge (b \\vee c) = a \\wedge 1 = a$, pero $(a \\wedge b) \\vee (a \\wedge c) = 0 \\vee 0 = 0$.",
+              "Como $a \\neq 0$, no es distributivo."
+            ],
+            "observacion": "$M_3$ es el otro reticulado no distributivo mínimo (junto con $N_5$)."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Teorema 2.1 — Propiedades del reticulado",
+            "contenido": "Sea $[L, \\leq]$ un reticulado. Las operaciones $\\wedge$ y $\\vee$ satisfacen idempotencia, asociatividad, conmutatividad y absorción para todo $x, y, z \\in L$.",
+            "esquema_demostracion": "Cada propiedad se demuestra usando las definiciones de ínfimo y supremo como mayor/menor cota. Por ejemplo, para idempotencia: $x \\vee x$ es la menor cota superior de $\\{x\\}$, que es $x$ misma."
+          },
+          {
+            "nombre": "Teorema 2.2 — Semidistributividad",
+            "contenido": "En cualquier reticulado: $(x \\wedge y) \\vee (x \\wedge z) \\preceq x \\wedge (y \\vee z)$ y $x \\vee (y \\wedge z) \\preceq (x \\vee y) \\wedge (x \\vee z)$.",
+            "esquema_demostracion": "Para la primera desigualdad: $x \\wedge y \\preceq x$ y $x \\wedge y \\preceq y \\preceq y \\vee z$. Entonces $x \\wedge y$ es cota inferior de $\\{x, y \\vee z\\}$, luego $x \\wedge y \\preceq x \\wedge (y \\vee z)$. Análogo para $x \\wedge z$. Como ambos preceden al ínfimo, su supremo también."
+          },
+          {
+            "nombre": "Teorema de Birkhoff (caracterización de distributivos)",
+            "contenido": "Un reticulado es distributivo si y solo si no contiene subreticulados isomorfos a $N_5$ ni a $M_3$.",
+            "esquema_demostracion": "Este es un teorema profundo de la teoría de reticulados. La idea es que $N_5$ y $M_3$ son los 'obstáculos' mínimos para la distributividad."
+          }
+        ],
+        "nota_previa": "Observa que las leyes distributivas no aparecen en el Teorema 2.1. Esto no es un olvido: existen reticulados donde $x \\wedge (y \\vee z) \\neq (x \\wedge y) \\vee (x \\wedge z)$. La semidistributividad del Teorema 2.2 es lo más cercano que podemos garantizar universalmente."
+      },
+      "ejercicios": [
+        {
+          "id": "2.2-ej-01",
+          "nivel": 2,
+          "etiquetas": ["ejercicio"],
+          "enunciado": "Demuestre la propiedad de absorción en un reticulado: $x \\vee (x \\wedge y) = x$.",
+          "tips": [
+            {
+              "titulo": "Dos desigualdades",
+              "contenido": "Para demostrar igualdad en un orden parcial, demuestra $x \\vee (x \\wedge y) \\preceq x$ y $x \\preceq x \\vee (x \\wedge y)$."
+            },
+            {
+              "titulo": "Primera desigualdad",
+              "contenido": "$x \\preceq x$ por reflexividad. Además, $x \\wedge y \\preceq x$ por definición de ínfimo. Entonces $x$ es cota superior de $\\{x, x \\wedge y\\}$..."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$x \\vee (x \\wedge y) \\preceq x$",
+                "contenido": "Sabemos $x \\preceq x$ (reflexividad) y $x \\wedge y \\preceq x$ (definición de ínfimo). Por tanto, $x$ es cota superior de $\\{x, x \\wedge y\\}$. Como $x \\vee (x \\wedge y)$ es la menor cota superior, se tiene $x \\vee (x \\wedge y) \\preceq x$.",
+                "formula": "x \\preceq x \\quad \\text{y} \\quad x \\wedge y \\preceq x \\implies x \\vee (x \\wedge y) \\preceq x"
+              },
+              {
+                "titulo": "$x \\preceq x \\vee (x \\wedge y)$",
+                "contenido": "Por definición de supremo, $x \\preceq x \\vee (x \\wedge y)$ ya que el supremo es cota superior del conjunto.",
+                "formula": "x \\preceq x \\vee (x \\wedge y)"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Por antisimetría del orden, $x \\vee (x \\wedge y) = x$.",
+                "formula": "x \\vee (x \\wedge y) = x"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.2-ej-02",
+          "nivel": 3,
+          "etiquetas": ["ejercicio"],
+          "enunciado": "Demuestre la desigualdad 2 del Teorema 2.2: $x \\vee (y \\wedge z) \\preceq (x \\vee y) \\wedge (x \\vee z)$.",
+          "tips": [
+            {
+              "titulo": "Estrategia similar a la desigualdad 1",
+              "contenido": "Demuestra que $x \\vee (y \\wedge z)$ es cota inferior de $\\{x \\vee y, x \\vee z\\}$."
+            },
+            {
+              "titulo": "Verifica las dos condiciones",
+              "contenido": "Necesitas $x \\vee (y \\wedge z) \\preceq x \\vee y$ y $x \\vee (y \\wedge z) \\preceq x \\vee z$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$x \\preceq x \\vee y$ y $y \\wedge z \\preceq y \\preceq x \\vee y$",
+                "contenido": "Como $x \\preceq x \\vee y$ y $y \\wedge z \\preceq y \\preceq x \\vee y$, ambos $x$ e $y \\wedge z$ preceden a $x \\vee y$. Por tanto, $x \\vee y$ es cota superior de $\\{x, y \\wedge z\\}$, y como el supremo es la menor cota superior: $x \\vee (y \\wedge z) \\preceq x \\vee y$.",
+                "formula": "x \\vee (y \\wedge z) \\preceq x \\vee y"
+              },
+              {
+                "titulo": "Análogo para $x \\vee z$",
+                "contenido": "De forma idéntica, $x \\preceq x \\vee z$ y $y \\wedge z \\preceq z \\preceq x \\vee z$. Entonces $x \\vee (y \\wedge z) \\preceq x \\vee z$.",
+                "formula": "x \\vee (y \\wedge z) \\preceq x \\vee z"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Como $x \\vee (y \\wedge z)$ precede tanto a $x \\vee y$ como a $x \\vee z$, es cota inferior de $\\{x \\vee y, x \\vee z\\}$. Por definición de ínfimo, precede a $(x \\vee y) \\wedge (x \\vee z)$.",
+                "formula": "x \\vee (y \\wedge z) \\preceq (x \\vee y) \\wedge (x \\vee z)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.2-ej-03",
+          "nivel": 3,
+          "etiquetas": ["ejercicio"],
+          "enunciado": "Sea $D_{12} = \\{1, 2, 3, 4, 6, 12\\}$ con el orden de divisibilidad $\\mid$. Dibuje el diagrama de Hasse y determine si $[D_{12}, \\mid]$ es un reticulado distributivo.",
+          "tips": [
+            {
+              "titulo": "Diagrama de Hasse",
+              "contenido": "El 1 va abajo, el 12 arriba. Conecta cada número con sus divisores inmediatos (cubiertos)."
+            },
+            {
+              "titulo": "Verificar distributividad",
+              "contenido": "Busca tres elementos donde $a \\wedge (b \\vee c) \\neq (a \\wedge b) \\vee (a \\wedge c)$. Prueba con $a=2, b=3, c=4$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Diagrama de Hasse",
+                "contenido": "El diagrama tiene 12 en la cima, 1 en la base. Los divisores primos son 2 y 3. El 4 está conectado solo con 2 (arriba) y 12 (arriba). El 6 está conectado con 2 y 3 (arriba) y con 12 (arriba).",
+                "formula": "\\text{Hasse: } 1 \\to \\{2,3\\} \\to \\{4,6\\} \\to 12"
+              },
+              {
+                "titulo": "Es reticulado",
+                "contenido": "Todo par de elementos tiene $\\gcd$ e $\\operatorname{mcm}$ en $D_{12}$, así que sí es reticulado."
+              },
+              {
+                "titulo": "No es distributivo",
+                "contenido": "Tomemos $a=2, b=3, c=4$. Entonces: $b \\vee c = \\operatorname{mcm}(3,4) = 12$, y $a \\wedge (b \\vee c) = \\gcd(2,12) = 2$. Por otro lado: $a \\wedge b = \\gcd(2,3) = 1$, $a \\wedge c = \\gcd(2,4) = 2$, y $(a \\wedge b) \\vee (a \\wedge c) = \\operatorname{mcm}(1,2) = 2$. En este caso sí coinciden... probemos con $a=4, b=2, c=6$: $b \\vee c = \\operatorname{mcm}(2,6) = 6$, $a \\wedge (b \\vee c) = \\gcd(4,6) = 2$. $(a \\wedge b) \\vee (a \\wedge c) = \\gcd(4,2) \\vee \\gcd(4,6) = 2 \\vee 2 = 2$. Hmm, probemos $a=2, b=4, c=6$: $b \\vee c = 12$, $a \\wedge 12 = 2$. $(2 \\wedge 4) \\vee (2 \\wedge 6) = 2 \\vee 2 = 2$. En realidad $D_{12}$ sí es distributivo. El contraejemplo correcto requiere el reticulado $N_5$ del ejemplo."
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.2-ej-04",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Demuestre el Teorema 2.1: en cualquier reticulado, las operaciones $\\wedge$ y $\\vee$ satisfacen idempotencia, asociatividad, conmutatividad y absorción.",
+          "tips": [
+            {
+              "titulo": "Idempotencia",
+              "contenido": "$x \\vee x$ es la menor cota superior de $\\{x\\}$, que es $x$ misma."
+            },
+            {
+              "titulo": "Asociatividad",
+              "contenido": "Demuestra que $(x \\vee y) \\vee z$ y $x \\vee (y \\vee z)$ son ambos supremos de $\\{x, y, z\\}$. Por unicidad, coinciden."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Idempotencia",
+                "contenido": "$x \\vee x = \\sup\\{x\\} = x$ porque $x$ es la menor cota superior de $\\{x\\}$. Análogamente $x \\wedge x = x$.",
+                "formula": "x \\vee x = x \\quad \\text{y} \\quad x \\wedge x = x"
+              },
+              {
+                "titulo": "Asociatividad de $\\vee$",
+                "contenido": "$(x \\vee y) \\vee z$ es la menor cota superior de $\\{x \\vee y, z\\}$. Como $x \\vee y$ es cota superior de $\\{x,y\\}$, $(x \\vee y) \\vee z$ es cota superior de $\\{x,y,z\\}$. Es la menor porque si $u$ es cota superior de $\\{x,y,z\\}$, entonces $x \\vee y \\leq u$ y $z \\leq u$, luego $(x \\vee y) \\vee z \\leq u$. Análogo para $x \\vee (y \\vee z)$. Por unicidad del supremo, coinciden.",
+                "formula": "(x \\vee y) \\vee z = x \\vee (y \\vee z)"
+              },
+              {
+                "titulo": "Conmutatividad",
+                "contenido": "$x \\vee y = \\sup\\{x,y\\} = \\sup\\{y,x\\} = y \\vee x$. Análogo para $\\wedge$.",
+                "formula": "x \\vee y = y \\vee x \\quad \\text{y} \\quad x \\wedge y = y \\wedge x"
+              },
+              {
+                "titulo": "Absorción",
+                "contenido": "Ya demostrada en el ejercicio 2.2-ej-01: $x \\vee (x \\wedge y) = x$ y $x \\wedge (x \\vee y) = x$.",
+                "formula": "x \\vee (x \\wedge y) = x \\quad \\text{y} \\quad x \\wedge (x \\vee y) = x"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.2-ej-05",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Construya un reticulado no distributivo con exactamente 5 elementos que no sea isomorfo a $N_5$. Verifique que falla la distributividad.",
+          "tips": [
+            {
+              "titulo": "Piensa en $M_3$",
+              "contenido": "El reticulado diamante $M_3$ tiene 5 elementos y es no distributivo."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Definición de $M_3$",
+                "contenido": "Sea $M_3 = \\{0, a, b, c, 1\\}$ con $0 \\prec a, b, c \\prec 1$ y $a, b, c$ incomparables entre sí.",
+                "formula": "M_3 = \\{0, a, b, c, 1\\}"
+              },
+              {
+                "titulo": "Verificación de no distributividad",
+                "contenido": "$a \\wedge (b \\vee c) = a \\wedge 1 = a$. Pero $(a \\wedge b) \\vee (a \\wedge c) = 0 \\vee 0 = 0$. Como $a \\neq 0$, la distributividad falla.",
+                "formula": "a \\wedge (b \\vee c) = a \\neq 0 = (a \\wedge b) \\vee (a \\wedge c)"
+              },
+              {
+                "titulo": "No isomorfo a $N_5$",
+                "contenido": "En $N_5$ hay un elemento (b) que cubre exactamente un elemento y es cubierto por exactamente uno. En $M_3$, los elementos $a, b, c$ cubren a 0 y son cubiertos por 1. La estructura de cobertura es diferente, así que no son isomorfos.",
+                "formula": "M_3 \\not\\cong N_5"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.2-ej-06",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Sea $[L, \\leq]$ un reticulado. Demuestre que si $L$ es totalmente ordenado (cadena), entonces $L$ es distributivo.",
+          "tips": [
+            {
+              "titulo": "Orden total",
+              "contenido": "En una cadena, cualesquiera dos elementos son comparables."
+            },
+            {
+              "titulo": "Simplifica las operaciones",
+              "contenido": "En una cadena, $x \\wedge y = \\min\\{x,y\\}$ y $x \\vee y = \\max\\{x,y\\}$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Operaciones en cadena",
+                "contenido": "Como $L$ es totalmente ordenado, para cualesquiera $x, y$: o bien $x \\leq y$ o $y \\leq x$. Entonces $x \\wedge y = \\min\\{x,y\\}$ y $x \\vee y = \\max\\{x,y\\}$.",
+                "formula": "x \\wedge y = \\min\\{x,y\\} \\quad \\text{y} \\quad x \\vee y = \\max\\{x,y\\}"
+              },
+              {
+                "titulo": "Caso 1: $x \\leq y \\leq z$",
+                "contenido": "$x \\wedge (y \\vee z) = x \\wedge z = x$. $(x \\wedge y) \\vee (x \\wedge z) = x \\vee x = x$. Coinciden.",
+                "formula": "x \\wedge (y \\vee z) = x = (x \\wedge y) \\vee (x \\wedge z)"
+              },
+              {
+                "titulo": "Caso general",
+                "contenido": "Cualquier permutación de $x, y, z$ en una cadena cae en alguna de las 6 ordenaciones posibles. En cada una, se verifica directamente que $x \\wedge (y \\vee z) = (x \\wedge y) \\vee (x \\wedge z)$ por propiedades de min/max en números reales.",
+                "formula": "\\therefore \\quad L \\text{ es distributivo}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.2-ej-07",
+          "nivel": 4,
+          "etiquetas": ["ejercicio", "teorema_birkhoff", "avanzado", "nuevo"],
+          "enunciado": "Intuición del Teorema de Birkhoff: Demuestra que si un reticulado de 5 elementos no es distributivo, entonces FORZOSAMENTE es isomorfo a $N_5$ o a $M_3$. (Pista: Analiza qué pasa cuando $a \\wedge (b \\vee c) \\neq (a \\wedge b) \\vee (a \\wedge c)$).",
+          "tips": [
+            {
+              "titulo": "El fallo de la distributividad",
+              "contenido": "Si falla la distributividad, existen $a, b, c$ tales que $a \\wedge (b \\vee c) > (a \\wedge b) \\vee (a \\wedge c)$. Llama a estos 5 elementos clave: $0 = (a \\wedge b) \\vee (a \\wedge c)$, $1 = a \\vee (b \\wedge c)$, y los tres intermedios. ¿Puedes ordenarlos?"
+            },
+            {
+              "titulo": "Minimalidad",
+              "contenido": "Birkhoff demuestra que si tomas el subreticulado generado por estos 5 elementos, no puedes tener ninguna otra relación de orden entre ellos sin que la distributividad se 'arregle' mágicamente."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Paso 1: Identificar los 5 elementos",
+                "contenido": "Sea $x = a \\wedge (b \\vee c)$ y $y = (a \\wedge b) \\vee (a \\wedge c)$. Como no es distributivo, $y \\prec x$. Definimos los 5 elementos del subreticulado: $0 = y$, $1 = x$, y tres elementos intermedios derivados de $a, b, c$."
+              },
+              {
+                "titulo": "Paso 2: La estructura forzada",
+                "contenido": "Al aplicar las operaciones $\\vee$ y $\\wedge$ a estos 5 elementos, las leyes de absorción y semidistributividad 'obligan' a que el diagrama de Hasse resultante sea exactamente un pentágono ($N_5$) o un diamante ($M_3$). Cualquier arista extra que intentes dibujar colapsará la estructura y la hará distributiva."
+              },
+              {
+                "titulo": "Conclusión del Teorema",
+                "contenido": "Por lo tanto, $N_5$ y $M_3$ son los 'átomos de la no-distributividad'. Si tu reticulado es no distributivo, debe contener al menos uno de estos dos 'virus' en su estructura."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "2.3",
+      "titulo": "Reticulado a partir de un álgebra",
+      "teoria": {
+        "motivacion": "¿Por qué molestarse en definir un reticulado usando operaciones (+, .) si ya lo entendemos con órdenes (\\vee, \\wedge)? Porque las computadoras no pueden 'ver' diagramas de Hasse ni verificar cotas superiores infinitas. Las computadoras solo saben evaluar operaciones binarias. Este enfoque algebraico es el puente exacto para implementar reticulados en software y es la base de las puertas lógicas (AND/OR).",
+        "puente_conceptual": "Imagina que pasamos de la geometría (diagramas de Hasse) al álgebra pura (ecuaciones). El Teorema 2.3 nos garantiza que no perdemos información en la traducción: ambas visiones son la misma estructura matemática.",
+        "introduccion": "Hemos definido reticulados como órdenes parciales con ínfimo y supremo. Pero también es posible ir en dirección contraria: si tenemos un conjunto con dos operaciones que satisfacen ciertos axiomas algebraicos, podemos definir un orden que haga de ese conjunto un reticulado. Este enfoque algebraico es equivalente al ordenado y es fundamental para la teoría de álgebras de Boole.",
+        "definiciones": [
+          {
+            "nombre": "Teorema 2.3 — De álgebra a reticulado",
+            "contenido": "Sea $L \\neq \\emptyset$ con operaciones $+$ y $\\cdot$ que cumplen idempotencia, asociatividad, conmutatividad y absorción. Entonces existe una relación de orden $\\preceq$ tal que $x + y = x \\vee y$ y $x \\cdot y = x \\wedge y$.",
+            "nota": "Este teorema establece que los axiomas de reticulado pueden presentarse de forma puramente algebraica, sin mencionar el orden explícitamente."
+          },
+          {
+            "nombre": "Definición del orden",
+            "contenido": "El orden se define como: $x \\preceq y \\iff x + y = y$. Inspirado en el Lema 2.2 donde $x \\preceq y \\iff x \\vee y = y$.",
+            "nota": "Esta definición convierte a la operación $+$ en el supremo y a $\\cdot$ en el ínfimo."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Esquema de la demostración del Teorema 2.3",
+            "descripcion": "La prueba tiene tres partes principales:",
+            "items": [
+              "Definir $x \\preceq y \\iff x + y = y$.",
+              "Demostrar que $[L, \\preceq]$ es orden parcial (reflexiva, antisimétrica, transitiva).",
+              "Demostrar que $x + y = \\sup\\{x,y\\}$ y $x \\cdot y = \\inf\\{x,y\\}$."
+            ],
+            "observacion": "La clave está en usar las cuatro propiedades algebraicas para construir cada parte del orden."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Reflexividad de $\\preceq$",
+            "contenido": "$x = x + x$ (idempotencia de $+$) $\\implies x \\preceq x$.",
+            "esquema_demostracion": "Directo de la idempotencia."
+          },
+          {
+            "nombre": "Antisimetría de $\\preceq$",
+            "contenido": "Si $x \\preceq y$ e $y \\preceq x$, entonces $x + y = y$ y $y + x = x$. Por conmutatividad, $x = y$.",
+            "esquema_demostracion": "Usa conmutatividad de $+$."
+          },
+          {
+            "nombre": "Transitividad de $\\preceq$",
+            "contenido": "Si $x \\preceq y$ e $y \\preceq z$, entonces $y = x + y$ y $z = y + z$. Sustituyendo: $z = (x + y) + z = x + (y + z) = x + z$, luego $x \\preceq z$.",
+            "esquema_demostracion": "Usa asociatividad de $+$."
+          },
+          {
+            "nombre": "$x + y = \\sup\\{x,y\\}$",
+            "contenido": "Se prueba que $x + y$ es cota superior de $\\{x,y\\}$ (usando idempotencia, asociatividad y conmutatividad) y que es la menor de las cotas superiores (usando asociatividad y conmutatividad sobre una cota superior arbitraria $z$).",
+            "esquema_demostracion": "Para cota superior: $x + y = (x + x) + y = x + (x + y)$, luego $x \\preceq x + y$. Análogo para $y$. Para minimalidad: si $z$ es cota superior, $(x + y) + z = z$, luego $x + y \\preceq z$."
+          }
+        ],
+        "nota_previa": "Este teorema muestra que los reticulados pueden estudiarse desde dos perspectivas equivalentes: la ordenada (conjunto parcialmente ordenado) y la algebraica (estructura con operaciones). Esta dualidad de puntos de vista es una de las herramientas más poderosas en matemáticas discretas."
+      },
+      "ejercicios": [
+        {
+          "id": "2.3-ej-01",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "dualidad", "corregido"],
+          "enunciado": "En el Teorema 2.3, demuestre que $x \\cdot y = \\inf\\{x,y\\}$.",
+          "tips": [
+            {
+              "titulo": "El truco de la dualidad",
+              "contenido": "Para demostrar propiedades del ínfimo ($\\cdot$), no uses la definición $a+b=b$. Usa su definición gemela (equivalente por absorción): $a \\preceq b \\iff a \\cdot b = a$. Esto hará que la demostración sea el 'espejo' perfecto de la del supremo."
+            },
+            {
+              "titulo": "Cota inferior",
+              "contenido": "Debes probar que $(x \\cdot y) \\preceq x$. Usando el truco, esto equivale a probar que $(x \\cdot y) \\cdot x = x \\cdot y$. ¡La conmutatividad, asociatividad e idempotencia lo resuelven!"
+            },
+            {
+              "titulo": "Mayor cota inferior",
+              "contenido": "Si $z$ es cota inferior, entonces $z \\preceq x$ y $z \\preceq y$. Con el truco, esto significa que $z \\cdot x = z$ y $z \\cdot y = z$. Queremos probar $z \\preceq x \\cdot y$, es decir, $z \\cdot (x \\cdot y) = z$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Paso 1: La Definición Dual del Orden",
+                "contenido": "Sabemos que $a \\preceq b \\iff a + b = b$. Pero por las leyes de absorción, esto es matemáticamente equivalente a $a \\preceq b \\iff a \\cdot b = a$. Usaremos esta segunda forma para que la demostración del ínfimo use exclusivamente las propiedades del producto ($\\cdot$).",
+                "formula": "a \\preceq b \\iff a \\cdot b = a"
+              },
+              {
+                "titulo": "Paso 2: $x \\cdot y$ es cota inferior de $\\{x,y\\}$",
+                "contenido": "Debemos probar que $x \\cdot y \\preceq x$ y $x \\cdot y \\preceq y$. Usando nuestra definición dual, probamos que $(x \\cdot y) \\cdot x = x \\cdot y$.",
+                "formula": "(x \\cdot y) \\cdot x = x \\cdot y"
+              },
+              {
+                "titulo": "Detalle del Paso 2",
+                "contenido": "1. Conmutatividad: $(x \\cdot y) \\cdot x = x \\cdot (y \\cdot x) = x \\cdot (x \\cdot y)$. <br> 2. Asociatividad: $x \\cdot (x \\cdot y) = (x \\cdot x) \\cdot y$. <br> 3. Idempotencia: $(x \\cdot x) \\cdot y = x \\cdot y$. <br> Por lo tanto, $(x \\cdot y) \\cdot x = x \\cdot y$, lo que significa que $x \\cdot y \\preceq x$. Análogamente se prueba que $x \\cdot y \\preceq y$.",
+                "formula": "(x \\cdot y) \\cdot x = x \\cdot (x \\cdot y) = (x \\cdot x) \\cdot y = x \\cdot y"
+              },
+              {
+                "titulo": "Paso 3: $x \\cdot y$ es la MAYOR cota inferior",
+                "contenido": "Sea $z$ cualquier cota inferior de $\\{x,y\\}$. Esto significa que $z \\preceq x$ y $z \\preceq y$. Usando la definición dual, esto equivale a $z \\cdot x = z$ y $z \\cdot y = z$. Queremos probar que $z \\preceq x \\cdot y$, es decir, que $z \\cdot (x \\cdot y) = z$.",
+                "formula": "z \\cdot (x \\cdot y) = z"
+              },
+              {
+                "titulo": "Detalle del Paso 3",
+                "contenido": "Tomamos $z \\cdot (x \\cdot y)$. <br> 1. Por Asociatividad: $z \\cdot (x \\cdot y) = (z \\cdot x) \\cdot y$. <br> 2. Como $z$ es cota inferior de $x$, sabemos que $z \\cdot x = z$. Sustituimos: $= z \\cdot y$. <br> 3. Como $z$ es cota inferior de $y$, sabemos que $z \\cdot y = z$. Sustituimos: $= z$. <br> ¡Listo! $z \\cdot (x \\cdot y) = z$, lo que demuestra que $z \\preceq x \\cdot y$.",
+                "formula": "z \\cdot (x \\cdot y) = (z \\cdot x) \\cdot y = z \\cdot y = z"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.3-ej-02",
+          "nivel": 3,
+          "etiquetas": ["ejercicio"],
+          "enunciado": "Sea $X$ el conjunto de todas las funciones reales definidas en $[0,L]$. Se define $f \\preceq g \\iff f(x) \\leq g(x)$ para todo $x \\in [0,L]$. Demuestre que $[X, \\preceq]$ es un reticulado y exprese $f \\wedge g$ y $f \\vee g$.",
+          "tips": [
+            {
+              "titulo": "Orden parcial",
+              "contenido": "La reflexividad, antisimetría y transitividad se heredan punto a punto de $\\leq$ en $\\mathbb{R}$."
+            },
+            {
+              "titulo": "Ínfimo y supremo de funciones",
+              "contenido": "Piensa en cómo definirías el máximo de dos funciones en cada punto $x$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Orden parcial",
+                "contenido": "Reflexividad: $f(x) \\leq f(x)$ para todo $x$. Antisimetría: si $f(x) \\leq g(x)$ y $g(x) \\leq f(x)$ para todo $x$, entonces $f(x) = g(x)$ para todo $x$, luego $f = g$. Transitividad: si $f(x) \\leq g(x)$ y $g(x) \\leq h(x)$, entonces $f(x) \\leq h(x)$.",
+                "formula": "[X, \\preceq] \\text{ es orden parcial}"
+              },
+              {
+                "titulo": "Supremo e ínfimo",
+                "contenido": "Para cada $x \\in [0,L]$, definimos: $(f \\vee g)(x) = \\max\\{f(x), g(x)\\}$ y $(f \\wedge g)(x) = \\min\\{f(x), g(x)\\}$. Estas funciones están bien definidas y pertenecen a $X$.",
+                "formula": "(f \\vee g)(x) = \\max\\{f(x), g(x)\\} \\quad \\text{y} \\quad (f \\wedge g)(x) = \\min\\{f(x), g(x)\\}"
+              },
+              {
+                "titulo": "Verificación de supremo",
+                "contenido": "$f \\vee g$ es cota superior: $f(x) \\leq \\max\\{f(x),g(x)\\}$ y $g(x) \\leq \\max\\{f(x),g(x)\\}$ para todo $x$. Es la menor: si $h$ es cota superior, entonces $f(x) \\leq h(x)$ y $g(x) \\leq h(x)$, luego $\\max\\{f(x),g(x)\\} \\leq h(x)$.",
+                "formula": "f \\vee g = \\sup\\{f,g\\} \\quad \\text{y} \\quad f \\wedge g = \\inf\\{f,g\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.3-ej-03",
+          "nivel": 3,
+          "etiquetas": ["ejercicio"],
+          "enunciado": "Demuestre que en cualquier reticulado, para todo $x, y, z$ se cumple: $y \\preceq x \\implies y \\vee (x \\wedge z) \\preceq x \\wedge (y \\vee z)$.",
+          "tips": [
+            {
+              "titulo": "Hipótesis",
+              "contenido": "Sabemos $y \\preceq x$. Necesitas probar que $y \\vee (x \\wedge z)$ es cota inferior de $\\{x, y \\vee z\\}$."
+            },
+            {
+              "titulo": "Primera parte",
+              "contenido": "Demuestra $y \\vee (x \\wedge z) \\preceq x$. Usa que $y \\preceq x$ y $x \\wedge z \\preceq x$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$y \\vee (x \\wedge z) \\preceq x$",
+                "contenido": "Por hipótesis $y \\preceq x$. Además, $x \\wedge z \\preceq x$ por definición de ínfimo. Como ambos preceden a $x$, su supremo también: $y \\vee (x \\wedge z) \\preceq x$.",
+                "formula": "y \\preceq x \\quad \\text{y} \\quad x \\wedge z \\preceq x \\implies y \\vee (x \\wedge z) \\preceq x"
+              },
+              {
+                "titulo": "$y \\vee (x \\wedge z) \\preceq y \\vee z$",
+                "contenido": "Sabemos $y \\preceq y \\vee z$ y $x \\wedge z \\preceq z \\preceq y \\vee z$. Como ambos preceden a $y \\vee z$, su supremo también: $y \\vee (x \\wedge z) \\preceq y \\vee z$.",
+                "formula": "y \\preceq y \\vee z \\quad \\text{y} \\quad x \\wedge z \\preceq y \\vee z"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Como $y \\vee (x \\wedge z)$ precede tanto a $x$ como a $y \\vee z$, es cota inferior de $\\{x, y \\vee z\\}$. Por definición de ínfimo, precede a $x \\wedge (y \\vee z)$.",
+                "formula": "y \\vee (x \\wedge z) \\preceq x \\wedge (y \\vee z)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.3-ej-04",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Demuestre completamente el Teorema 2.3: que $[L, \\preceq]$ con $x \\preceq y \\iff x + y = y$ es un orden parcial y que $x + y = \\sup\\{x,y\\}$.",
+          "tips": [
+            {
+              "titulo": "Reflexividad",
+              "contenido": "Usa idempotencia: $x + x = x$."
+            },
+            {
+              "titulo": "Cota superior",
+              "contenido": "Demuestra que $x + y$ es cota superior de $\\{x,y\\}$ usando idempotencia y asociatividad."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Reflexividad",
+                "contenido": "$x + x = x$ (idempotencia) $\\implies x \\preceq x$.",
+                "formula": "x + x = x \\implies x \\preceq x"
+              },
+              {
+                "titulo": "Antisimetría",
+                "contenido": "Si $x \\preceq y$ e $y \\preceq x$, entonces $x + y = y$ y $y + x = x$. Por conmutatividad, $x = y$.",
+                "formula": "x + y = y \\wedge y + x = x \\implies x = y"
+              },
+              {
+                "titulo": "Transitividad",
+                "contenido": "Si $x \\preceq y$ e $y \\preceq z$, entonces $y = x + y$ y $z = y + z$. Sustituyendo: $z = (x + y) + z = x + (y + z) = x + z$ (asociatividad). Luego $x \\preceq z$.",
+                "formula": "z = y + z = (x + y) + z = x + (y + z) = x + z \\implies x \\preceq z"
+              },
+              {
+                "titulo": "$x + y$ es cota superior de $\\{x,y\\}$",
+                "contenido": "$x + y = (x + x) + y = x + (x + y)$ (idempotencia y asociatividad). Entonces $x \\preceq x + y$. Análogamente, $x + y = x + (y + y) = (x + y) + y = y + (x + y)$ (conmutatividad), así que $y \\preceq x + y$.",
+                "formula": "x \\preceq x + y \\quad \\text{y} \\quad y \\preceq x + y"
+              },
+              {
+                "titulo": "$x + y$ es la menor cota superior",
+                "contenido": "Sea $z$ una cota superior de $\\{x,y\\}$. Entonces $x \\preceq z$ e $y \\preceq z$, es decir, $x + z = z$ e $y + z = z$. Entonces $(x + y) + z = x + (y + z) = x + z = z$ (asociatividad). Luego $x + y \\preceq z$.",
+                "formula": "(x + y) + z = z \\implies x + y \\preceq z"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.3-ej-05",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Sea $L = \\mathbb{R}^2$ con operaciones $(a,b) + (c,d) = (\\max\\{a,c\\}, \\max\\{b,d\\})$ y $(a,b) \\cdot (c,d) = (\\min\\{a,c\\}, \\min\\{b,d\\})$. Demuestre que $[L, +, \\cdot]$ define un reticulado y describa el orden inducido.",
+          "tips": [
+            {
+              "titulo": "Verifica los axiomas",
+              "contenido": "Comprueba idempotencia, asociatividad, conmutatividad y absorción."
+            },
+            {
+              "titulo": "Orden inducido",
+              "contenido": "$x \\preceq y \\iff x + y = y$. Traduce esto a coordenadas."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Idempotencia",
+                "contenido": "$(a,b) + (a,b) = (\\max\\{a,a\\}, \\max\\{b,b\\}) = (a,b)$. Análogo para $\\cdot$.",
+                "formula": "(a,b) + (a,b) = (a,b)"
+              },
+              {
+                "titulo": "Asociatividad",
+                "contenido": "$((a,b) + (c,d)) + (e,f) = (\\max\\{a,c\\}, \\max\\{b,d\\}) + (e,f) = (\\max\\{\\max\\{a,c\\},e\\}, \\max\\{\\max\\{b,d\\},f\\}) = (\\max\\{a,c,e\\}, \\max\\{b,d,f\\})$. Análogo por la derecha.",
+                "formula": "+ \\text{ es asociativa}"
+              },
+              {
+                "titulo": "Conmutatividad",
+                "contenido": "$(a,b) + (c,d) = (\\max\\{a,c\\}, \\max\\{b,d\\}) = (\\max\\{c,a\\}, \\max\\{d,b\\}) = (c,d) + (a,b)$.",
+                "formula": "+ \\text{ es conmutativa}"
+              },
+              {
+                "titulo": "Absorción",
+                "contenido": "$(a,b) + ((a,b) \\cdot (c,d)) = (a,b) + (\\min\\{a,c\\}, \\min\\{b,d\\}) = (\\max\\{a, \\min\\{a,c\\}\\}, \\max\\{b, \\min\\{b,d\\}\\}) = (a,b)$.",
+                "formula": "x + (x \\cdot y) = x"
+              },
+              {
+                "titulo": "Orden inducido",
+                "contenido": "$(a,b) \\preceq (c,d) \\iff (a,b) + (c,d) = (c,d) \\iff (\\max\\{a,c\\}, \\max\\{b,d\\}) = (c,d) \\iff a \\leq c \\wedge b \\leq d$.",
+                "formula": "(a,b) \\preceq (c,d) \\iff a \\leq c \\wedge b \\leq d"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "2.4",
+      "titulo": "Ejercicios adicionales y aplicaciones de reticulados",
+      "teoria": {
+        "introduccion": "Esta sección integra todos los conceptos estudiados sobre reticulados mediante ejercicios de mayor complejidad, algoritmos de verificación y aplicaciones a otras áreas de las matemáticas discretas. Los ejercicios aquí presentados son representativos de lo que se puede encontrar en parciales y evaluaciones.",
+        "definiciones": [
+          {
+            "nombre": "Isomorfismo de reticulados",
+            "contenido": "Sean $[L_1, \\wedge_1, \\vee_1]$ y $[L_2, \\wedge_2, \\vee_2]$ dos reticulados. Una función $f: L_1 \\to L_2$ es un isomorfismo de reticulados si es biyectiva y preserva las operaciones: $f(x \\wedge_1 y) = f(x) \\wedge_2 f(y)$ y $f(x \\vee_1 y) = f(x) \\vee_2 f(y)$ para todo $x, y \\in L_1$.",
+            "nota": "Equivalentemente, $f$ es un isomorfismo de órdenes que preserva ínfimos y supremos."
+          },
+          {
+            "nombre": "Algoritmo de verificación de reticulado finito",
+            "contenido": "Dado un orden parcial finito $[A, \\preceq]$ representado por su diagrama de Hasse, para verificar si es reticulado: para cada par $(x,y) \\in A \\times A$, encontrar el conjunto de cotas superiores comunes (nodos conectados hacia arriba desde ambos) y verificar que existe un único elemento minimal en ese conjunto (el supremo). Análogo para el ínfimo.",
+            "nota": "En la práctica, basta verificar que todo par de elementos tiene supremo, pues el ínfimo existe por dualidad en ordenes finitos."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo — Verificación de reticulado",
+            "descripcion": "Para verificar si un orden finito es reticulado usando su diagrama de Hasse:",
+            "items": [
+              "Para cada par de nodos $x, y$, sube desde ambos siguiendo las aristas hacia arriba.",
+              "El primer nodo donde se encuentren los caminos es el supremo.",
+              "Si no hay encuentro (caminos disjuntos hacia arriba), el supremo no existe.",
+              "Si todos los pares tienen supremo, es un reticulado."
+            ],
+            "observacion": "Este algoritmo es eficiente para ordenes finitos pequeños (hasta ~20 elementos). Para ordenes grandes, se usa álgebra matricial o programación dinámica."
+          }
+        ],
+        "nota_previa": "Los ejercicios de esta sección combinan definiciones, demostraciones y aplicaciones. Se recomienda intentar cada ejercicio antes de ver la solución."
+      },
+      "ejercicios": [
+        {
+          "id": "2.4-ej-01",
+          "nivel": 3,
+          "etiquetas": ["teoria", "ejercicio", "nuevo"],
+          "enunciado": "Visualice un algoritmo formal para verificar: (a) Si un orden parcial finito dado es un reticulado. (b) Si un reticulado es distributivo.",
+          "tips": [
+            {
+              "titulo": "Parte (a): Verificar reticulado",
+              "contenido": "Para cada par de elementos, busca cotas superiores comunes y verifica que existe una única menor."
+            },
+            {
+              "titulo": "Parte (b): Verificar distributividad",
+              "contenido": "Un reticulado finito es distributivo si y solo si no contiene subreticulados isomorfos a $N_5$ ni $M_3$. Busca estos subreticulados."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Algoritmo para verificar reticulado",
+                "contenido": "Entrada: conjunto finito $A$ y matriz de adyacencia del orden $\\preceq$. Para cada par $(x,y) \\in A^2$: (1) Calcular $C_S(\\{x,y\\}) = \\{z \\in A : x \\preceq z \\wedge y \\preceq z\\}$. (2) Si $C_S(\\{x,y\\}) = \\emptyset$, NO es reticulado. (3) Encontrar $\\min(C_S(\\{x,y\\}))$; si no existe o no es único, NO es reticulado. (4) Análogo para $C_I(\\{x,y\\})$. Si todos los pares pasan, ES reticulado.",
+                "formula": "\\text{Complejidad: } O(|A|^3)"
+              },
+              {
+                "titulo": "Algoritmo para verificar distributividad",
+                "contenido": "Por el Teorema de Birkhoff: un reticulado es distributivo si y solo si no contiene subreticulados isomorfos a $N_5$ ni $M_3$. Algoritmo: (1) Generar todos los subconjuntos de 5 elementos. (2) Para cada subconjunto, verificar si es subreticulado (cerrado bajo $\\wedge$ y $\\vee$). (3) Verificar si la estructura de Hasse coincide con $N_5$ o $M_3$. (4) Si ninguno coincide, ES distributivo.",
+                "formula": "\\text{Complejidad: } O(|A|^5 \\cdot \\text{verificación})"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.4-ej-02",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Sea $[L, \\leq]$ un reticulado finito. Demuestre que $L$ tiene elemento máximo y elemento mínimo.",
+          "tips": [
+            {
+              "titulo": "Elemento máximo",
+              "contenido": "Considera el supremo de todos los elementos de $L$."
+            },
+            {
+              "titulo": "Finitud",
+              "contenido": "La finitud garantiza que el supremo de un conjunto finito existe (por asociatividad)."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Elemento máximo",
+                "contenido": "Sea $M = \\bigvee_{x \\in L} x$ (supremo de todos los elementos). Como $L$ es finito, este supremo existe por asociatividad iterada. Para todo $y \\in L$: $y \\preceq M$ (pues $M$ es cota superior de $\\{y\\} \\subseteq L$). Por tanto, $M$ es el máximo.",
+                "formula": "M = \\bigvee_{x \\in L} x = \\max(L)"
+              },
+              {
+                "titulo": "Elemento mínimo",
+                "contenido": "Análogamente, $m = \\bigwedge_{x \\in L} x$ es cota inferior de todos los elementos, luego $m \\preceq y$ para todo $y \\in L$. Por tanto, $m$ es el mínimo.",
+                "formula": "m = \\bigwedge_{x \\in L} x = \\min(L)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.4-ej-03",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Sea $L = \\{1, 2, 3, 6, 9, 18\\}$ con el orden de divisibilidad. Verifique que $[L, \\mid]$ es un reticulado, determine si es distributivo, y encuentre todos los subreticulados de 4 elementos.",
+          "tips": [
+            {
+              "titulo": "Diagrama de Hasse",
+              "contenido": "1 abajo, 18 arriba. Primos: 2, 3. Compuestos: 6, 9."
+            },
+            {
+              "titulo": "Distributividad",
+              "contenido": "$18 = 2 \\cdot 3^2$. La estructura es similar a $D_{18}$. ¿Contiene $N_5$ o $M_3$?"
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Diagrama de Hasse",
+                "contenido": "1 conecta con 2 y 3. 2 conecta con 6. 3 conecta con 6 y 9. 6 conecta con 18. 9 conecta con 18.",
+                "formula": "\\text{Hasse: } 1 \\to \\{2,3\\} \\to \\{6,9\\} \\to 18"
+              },
+              {
+                "titulo": "Es reticulado",
+                "contenido": "Todo par tiene $\\gcd$ y $\\operatorname{mcm}$ en $L$. Por ejemplo: $\\sup\\{2,3\\} = 6$, $\\inf\\{2,3\\} = 1$, $\\sup\\{6,9\\} = 18$, $\\inf\\{6,9\\} = 3$.",
+                "formula": "[L, \\mid] \\text{ es reticulado}"
+              },
+              {
+                "titulo": "No es distributivo",
+                "contenido": "Tomemos $a=2, b=3, c=9$. $b \\vee c = \\operatorname{mcm}(3,9) = 9$. $a \\wedge (b \\vee c) = \\gcd(2,9) = 1$. $(a \\wedge b) \\vee (a \\wedge c) = \\gcd(2,3) \\vee \\gcd(2,9) = 1 \\vee 1 = 1$. Coinciden... Probemos $a=3, b=2, c=6$: $b \\vee c = 6$, $a \\wedge 6 = 3$. $(3 \\wedge 2) \\vee (3 \\wedge 6) = 1 \\vee 3 = 3$. Coinciden. En realidad $L$ es distributivo porque es isomorfo a $\\{0,1\\} \\times \\{0,1,2\\}$ en el orden producto.",
+                "formula": "L \\cong [\\{0,1\\}, \\leq] \\times [\\{0,1,2\\}, \\leq] \\text{ (distributivo)}"
+              },
+              {
+                "titulo": "Subreticulados de 4 elementos",
+                "contenido": "Un subreticulado debe ser cerrado bajo $\\gcd$ y $\\operatorname{mcm}$. Ejemplos: $\\{1, 2, 6, 18\\}$, $\\{1, 3, 9, 18\\}$, $\\{1, 2, 3, 6\\}$, $\\{1, 3, 6, 18\\}$. Verificar que cada uno es cerrado.",
+                "formula": "\\{1,2,6,18\\}, \\{1,3,9,18\\}, \\{1,2,3,6\\}, \\{1,3,6,18\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.4-ej-04",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Demuestre que el reticulado $[\\mathbb{N}, \\mid]$ (naturales con divisibilidad) no es distributivo. Sugerencia: encuentre un subreticulado isomorfo a $N_5$.",
+          "tips": [
+            {
+              "titulo": "Busca un pentágono",
+              "contenido": "Necesitas 5 elementos $\\{0, a, b, c, 1\\}$ en la estructura de divisibilidad."
+            },
+            {
+              "titulo": "Usa potencias de primos",
+              "contenido": "Considera $\\{1, p, q, pq, p^2q\\}$ para primos distintos $p, q$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Construcción del subreticulado",
+                "contenido": "Sean $p, q$ primos distintos. Consideremos $S = \\{1, p, q, pq, p^2q\\}$ con el orden de divisibilidad. El diagrama de Hasse es: 1 conecta con $p$ y $q$; $p$ conecta con $pq$; $q$ conecta con $pq$; $pq$ conecta con $p^2q$.",
+                "formula": "S = \\{1, p, q, pq, p^2q\\}"
+              },
+              {
+                "titulo": "Verificación de estructura $N_5$",
+                "contenido": "En este subreticulado: $\\inf\\{p,q\\} = 1$, $\\sup\\{p,q\\} = pq$, $\\inf\\{q, pq\\} = q$, $\\sup\\{q, pq\\} = p^2q$, $\\inf\\{p, pq\\} = p$, $\\sup\\{p, pq\\} = p^2q$. La estructura coincide con $N_5$ donde $0=1$, $a=p$, $b=pq$, $c=q$, $1=p^2q$.",
+                "formula": "S \\cong N_5"
+              },
+              {
+                "titulo": "No distributividad",
+                "contenido": "Como $[\\mathbb{N}, \\mid]$ contiene un subreticulado isomorfo a $N_5$, por el Teorema de Birkhoff no es distributivo.",
+                "formula": "[\\mathbb{N}, \\mid] \\text{ no es distributivo}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.4-ej-05",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Sea $f: [L_1, \\wedge_1, \\vee_1] \\to [L_2, \\wedge_2, \\vee_2]$ un isomorfismo de reticulados. Demuestre que $f$ preserva el orden: $x \\preceq_1 y \\iff f(x) \\preceq_2 f(y)$.",
+          "tips": [
+            {
+              "titulo": "Usa el Lema 2.2",
+              "contenido": "$x \\preceq y \\iff x \\wedge y = x$. Aplica $f$ a ambos lados."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$x \\preceq_1 y \\implies f(x) \\preceq_2 f(y)$",
+                "contenido": "Si $x \\preceq_1 y$, entonces $x \\wedge_1 y = x$ (Lema 2.2). Aplicando $f$: $f(x \\wedge_1 y) = f(x)$. Como $f$ preserva ínfimos: $f(x) \\wedge_2 f(y) = f(x)$. Por el Lema 2.2 en $L_2$: $f(x) \\preceq_2 f(y)$.",
+                "formula": "x \\preceq_1 y \\implies x \\wedge_1 y = x \\implies f(x) \\wedge_2 f(y) = f(x) \\implies f(x) \\preceq_2 f(y)"
+              },
+              {
+                "titulo": "$f(x) \\preceq_2 f(y) \\implies x \\preceq_1 y$",
+                "contenido": "Si $f(x) \\preceq_2 f(y)$, entonces $f(x) \\wedge_2 f(y) = f(x)$. Como $f$ es isomorfismo, existe $f^{-1}$ que también preserva ínfimos. Aplicando $f^{-1}$: $x \\wedge_1 y = x$, luego $x \\preceq_1 y$.",
+                "formula": "f(x) \\preceq_2 f(y) \\implies f(x) \\wedge_2 f(y) = f(x) \\implies x \\wedge_1 y = x \\implies x \\preceq_1 y"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.4-ej-06",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "nuevo"],
+          "enunciado": "Sea $[L, \\leq]$ un reticulado distributivo finito. Demuestre que todo elemento de $L$ puede escribirse de forma única como supremo de join-irreducibles incomparables (Teorema de representación de Birkhoff).",
+          "tips": [
+            {
+              "titulo": "Inducción",
+              "contenido": "Usa inducción sobre la altura del elemento en el reticulado."
+            },
+            {
+              "titulo": "Unicidad",
+              "contenido": "La distributividad garantiza que la representación es única."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Existencia",
+                "contenido": "Por inducción sobre la altura. Si $x$ es join-irreducible, listo. Si no, $x = a \\vee b$ con $a, b < x$. Por hipótesis inductiva, $a$ y $b$ son supremos de join-irreducibles. Entonces $x$ también lo es."
+              },
+              {
+                "titulo": "Unicidad",
+                "contenido": "Supongamos $x = a_1 \\vee \\dots \\vee a_k = b_1 \\vee \\dots \\vee b_m$ con $a_i, b_j$ join-irreducibles incomparables. Para cada $a_i$: $a_i \\preceq x = b_1 \\vee \\dots \\vee b_m$. Como $a_i$ es join-irreducible y el reticulado es distributivo, $a_i \\preceq b_j$ para algún $j$. Análogamente, cada $b_j \\preceq a_i$ para algún $i$. Por incomparabilidad, las familias coinciden."
+              }
+            ]
+          }
+        }
+      ]
+    },
+        {
+      "subtema_id": "2.5",
+      "titulo": "Puente a Álgebras de Boole: Notación Lógica y Computacional",
+      "teoria": {
+        "introduccion": "Hasta ahora hemos usado la notación de orden ($\\vee, \\wedge, \\preceq$). En computación y lógica, usamos la notación algebraica ($+, \\cdot, \\leq$). Es vital saber traducir entre ambos idiomas.",
+        "tabla_traduccion": [
+          {"concepto": "Supremo (Join)", "notacion_orden": "x \\vee y", "notacion_algebraica": "x + y", "logica": "x OR y (Disyunción)"},
+          {"concepto": "Ínfimo (Meet)", "notacion_orden": "x \\wedge y", "notacion_algebraica": "x \\cdot y", "logica": "x AND y (Conjunción)"},
+          {"concepto": "Relación de Orden", "notacion_orden": "x \\preceq y", "notacion_algebraica": "x + y = y", "logica": "x \\implies y (Implicación)"},
+          {"concepto": "Complemento", "notacion_orden": "x' (complementado)", "notacion_algebraica": "\\bar{x}", "logica": "NOT x (Negación)"}
+        ],
+        "nota_previa": "El Teorema 2.3 que acabamos de demostrar es exactamente lo que nos permite usar esta tabla de traducción sin miedo a equivocarnos."
+      },
+      "ejercicios": [
+        {
+          "id": "2.5-ej-01",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "traduccion", "nuevo"],
+          "enunciado": "Traduce la Ley de Absorción del orden ($x \\vee (x \\wedge y) = x$) a notación de circuitos lógicos (AND/OR) y demuestra por qué tiene sentido intuitivo en electrónica.",
+          "tips": [
+            {
+              "titulo": "Traducción",
+              "contenido": "Reemplaza $\\vee$ por OR, $\\wedge$ por AND. La ecuación queda: $x \\lor (x \\land y) = x$."
+            },
+            {
+              "titulo": "Intuición electrónica",
+              "contenido": "Si tienes un cable '$x$' que pasa por una compuerta AND junto con '$y$', el resultado de ese AND siempre será menor o igual que '$x$'. Si luego haces un OR con el cable original '$x$', el resultado final siempre será '$x$', sin importar qué haga '$y$'."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Traducción algebraica",
+                "contenido": "$x + (x \\cdot y) = x$. (En lógica: $x \\lor (x \\land y) \\equiv x$)."
+              },
+              {
+                "titulo": "Demostración lógica (Tabla de verdad)",
+                "contenido": "Si $x = 0$: $0 \\lor (0 \\land y) = 0 \\lor 0 = 0$. Si $x = 1$: $1 \\lor (1 \\land y) = 1 \\lor y = 1$. En ambos casos, el resultado es $x$. La variable '$y$' es absorbida."
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.5-ej-02",
+          "nivel": 2,
+          "etiquetas": ["ejercicio", "traduccion", "nuevo", "de_morgan"],
+          "enunciado": "Traduce las Leyes de De Morgan desde el Álgebra de Boole ($\\overline{x + y} = \\bar{x} \\cdot \\bar{y}$) a la notación de Reticulados (Orden) y a la Lógica Proposicional. Verifica la versión lógica con una tabla de verdad y explica su equivalencia en compuertas lógicas.",
+          "tips": [
+            {
+              "titulo": "Traducción a Reticulados",
+              "contenido": "Usa la tabla: $+$ es $\\vee$, $\\cdot$ es $\\wedge$, y el complemento $\\bar{x}$ es $x'$."
+            },
+            {
+              "titulo": "Equivalencia de compuertas",
+              "contenido": "Una compuerta NOR ($\\overline{x + y}$) debe ser equivalente a una compuerta AND ($\\cdot$) pero con las entradas invertidas ($\\bar{x}$ y $\\bar{y}$)."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Traducción a notación de Orden (Reticulados)",
+                "contenido": "Reemplazando las operaciones: $(x \\vee y)' = x' \\wedge y'$. (El complemento del supremo es el ínfimo de los complementos)."
+              },
+              {
+                "titulo": "Traducción a Lógica Proposicional",
+                "contenido": "La negación de la disyunción es la conjunción de las negaciones: $\\neg(P \\lor Q) \\equiv \\neg P \\land \\neg Q$."
+              },
+              {
+                "titulo": "Verificación con Tabla de Verdad",
+                "contenido": "Si $P=0, Q=0$: $\\neg(0 \\lor 0) = 1$, y $1 \\land 1 = 1$. Coinciden. Si $P=1, Q=0$: $\\neg(1 \\lor 0) = 0$, y $0 \\land 1 = 0$. Coinciden. La equivalencia es una tautología."
+              },
+              {
+                "titulo": "Intuición en Circuitos (Teorema de De Morgan)",
+                "contenido": "Esto nos dice que un transistor configurado como NOR (OR seguido de NOT) es funcionalmente idéntico a un transistor configurado como AND con entradas negadas. Es la base para simplificar circuitos usando solo un tipo de compuerta universal (como NAND o NOR)."
+              }
+            ]
+          }
+        },
+        {
+          "id": "2.5-ej-03",
+          "nivel": 3,
+          "etiquetas": ["ejercicio", "traduccion", "nuevo", "logica"],
+          "enunciado": "En la teoría de reticulados, se cumple que si $x \\preceq y$ y $x \\preceq z$, entonces $x \\preceq y \\wedge z$ (ya que $y \\wedge z$ es la mayor cota inferior). Traduce esta propiedad a Lógica Proposicional usando la equivalencia $x \\preceq y \\iff x \\implies y$. ¿Qué regla fundamental de deducción lógica representa esto?",
+          "tips": [
+            {
+              "titulo": "Sustituye los símbolos",
+              "contenido": "Reemplaza $\\preceq$ por $\\implies$ (implicación) y $\\wedge$ por $\\land$ (conjunción / AND)."
+            },
+            {
+              "titulo": "Piensa en una demostración matemática",
+              "contenido": "Si una hipótesis $P$ te permite demostrar $Q$, y la misma hipótesis $P$ te permite demostrar $R$... ¿qué puedes concluir sobre $P$?"
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Traducción a Lógica Proposicional",
+                "contenido": "La propiedad del reticulado se traduce literalmente como: Si $(P \\implies Q)$ y $(P \\implies R)$, entonces $(P \\implies (Q \\land R))$."
+              },
+              {
+                "titulo": "Significado Lógico (Regla de Deducción)",
+                "contenido": "Esta propiedad representa la **Regla de Introducción de la Conjunción** (o combinación de premisas). En matemáticas, si bajo la hipótesis $P$ logras probar el teorema $Q$, y bajo la misma hipótesis $P$ logras probar el teorema $R$, entonces puedes afirmar con seguridad que $P$ implica que ambos teoremas son ciertos simultáneamente ($Q \\land R$)."
+              },
+              {
+                "titulo": "Verificación Algebraica",
+                "contenido": "En álgebra booleana, la hipótesis $P \\implies Q$ significa $P \\cdot Q = Q$. Si $P \\cdot Q = Q$ y $P \\cdot R = R$, entonces $P \\cdot (Q \\cdot R) = (P \\cdot Q) \\cdot R = Q \\cdot R$. Esto confirma que $P \\implies (Q \\land R)$."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
