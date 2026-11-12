@@ -1,0 +1,1102 @@
+{
+  "tema_id": "tema-1",
+  "titulo": "Cotas, ínfimo y supremo",
+  "descripcion": "Primer acercamiento a las estructuras de orden. Definimos cotas inferiores, cotas superiores, ínfimo y supremo, elementos notables (máximo, mínimo, maximales, minimales), conjuntos acotados, lectura en diagramas de Hasse y sus propiedades fundamentales.",
+  "subtemas": [
+    {
+      "subtema_id": "1.1",
+      "titulo": "Cotas inferiores y superiores",
+      "teoria": {
+        "introduccion": "Antes de hablar de reticulados, necesitamos dominar el lenguaje de las cotas. Dado un orden parcial y un subconjunto de elementos, nos interesa saber qué elementos del conjunto total 'dominan' o 'son dominados' por todos los del subconjunto.",
+        "definiciones": [
+          {
+            "nombre": "Cota inferior",
+            "contenido": "Sea $[A, \\preceq]$ un orden parcial y $S \\subseteq A$. Un elemento $c \\in A$ se dice **cota inferior** de $S$ si $\\forall x \\in S : c \\preceq x$. El conjunto de todas las cotas inferiores se denota $C_I(S)$.",
+            "nota": "Las cotas inferiores de $S$ preceden a **todos** los elementos de $S$."
+          },
+          {
+            "nombre": "Cota superior",
+            "contenido": "Un elemento $c \\in A$ se dice **cota superior** de $S$ si $\\forall x \\in S : x \\preceq c$. El conjunto de todas las cotas superiores se denota $C_S(S)$.",
+            "nota": "Las cotas superiores de $S$ suceden a **todos** los elementos de $S$."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 1.1 — Orden por divisibilidad en $\\mathbb{Z}^+$",
+            "descripcion": "Sea $[\\mathbb{Z}^+, \\preceq]$ donde la relación $\\preceq$ está definida para todo $x, y \\in \\mathbb{Z}^+$ de la siguiente manera: $x \\preceq y$ si y sólo si $\\exists k \\in \\mathbb{Z} : y = kx$ (es decir, $y$ es múltiplo de $x$). Si $S = \\{a, b\\}$:",
+            "items": [
+              "$C_I(S)$ es el conjunto de los **divisores comunes** de $a$ y $b$.",
+              "$C_S(S)$ es el conjunto de los **múltiplos comunes** de $a$ y $b$."
+            ],
+            "observacion": "Este ejemplo es fundamental porque conecta la teoría de órdenes con la aritmética elemental."
+          },
+          {
+            "titulo": "Ejemplo 1.2 — Orden de subconjuntos $[\\mathcal{P}(A), \\subseteq]$",
+            "descripcion": "Sea $A = \\{1, 2, 3\\}$ y $S = \\{\\{1\\}, \\{2\\}\\}$.",
+            "items": [
+              "$C_I(S) = \\{\\emptyset\\}$ (solo el vacío está contenido en ambos).",
+              "$C_S(S) = \\{\\{1,2\\}, \\{1,2,3\\}\\}$ (cualquier conjunto que contenga al 1 y al 2)."
+            ],
+            "diagrama": {
+              "tipo": "hasse",
+              "nodos": [
+                {
+                  "id": "123",
+                  "etiqueta": "{1,2,3}",
+                  "nivel": 0
+                },
+                {
+                  "id": "12",
+                  "etiqueta": "{1,2}",
+                  "nivel": 1
+                },
+                {
+                  "id": "13",
+                  "etiqueta": "{1,3}",
+                  "nivel": 1
+                },
+                {
+                  "id": "23",
+                  "etiqueta": "{2,3}",
+                  "nivel": 1
+                },
+                {
+                  "id": "1",
+                  "etiqueta": "{1}",
+                  "nivel": 2
+                },
+                {
+                  "id": "2",
+                  "etiqueta": "{2}",
+                  "nivel": 2
+                },
+                {
+                  "id": "3",
+                  "etiqueta": "{3}",
+                  "nivel": 2
+                },
+                {
+                  "id": "0",
+                  "etiqueta": "\\emptyset",
+                  "nivel": 3
+                }
+              ],
+              "aristas": [
+                [
+                  "123",
+                  "12"
+                ],
+                [
+                  "123",
+                  "13"
+                ],
+                [
+                  "123",
+                  "23"
+                ],
+                [
+                  "12",
+                  "1"
+                ],
+                [
+                  "12",
+                  "2"
+                ],
+                [
+                  "13",
+                  "1"
+                ],
+                [
+                  "13",
+                  "3"
+                ],
+                [
+                  "23",
+                  "2"
+                ],
+                [
+                  "23",
+                  "3"
+                ],
+                [
+                  "1",
+                  "0"
+                ],
+                [
+                  "2",
+                  "0"
+                ],
+                [
+                  "3",
+                  "0"
+                ]
+              ],
+              "destacados": [
+                "1",
+                "2"
+              ]
+            }
+          }
+        ],
+        "nota_previa": "Una observación natural: ¿puede un elemento ser al mismo tiempo cota inferior y cota superior de un subconjunto? La respuesta es sí, pero solo cuando el subconjunto es un singleton o el elemento es comparable de forma trivial."
+      },
+      "ejercicios": [
+        {
+          "id": "1.1-ej-01",
+          "nivel": 1,
+          "etiquetas": [
+            "teoria",
+            "ejercicio"
+          ],
+          "enunciado": "Sea el orden $[\\mathbb{R}, \\leq]$. Diga cuáles son las cotas inferiores y las cotas superiores del subconjunto $S = [1, 2)$.",
+          "tips": [
+            {
+              "titulo": "Analiza el intervalo",
+              "contenido": "$S = [1, 2)$ incluye al 1 pero **no** incluye al 2. ¿Qué números son menores o iguales que todos los elementos de $S$?"
+            },
+            {
+              "titulo": "Cotas superiores",
+              "contenido": "Una cota superior debe ser mayor o igual que **todo** elemento de $S$. Como los elementos de $S$ se acercan a 2 por debajo, cualquier número $\\geq 2$ funciona."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cotas inferiores $C_I(S)$",
+                "contenido": "Buscamos $c \\in \\mathbb{R}$ tal que $c \\leq x$ para todo $x \\in [1, 2)$. Como el menor elemento de $S$ es 1, cualquier $c \\leq 1$ satisface la condición.",
+                "formula": "C_I(S) = (-\\infty, 1]"
+              },
+              {
+                "titulo": "Cotas superiores $C_S(S)$",
+                "contenido": "Buscamos $c \\in \\mathbb{R}$ tal que $x \\leq c$ para todo $x \\in [1, 2)$. Aunque $S$ no contiene al 2, todos sus elementos son estrictamente menores que 2. Por tanto, cualquier $c \\geq 2$ es cota superior.",
+                "formula": "C_S(S) = [2, +\\infty)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.1-ej-02",
+          "nivel": 1,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[\\mathbb{Z}^+, \\preceq]$ con $x \\preceq y$ si y sólo si $\\exists k \\in \\mathbb{Z} : y = kx$ (es decir, $x \\mid y$). Sea $S = \\{6, 10\\}$. Determine $C_I(S)$ y $C_S(S)$.",
+          "tips": [
+            {
+              "titulo": "Traduce a lenguaje aritmético",
+              "contenido": "En este orden, $c \\preceq x$ significa $\\exists k \\in \\mathbb{Z} : x = kc$, es decir, $c \\mid x$. Así que las cotas inferiores son los divisores comunes de 6 y 10."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Divisores comunes",
+                "contenido": "Los divisores de 6 son $\\{1, 2, 3, 6\\}$. Los divisores de 10 son $\\{1, 2, 5, 10\\}$. La intersección es $\\{1, 2\\}$.",
+                "formula": "C_I(S) = \\{1, 2\\}"
+              },
+              {
+                "titulo": "Múltiplos comunes",
+                "contenido": "Las cotas superiores son los múltiplos comunes de 6 y 10. El mínimo común múltiplo es 30, así que los múltiplos comunes son $\\{30, 60, 90, \\dots\\}$.",
+                "formula": "C_S(S) = \\{30k \\mid k \\in \\mathbb{Z}^+\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.1-ej-03",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "¿Puede un elemento ser al mismo tiempo cota inferior y cota superior de un subconjunto $S \\subseteq A$ en un orden $[A, \\preceq]$? Justifique.",
+          "tips": [
+            {
+              "titulo": "Piensa en el caso trivial",
+              "contenido": "Si $S = \\{a\\}$ es un singleton, ¿qué pasa con el propio $a$?"
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Respuesta: sí, es posible",
+                "contenido": "Si $S = \\{a\\}$, entonces $a \\preceq a$ (reflexividad) y $a \\preceq a$. Por tanto, $a$ es simultáneamente cota inferior y cota superior de $S$.",
+                "formula": "C_I(\\{a\\}) \\cap C_S(\\{a\\}) \\neq \\emptyset"
+              },
+              {
+                "titulo": "Otro caso: elementos incomparables",
+                "contenido": "Si el orden es discreto o los elementos son incomparables, puede haber cotas que no sean el propio elemento. Pero la pregunta es sobre la **posibilidad**, no sobre la generalidad.",
+                "formula": "\\text{Ejemplo: } S = \\{2\\} \\subseteq [\\mathbb{Z}^+, \\mid] \\Rightarrow 2 \\in C_I(S) \\cap C_S(S)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.1-ej-04",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "nuevo"
+          ],
+          "enunciado": "Sea $[\\mathbb{Z}^+, \\preceq]$ con $x \\preceq y$ si y sólo si $\\exists k \\in \\mathbb{Z} : y = kx$ (es decir, $x \\mid y$). Sea $S = \\{12, 18\\}$. Determine $C_I(S)$, $C_S(S)$, $\\inf(S)$ y $\\sup(S)$.",
+          "tips": [
+            {
+              "titulo": "Conexión con aritmética",
+              "contenido": "Recuerda: en este orden, las cotas inferiores son divisores comunes ($\\exists k \\in \\mathbb{Z} : x = kc$) y las cotas superiores son múltiplos comunes."
+            },
+            {
+              "titulo": "Factorización prima",
+              "contenido": "$12 = 2^2 \\cdot 3$ y $18 = 2 \\cdot 3^2$. Esto facilita encontrar MCD y MCM."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Divisores comunes (cotas inferiores)",
+                "contenido": "Los divisores de 12 son $\\{1, 2, 3, 4, 6, 12\\}$. Los divisores de 18 son $\\{1, 2, 3, 6, 9, 18\\}$. La intersección es $\\{1, 2, 3, 6\\}$.",
+                "formula": "C_I(S) = \\{1, 2, 3, 6\\}"
+              },
+              {
+                "titulo": "Múltiplos comunes (cotas superiores)",
+                "contenido": "El mínimo común múltiplo de 12 y 18 es 36. Los múltiplos comunes son $\\{36, 72, 108, \\dots\\}$.",
+                "formula": "C_S(S) = \\{36k \\mid k \\in \\mathbb{Z}^+\\}"
+              },
+              {
+                "titulo": "Ínfimo y supremo",
+                "contenido": "El ínfimo es la mayor cota inferior: $\\inf(S) = \\gcd(12, 18) = 6$. El supremo es la menor cota superior: $\\sup(S) = \\operatorname{mcm}(12, 18) = 36$.",
+                "formula": "\\inf(\\{12,18\\}) = 6 \\quad \\text{y} \\quad \\sup(\\{12,18\\}) = 36"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.1-ej-05",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "nuevo"
+          ],
+          "enunciado": "Sea $[\\mathbb{R}, \\leq]$ y $S = \\{x \\in \\mathbb{R} : x^2 < 2\\}$. Determine $C_I(S)$, $C_S(S)$, $\\inf(S)$ y $\\sup(S)$, si existen.",
+          "tips": [
+            {
+              "titulo": "Reescribe el conjunto",
+              "contenido": "$x^2 < 2 \\iff -\\sqrt{2} < x < \\sqrt{2}$. Así que $S = (-\\sqrt{2}, \\sqrt{2})$."
+            },
+            {
+              "titulo": "Intervalo abierto",
+              "contenido": "Como es un intervalo abierto, los extremos no pertenecen a $S$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Reescribir $S$",
+                "contenido": "$S = (-\\sqrt{2}, \\sqrt{2})$. Es un intervalo abierto simétrico respecto al origen.",
+                "formula": "S = \\{x \\in \\mathbb{R} : -\\sqrt{2} < x < \\sqrt{2}\\}"
+              },
+              {
+                "titulo": "Cotas inferiores y superiores",
+                "contenido": "Todo $c \\leq -\\sqrt{2}$ es cota inferior. Todo $c \\geq \\sqrt{2}$ es cota superior.",
+                "formula": "C_I(S) = (-\\infty, -\\sqrt{2}] \\quad C_S(S) = [\\sqrt{2}, +\\infty)"
+              },
+              {
+                "titulo": "Ínfimo y supremo",
+                "contenido": "El ínfimo es la mayor cota inferior: $-\\sqrt{2}$. El supremo es la menor cota superior: $\\sqrt{2}$. Ninguno pertenece a $S$.",
+                "formula": "\\inf(S) = -\\sqrt{2} \\quad \\sup(S) = \\sqrt{2}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "1.2",
+      "titulo": "Ínfimo y supremo",
+      "teoria": {
+        "introduccion": "De entre todas las cotas inferiores y superiores, nos interesan las 'mejores': la mayor cota inferior y la menor cota superior. Estos elementos especiales reciben nombres propios.",
+        "definiciones": [
+          {
+            "nombre": "Ínfimo",
+            "contenido": "Sea $[A, \\preceq]$ un orden y $S \\subseteq A$. Una cota inferior $c \\in C_I(S)$ se denomina **ínfimo** de $S$ si $\\forall x \\in C_I(S) : x \\preceq c$. Es decir, el ínfimo es la **mayor** de las cotas inferiores. Se denota $c = \\inf(S)$.",
+            "nota": "El ínfimo es único cuando existe (Lema 1.1)."
+          },
+          {
+            "nombre": "Supremo",
+            "contenido": "Una cota superior $c \\in C_S(S)$ se denomina **supremo** de $S$ si $\\forall x \\in C_S(S) : c \\preceq x$. Es decir, el supremo es la **menor** de las cotas superiores. Se denota $c = \\sup(S)$.",
+            "nota": "El supremo también es único cuando existe."
+          },
+          {
+            "nombre": "Nota 1.1 — Notación del ínfimo y supremo",
+            "contenido": "En ocasiones, por simplicidad, al ínfimo $\\inf(\\{x,y\\})$ se le denota como $\\inf\\{x,y\\}$, o incluso $\\inf(x,y)$. Igual pasa con el supremo."
+          }
+        ],
+        "lemas": [
+          {
+            "nombre": "Lema 1.1 — Unicidad del ínfimo y supremo",
+            "contenido": "Si el ínfimo de $S$ existe, es único. Si el supremo de $S$ existe, es único.",
+            "esquema_demostracion": "Supongamos dos ínfimos $c_1 \\neq c_2$. Como ambos son cotas inferiores y cada uno es mayor que cualquier otra cota inferior, se tiene $c_1 \\preceq c_2$ y $c_2 \\preceq c_1$. Por antisimetría, $c_1 = c_2$. Contradicción."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 1.3 — Retomando $\\mathcal{P}(\\{1,2,3\\})$",
+            "descripcion": "Con $S = \\{\\{1\\}, \\{2\\}\\}$:",
+            "items": [
+              "$\\inf(S) = \\emptyset$ (la mayor cota inferior, y la única).",
+              "$\\sup(S) = \\{1,2\\}$ (la menor cota superior entre $\\{1,2\\}$ y $\\{1,2,3\\}$)."
+            ],
+            "observacion": "Nota que $\\sup(S) \\in S$, pero $\\inf(S) \\notin S$. Esto muestra que el ínfimo no siempre pertenece al conjunto original."
+          },
+          {
+            "titulo": "Ejemplo 1.4 — Divisibilidad en $\\mathbb{Z}^+$",
+            "descripcion": "En $[\\mathbb{Z}^+, \\preceq]$ donde $x \\preceq y$ si y sólo si $\\exists k \\in \\mathbb{Z} : y = kx$, con $S = \\{a, b\\}$:",
+            "items": [
+              "$\\inf(\\{a,b\\}) = \\gcd(a,b)$ (Máximo Común Divisor).",
+              "$\\sup(\\{a,b\\}) = \\operatorname{mcm}(a,b)$ (Mínimo Común Múltiplo)."
+            ],
+            "observacion": "Todo par de enteros positivos tiene MCD y MCM, así que $\\inf$ y $\\sup$ siempre existen en este orden. Esto hace que $[\\mathbb{Z}^+, \\mid]$ sea un reticulado."
+          }
+        ],
+        "notacion": "En ocasiones, por simplicidad, se escribe $\\inf\\{x,y\\}$ o incluso $\\inf(x,y)$ en lugar de $\\inf(\\{x,y\\})$. Análogamente para el supremo."
+      },
+      "ejercicios": [
+        {
+          "id": "1.2-ej-01",
+          "nivel": 1,
+          "etiquetas": [
+            "teoria",
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[\\mathbb{R}, \\leq]$ y $S = [1, 2)$. Determine $\\inf(S)$ y $\\sup(S)$, si existen.",
+          "tips": [
+            {
+              "titulo": "Revisa las cotas del ejercicio anterior",
+              "contenido": "Ya sabemos que $C_I(S) = (-\\infty, 1]$ y $C_S(S) = [2, +\\infty)$. El ínfimo es la mayor cota inferior y el supremo es la menor cota superior."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Ínfimo de $S$",
+                "contenido": "De $C_I(S) = (-\\infty, 1]$, el elemento mayor es 1. Además, $1 \\in S$. Por tanto:",
+                "formula": "\\inf(S) = 1"
+              },
+              {
+                "titulo": "Supremo de $S$",
+                "contenido": "De $C_S(S) = [2, +\\infty)$, el elemento menor es 2. Sin embargo, $2 \\notin S$. Aun así, el supremo existe como elemento del orden:",
+                "formula": "\\sup(S) = 2"
+              },
+              {
+                "titulo": "Observación clave",
+                "contenido": "El ínfimo sí pertenece a $S$ (es de hecho el mínimo), pero el supremo no pertenece a $S$. Esto demuestra que supremo e ínfimo son conceptos más generales que máximo y mínimo."
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.2-ej-02",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[\\mathbb{Z}^+, \\preceq]$ con $x \\preceq y$ si y sólo si $\\exists k \\in \\mathbb{Z} : y = kx$ (es decir, $x \\mid y$). Calcule $\\inf(\\{12, 18\\})$ y $\\sup(\\{12, 18\\})$.",
+          "tips": [
+            {
+              "titulo": "Conexión con aritmética",
+              "contenido": "Recuerda: en este orden, $\\inf = \\gcd$ y $\\sup = \\operatorname{mcm}$, ya que $x \\preceq y \\iff \\exists k \\in \\mathbb{Z} : y = kx$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Factorización",
+                "contenido": "Descomponemos en factores primos: $12 = 2^2 \\cdot 3$ y $18 = 2 \\cdot 3^2$.",
+                "formula": "\\gcd(12, 18) = 2^1 \\cdot 3^1 = 6"
+              },
+              {
+                "titulo": "Mínimo común múltiplo",
+                "contenido": "Tomamos los máximos exponentes:",
+                "formula": "\\operatorname{mcm}(12, 18) = 2^2 \\cdot 3^2 = 36"
+              },
+              {
+                "titulo": "Verificación",
+                "contenido": "Comprobamos: $6 \\mid 12$, $6 \\mid 18$, y no hay divisor común mayor. $12 \\mid 36$, $18 \\mid 36$, y no hay múltiplo común menor.",
+                "formula": "\\inf(\\{12,18\\}) = 6 \\quad \\text{y} \\quad \\sup(\\{12,18\\}) = 36"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.2-ej-03",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[A, \\preceq]$ un orden parcial y $S \\subseteq A$. Demuestre que si $\\inf(S)$ existe, entonces es único.",
+          "tips": [
+            {
+              "titulo": "Estrategia: reducción al absurdo",
+              "contenido": "Supón que existen dos ínfimos distintos $c_1$ y $c_2$. Usa la definición de ínfimo para compararlos."
+            },
+            {
+              "titulo": "Propiedad clave",
+              "contenido": "Si $c_1$ es ínfimo, es cota inferior. Si $c_2$ es ínfimo, es la mayor cota inferior, así que toda cota inferior (incluyendo $c_1$) debe precederla."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Hipótesis",
+                "contenido": "Supongamos que $c_1$ y $c_2$ son ambos ínfimos de $S$, con $c_1 \\neq c_2$."
+              },
+              {
+                "titulo": "Aplicar la definición",
+                "contenido": "Como $c_2 = \\inf(S)$, es la mayor cota inferior. Como $c_1 \\in C_I(S)$, se tiene $c_1 \\preceq c_2$. Análogamente, $c_2 \\preceq c_1$.",
+                "formula": "c_1 \\preceq c_2 \\quad \\text{y} \\quad c_2 \\preceq c_1"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Por antisimetría del orden parcial, $c_1 = c_2$. Esto contradice la suposición inicial. Por tanto, el ínfimo es único.",
+                "formula": "\\therefore \\quad \\inf(S) \\text{ es único}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.2-ej-04",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "nuevo"
+          ],
+          "enunciado": "Sea $[A, \\preceq]$ un orden parcial y $S = \\{x, y\\}$. Demuestre que si $x \\preceq y$, entonces $\\inf(S) = x$ y $\\sup(S) = y$.",
+          "tips": [
+            {
+              "titulo": "Usa la definición directamente",
+              "contenido": "Si $x \\preceq y$, entonces $x$ es cota inferior de $\\{x,y\\}$ y $y$ es cota superior. Demuestra que son las mejores."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cotas inferiores",
+                "contenido": "Como $x \\preceq x$ y $x \\preceq y$, $x$ es cota inferior de $S$. Si $c$ es otra cota inferior, entonces $c \\preceq x$. Por tanto, $x$ es la mayor cota inferior.",
+                "formula": "\\inf(\\{x,y\\}) = x"
+              },
+              {
+                "titulo": "Cotas superiores",
+                "contenido": "Como $x \\preceq y$ y $y \\preceq y$, $y$ es cota superior de $S$. Si $c$ es otra cota superior, entonces $y \\preceq c$. Por tanto, $y$ es la menor cota superior.",
+                "formula": "\\sup(\\{x,y\\}) = y"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.2-ej-05",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio",
+            "nuevo"
+          ],
+          "enunciado": "Sea $[A, \\preceq]$ un orden parcial y $S \\subseteq T \\subseteq A$. Demuestre que: (a) Toda cota superior de $T$ es cota superior de $S$. (b) Si $\\sup(T)$ existe, entonces $\\sup(S) \\preceq \\sup(T)$ (si ambos existen).",
+          "tips": [
+            {
+              "titulo": "Inclusión de conjuntos",
+              "contenido": "Si $S \\subseteq T$, cualquier elemento que domine a todos los de $T$ también domina a todos los de $S$."
+            },
+            {
+              "titulo": "Propiedad transitiva del supremo",
+              "contenido": "$\\sup(T)$ es cota superior de $T$, luego también de $S$. Como $\\sup(S)$ es la menor cota superior de $S$..."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Parte (a)",
+                "contenido": "Sea $c \\in C_S(T)$. Entonces $\\forall t \\in T: t \\preceq c$. Como $S \\subseteq T$, todo $s \\in S$ satisface $s \\preceq c$. Por tanto, $c \\in C_S(S)$.",
+                "formula": "C_S(T) \\subseteq C_S(S)"
+              },
+              {
+                "titulo": "Parte (b)",
+                "contenido": "$\\sup(T)$ es cota superior de $T$, luego por (a) es cota superior de $S$. Como $\\sup(S)$ es la menor cota superior de $S$, se tiene $\\sup(S) \\preceq \\sup(T)$.",
+                "formula": "\\sup(S) \\preceq \\sup(T)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "1.3",
+      "titulo": "Máximo, mínimo y elementos maximales/minimales",
+      "teoria": {
+        "introduccion": "El ínfimo y el supremo son las mejores cotas, pero no siempre pertenecen al conjunto original. Cuando sí pertenecen, reciben nombres especiales: mínimo y máximo. Además, existen conceptos más débiles —maximales y minimales— que no requieren ser comparables con todos los elementos del conjunto.",
+        "definiciones": [
+          {
+            "nombre": "Máximo de un conjunto",
+            "contenido": "Sea $[A, \\preceq]$ un orden parcial y $S \\subseteq A$. Un elemento $M \\in S$ se llama **máximo** de $S$ si $\\forall x \\in S : x \\preceq M$. Se denota $M = \\max(S)$.",
+            "nota": "El máximo, si existe, es único y coincide con $\\sup(S)$."
+          },
+          {
+            "nombre": "Mínimo de un conjunto",
+            "contenido": "Un elemento $m \\in S$ se llama **mínimo** de $S$ si $\\forall x \\in S : m \\preceq x$. Se denota $m = \\min(S)$.",
+            "nota": "El mínimo, si existe, es único y coincide con $\\inf(S)$."
+          },
+          {
+            "nombre": "Elemento Maximal",
+            "contenido": "Un elemento $a \\in S$ es **maximal** en $S$ si **no existe** $x \\in S$ tal que $a \\preceq x$ y $a \\neq x$. Es decir, nadie en $S$ lo supera estrictamente.",
+            "nota": "Un maximal no tiene que ser comparable con todos los elementos de $S$. Puede haber varios maximales."
+          },
+          {
+            "nombre": "Elemento Minimal",
+            "contenido": "Un elemento $b \\in S$ es **minimal** en $S$ si **no existe** $x \\in S$ tal que $x \\preceq b$ y $x \\neq b$. Es decir, nadie en $S$ lo precede estrictamente.",
+            "nota": "Puede haber varios minimales. Si el mínimo existe, es el único minimal."
+          }
+        ],
+        "teoremas": [
+          {
+            "nombre": "Teorema 1.A — Relación entre supremo/ínfimo y máximo/mínimo",
+            "contenido": "Sea $S \\subseteq A$. (1) Si $\\sup(S) \\in S$, entonces $\\sup(S) = \\max(S)$. (2) Si $\\inf(S) \\in S$, entonces $\\inf(S) = \\min(S)$.",
+            "demostracion": "Si $\\sup(S) \\in S$, por definición de supremo es cota superior, así que $\\forall x \\in S: x \\preceq \\sup(S)$. Como además $\\sup(S) \\in S$, satisface la definición de máximo. Análogo para ínfimo y mínimo."
+          },
+          {
+            "nombre": "Corolario 1.A — Unicidad",
+            "contenido": "El máximo y el mínimo, si existen, son únicos.",
+            "demostracion": "Directa del teorema anterior y de la unicidad del supremo/ínfimo (Lema 1.1)."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 1.5 — Máximo, mínimo, maximales y minimales en divisibilidad",
+            "descripcion": "Sea $[A, \\mid]$ donde $A = \\{1, 2, 3, 5, 6, 10, 15, 30\\}$ y $S = \\{2, 3, 5, 6\\}$:",
+            "items": [
+              "$C_I(S) = \\{1\\}$, así que $\\inf(S) = 1$. Como $1 \\notin S$, **no existe mínimo**.",
+              "$C_S(S) = \\{30\\}$, así que $\\sup(S) = 30$. Como $30 \\notin S$, **no existe máximo**.",
+              "**Minimales de $S$**: $\\{2, 3, 5\\}$ (ninguno es dividido por otro elemento de $S$).",
+              "**Maximales de $S$**: $\\{5, 6\\}$ (5 no divide a nadie en $S$; 6 tampoco divide a nadie en $S$)."
+            ],
+            "observacion": "Nota que hay tres minimales pero ninguno es mínimo. Esto ocurre cuando los elementos no son comparables entre sí."
+          },
+          {
+            "titulo": "Ejemplo 1.6 — En $[\\mathbb{R}, \\leq]$ con $S = [1, 2) \\cup \\{3\\}$",
+            "descripcion": "Analizamos los elementos notables:",
+            "items": [
+              "$\\inf(S) = 1$ y $1 \\in S$, así que $\\min(S) = 1$.",
+              "$\\sup(S) = 3$ y $3 \\in S$, así que $\\max(S) = 3$.",
+              "**Minimales**: solo $\\{1\\}$ (es el único elemento que no tiene predecesor en $S$).",
+              "**Maximales**: solo $\\{3\\}$ (es el único elemento que no tiene sucesor en $S$)."
+            ],
+            "observacion": "En un orden total (como $\\mathbb{R}$), los conceptos de máximo y maximal coinciden cuando existen."
+          }
+        ]
+      },
+      "ejercicios": [
+        {
+          "id": "1.3-ej-01",
+          "nivel": 2,
+          "etiquetas": [
+            "teoria",
+            "ejercicio"
+          ],
+          "enunciado": "En el orden $[\\mathcal{P}(\\{1,2,3\\}), \\subseteq]$, sea $S = \\{\\{1\\}, \\{2\\}, \\{1,2\\}\\}$. Halle: cotas inferiores, ínfimo, mínimo, minimales, cotas superiores, supremo, máximo y maximales.",
+          "tips": [
+            {
+              "titulo": "Dibuja el diagrama de Hasse",
+              "contenido": "Visualiza los conjuntos y sus inclusiones para no perderte."
+            },
+            {
+              "titulo": "Distingue ínfimo de mínimo",
+              "contenido": "El ínfimo puede estar fuera de $S$; el mínimo debe estar dentro."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cotas inferiores",
+                "contenido": "Buscamos conjuntos contenidos en $\\{1\\}$, $\\{2\\}$ y $\\{1,2\\}$. Solo $\\emptyset$ está contenido en los tres.",
+                "formula": "C_I(S) = \\{\\emptyset\\}"
+              },
+              {
+                "titulo": "Ínfimo y mínimo",
+                "contenido": "$\\inf(S) = \\emptyset$. Como $\\emptyset \\notin S$, **no existe mínimo**.",
+                "formula": "\\inf(S) = \\emptyset \\quad \\text{(no hay mínimo)}"
+              },
+              {
+                "titulo": "Minimales",
+                "contenido": "$\\{1\\}$ no contiene a ningún otro elemento de $S$. $\\{2\\}$ tampoco. $\\{1,2\\}$ contiene a $\\{1\\}$ y $\\{2\\}$, así que no es minimal.",
+                "formula": "\\text{Minimales} = \\{\\{1\\}, \\{2\\}\\}"
+              },
+              {
+                "titulo": "Cotas superiores",
+                "contenido": "Buscamos conjuntos que contengan a $\\{1\\}$, $\\{2\\}$ y $\\{1,2\\}$. Son $\\{1,2\\}$ y $\\{1,2,3\\}$.",
+                "formula": "C_S(S) = \\{\\{1,2\\}, \\{1,2,3\\}\\}"
+              },
+              {
+                "titulo": "Supremo y máximo",
+                "contenido": "La menor cota superior es $\\{1,2\\}$, y $\\{1,2\\} \\in S$. Por tanto, $\\sup(S) = \\max(S) = \\{1,2\\}$.",
+                "formula": "\\sup(S) = \\max(S) = \\{1,2\\}"
+              },
+              {
+                "titulo": "Maximales",
+                "contenido": "$\\{1,2\\}$ no está contenido propiamente en ningún otro elemento de $S$. Los otros sí están contenidos en $\\{1,2\\}$.",
+                "formula": "\\text{Maximales} = \\{\\{1,2\\}\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.3-ej-02",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[A, \\preceq]$ un orden parcial. Demuestre que si $S$ tiene máximo, entonces ese máximo es único.",
+          "tips": [
+            {
+              "titulo": "Usa antisimetría",
+              "contenido": "Supón dos máximos $M_1$ y $M_2$. Ambos están en $S$ y todos los elementos de $S$ los preceden."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Hipótesis",
+                "contenido": "Sean $M_1, M_2 \\in S$ ambos máximos de $S$."
+              },
+              {
+                "titulo": "Aplicar definición",
+                "contenido": "Como $M_1$ es máximo, $\\forall x \\in S: x \\preceq M_1$. En particular, $M_2 \\preceq M_1$. Análogamente, $M_1 \\preceq M_2$.",
+                "formula": "M_2 \\preceq M_1 \\quad \\text{y} \\quad M_1 \\preceq M_2"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Por antisimetría, $M_1 = M_2$. El máximo es único.",
+                "formula": "\\therefore \\quad \\max(S) \\text{ es único}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.3-ej-03",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Demuestre que si $\\inf(S) \\in S$, entonces $\\inf(S) = \\min(S)$ y es el único minimal de $S$.",
+          "tips": [
+            {
+              "titulo": "Dos partes",
+              "contenido": "Primero demuestra que $\\inf(S)$ es mínimo. Luego demuestra que no puede haber otro minimal."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$\\inf(S)$ es mínimo",
+                "contenido": "Por definición, $\\inf(S)$ es cota inferior, así que $\\forall x \\in S: \\inf(S) \\preceq x$. Como $\\inf(S) \\in S$, satisface la definición de mínimo.",
+                "formula": "\\inf(S) = \\min(S)"
+              },
+              {
+                "titulo": "Unicidad del minimal",
+                "contenido": "Sea $m \\in S$ un minimal. Como $\\inf(S) \\preceq m$ (pues $\\inf(S)$ es cota inferior) y $m$ es minimal, no puede haber $x \\in S$ con $x \\preceq m$ y $x \\neq m$. Pero $\\inf(S) \\in S$ y $\\inf(S) \\preceq m$. Si $\\inf(S) \\neq m$, contradice que $m$ sea minimal. Por tanto, $m = \\inf(S)$.",
+                "formula": "\\text{El único minimal es } \\inf(S) = \\min(S)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "1.4",
+      "titulo": "Conjuntos acotados y diagramas de Hasse",
+      "teoria": {
+        "introduccion": "Un conjunto puede tener o no cotas. Cuando las tiene, decimos que está acotado. Los diagramas de Hasse son herramientas visuales poderosas para identificar cotas, ínfimos, supremos, maximales y minimales de un vistazo.",
+        "definiciones": [
+          {
+            "nombre": "Conjunto acotado superiormente",
+            "contenido": "$S$ está **acotado superiormente** si $C_S(S) \\neq \\emptyset$, es decir, existe al menos una cota superior.",
+            "nota": "No es necesario que el supremo exista, solo que haya alguna cota superior."
+          },
+          {
+            "nombre": "Conjunto acotado inferiormente",
+            "contenido": "$S$ está **acotado inferiormente** si $C_I(S) \\neq \\emptyset$.",
+            "nota": "Análogo al caso superior."
+          },
+          {
+            "nombre": "Conjunto acotado",
+            "contenido": "$S$ es **acotado** si lo es superior e inferiormente, es decir, $C_I(S) \\neq \\emptyset$ y $C_S(S) \\neq \\emptyset$.",
+            "nota": "En un orden finito, todo subconjunto está acotado si el orden total tiene máximo y mínimo."
+          }
+        ],
+        "tecnicas": [
+          {
+            "nombre": "Cómo leer ínfimo y supremo en un diagrama de Hasse",
+            "pasos": [
+              "**Cotas superiores** de $S$: nodos que están **conectados hacia arriba** desde **todos** los elementos de $S$.",
+              "**Supremo**: la cota superior que está **más abajo** (el 'primer encuentro' al subir desde todos los elementos de $S$).",
+              "**Cotas inferiores** de $S$: nodos que están **conectados hacia abajo** desde **todos** los elementos de $S$.",
+              "**Ínfimo**: la cota inferior que está **más arriba** (el 'primer encuentro' al bajar desde todos los elementos de $S$)."
+            ],
+            "regla_mnemotecnica": "Sube hasta donde se encuentren todos: el primero es el supremo. Baja hasta donde se encuentren todos: el primero es el ínfimo."
+          }
+        ],
+        "ejemplos": [
+          {
+            "titulo": "Ejemplo 1.7 — Diagrama de Hasse en divisibilidad",
+            "descripcion": "Sea $A = \\{1, 2, 3, 6, 12, 18, 36\\}$ con el orden $\\mid$. El diagrama de Hasse tiene a 1 abajo, 2 y 3 arriba de 1, 6 arriba de 2 y 3, 12 arriba de 6, 18 arriba de 6, y 36 arriba de 12 y 18.",
+            "items": [
+              "Para $S = \\{2, 3\\}$: subiendo desde ambos, el primer encuentro es **6**. $\\sup(S) = 6$. Bajando, el encuentro es **1**. $\\inf(S) = 1$.",
+              "Para $T = \\{12, 18\\}$: subiendo, ambos se encuentran en **36**. $\\sup(T) = 36$. Bajando, se encuentran en **6**. $\\inf(T) = 6$."
+            ],
+            "observacion": "Si los elementos no tienen un 'camino común' hacia arriba o abajo, el supremo o ínfimo no existe."
+          },
+          {
+            "titulo": "Ejemplo 1.8 — Conjunto no acotado",
+            "descripcion": "En $[\\mathbb{R}, \\leq]$, sea $S = \\mathbb{R}^+ = (0, +\\infty)$.",
+            "items": [
+              "$C_S(S) = \\emptyset$: no hay número real mayor o igual que todos los positivos.",
+              "$C_I(S) = (-\\infty, 0]$: cualquier número $\\leq 0$ es cota inferior."
+            ],
+            "observacion": "$S$ está acotado inferiormente pero **no** superiormente. Por tanto, $S$ no es acotado."
+          }
+        ]
+      },
+      "ejercicios": [
+        {
+          "id": "1.4-ej-01",
+          "nivel": 2,
+          "etiquetas": [
+            "teoria",
+            "ejercicio"
+          ],
+          "enunciado": "Sea el orden por divisibilidad en $A = \\{1, 2, 3, 4, 6, 8, 12\\}$. Dibuje el diagrama de Hasse y determine para $S = \\{4, 6\\}$: $C_I(S)$, $C_S(S)$, $\\inf(S)$, $\\sup(S)$, maximales y minimales de $S$.",
+          "tips": [
+            {
+              "titulo": "Construye el diagrama paso a paso",
+              "contenido": "1 divide a todos. Luego conecta 2 con 4, 6, 8, 12; 3 con 6, 12; 4 con 8, 12; 6 con 12."
+            },
+            {
+              "titulo": "Busca caminos comunes",
+              "contenido": "Para $\\sup(\\{4,6\\})$, sube desde 4 y desde 6 hasta que sus caminos se encuentren."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Diagrama de Hasse",
+                "contenido": "Niveles: 1 (abajo); 2, 3 (siguiente); 4, 6 (siguiente); 8, 12 (arriba). Aristas: 1-2, 1-3, 2-4, 2-6, 2-8, 3-6, 4-8, 4-12, 6-12.",
+                "formula": "\\text{Hasse: } 1 \\to \\{2,3\\} \\to \\{4,6\\} \\to \\{8,12\\}"
+              },
+              {
+                "titulo": "Cotas inferiores",
+                "contenido": "Divisores comunes de 4 y 6: $\\{1, 2\\}$.",
+                "formula": "C_I(S) = \\{1, 2\\}"
+              },
+              {
+                "titulo": "Ínfimo",
+                "contenido": "La mayor cota inferior es 2.",
+                "formula": "\\inf(S) = 2"
+              },
+              {
+                "titulo": "Cotas superiores",
+                "contenido": "Múltiplos comunes de 4 y 6 en $A$: solo 12 (pues 8 no es múltiplo de 6, y 24 no está en $A$).",
+                "formula": "C_S(S) = \\{12\\}"
+              },
+              {
+                "titulo": "Supremo",
+                "contenido": "La única cota superior es 12.",
+                "formula": "\\sup(S) = 12"
+              },
+              {
+                "titulo": "Maximales y minimales de $S$",
+                "contenido": "En $S = \\{4,6\\}$: 4 no divide a 6, y 6 no divide a 4. Ninguno divide al otro, así que ambos son maximales y ambos son minimales.",
+                "formula": "\\text{Maximales} = \\{4, 6\\} \\quad \\text{Minimales} = \\{4, 6\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.4-ej-02",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[\\mathbb{R}^2, \\preceq]$ con el orden lexicográfico: $(a,b) \\preceq (c,d)$ si $a < c$, o $a = c$ y $b \\leq d$. Sea $S = \\{(x,y) \\in \\mathbb{R}^2 : x + y = 1, x \\geq 0, y \\geq 0\\}$. Determine si $S$ está acotado superior e inferiormente, y si existen ínfimo y supremo.",
+          "tips": [
+            {
+              "titulo": "Visualiza el conjunto",
+              "contenido": "$S$ es el segmento de recta que une $(1,0)$ con $(0,1)$ en el primer cuadrante."
+            },
+            {
+              "titulo": "Orden lexicográfico",
+              "contenido": "Primero compara la primera coordenada. Si son iguales, compara la segunda."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Análisis del conjunto",
+                "contenido": "$S = \\{(t, 1-t) : t \\in [0,1]\\}$. Los puntos van de $(0,1)$ a $(1,0)$.",
+                "formula": "S = \\{(t, 1-t) \\mid 0 \\leq t \\leq 1\\}"
+              },
+              {
+                "titulo": "Cotas inferiores",
+                "contenido": "En orden lexicográfico, $(a,b) \\preceq (c,d)$ si $a < c$ o ($a=c$ y $b \\leq d$). Todo punto con $a < 0$ es cota inferior. También $(0, y)$ con $y \\leq 1$.",
+                "formula": "C_I(S) = \\{(a,b) \\in \\mathbb{R}^2 : a < 0\\} \\cup \\{(0, b) : b \\leq 1\\}"
+              },
+              {
+                "titulo": "Ínfimo",
+                "contenido": "El punto $(0,1)$ es el primero en el orden lexicográfico de $S$. Cualquier cota inferior con primera coordenada 0 debe tener segunda coordenada $\\leq 1$. Por tanto, $\\inf(S) = (0, 1)$.",
+                "formula": "\\inf(S) = (0, 1) \\in S"
+              },
+              {
+                "titulo": "Cotas superiores",
+                "contenido": "Todo punto con $a > 1$ es cota superior. También $(1, y)$ con $y \\geq 0$.",
+                "formula": "C_S(S) = \\{(a,b) : a > 1\\} \\cup \\{(1, b) : b \\geq 0\\}"
+              },
+              {
+                "titulo": "Supremo",
+                "contenido": "El punto $(1,0)$ es el último en el orden lexicográfico de $S$. Es la menor cota superior.",
+                "formula": "\\sup(S) = (1, 0) \\in S"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "$S$ está acotado superior e inferiormente. Existen ínfimo y supremo, y ambos pertenecen a $S$ (son mínimo y máximo respectivamente).",
+                "formula": "\\min(S) = (0,1) \\quad \\max(S) = (1,0)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.4-ej-03",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[\\mathbb{Z}^+, \\preceq]$ con $x \\preceq y$ si y sólo si $\\exists k \\in \\mathbb{Z} : y = kx$ (es decir, $x \\mid y$). Sea $S = \\{n \\in \\mathbb{Z}^+ : n \\mid 60\\}$. Halle el máximo, mínimo, maximales y minimales de $S$.",
+          "tips": [
+            {
+              "titulo": "Lista los divisores",
+              "contenido": "Los divisores positivos de 60 son: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60."
+            },
+            {
+              "titulo": "Extremos del orden",
+              "contenido": "En divisibilidad, ¿quién divide a todos? ¿quién es múltiplo de todos?"
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Conjunto $S$",
+                "contenido": "$S = \\{1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60\\}$.",
+                "formula": "S = \\{d \\in \\mathbb{Z}^+ : d \\mid 60\\}"
+              },
+              {
+                "titulo": "Mínimo",
+                "contenido": "1 divide a todos los elementos de $S$, y $1 \\in S$. Por tanto, $\\min(S) = 1$.",
+                "formula": "\\min(S) = 1"
+              },
+              {
+                "titulo": "Máximo",
+                "contenido": "60 es múltiplo de todos los elementos de $S$, y $60 \\in S$. Por tanto, $\\max(S) = 60$.",
+                "formula": "\\max(S) = 60"
+              },
+              {
+                "titulo": "Maximales y minimales",
+                "contenido": "Como existe máximo, es el único maximal. Como existe mínimo, es el único minimal.",
+                "formula": "\\text{Maximales} = \\{60\\} \\quad \\text{Minimales} = \\{1\\}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "subtema_id": "1.5",
+      "titulo": "Propiedades y relaciones entre ínfimo, supremo, máximo y mínimo",
+      "teoria": {
+        "introduccion": "Los conceptos de cota, ínfimo, supremo, máximo y mínimo no son independientes. Existen relaciones lógicas y propiedades de monotonía que permiten demostrar resultados generales y resolver problemas de forma elegante.",
+        "teoremas": [
+          {
+            "nombre": "Teorema 1.B — Monotonía del ínfimo y supremo",
+            "contenido": "Sea $[L, \\preceq]$ un orden parcial donde existan los ínfimos/supremos involucrados. Sean $a, b, c \\in L$. (1) Si $a \\preceq b$, entonces $a \\wedge c \\preceq b \\wedge c$. (2) Si $a \\preceq b$, entonces $a \\vee c \\preceq b \\vee c$.",
+            "demostracion": "Para (1): $a \\wedge c \\preceq a \\preceq b$ y $a \\wedge c \\preceq c$. Así que $a \\wedge c$ es cota inferior de $\\{b, c\\}$. Como $b \\wedge c$ es la mayor cota inferior, $a \\wedge c \\preceq b \\wedge c$. Para (2): análogo usando cotas superiores."
+          },
+          {
+            "nombre": "Teorema 1.C — Relación de inclusión",
+            "contenido": "Sea $[A, \\preceq]$ un orden parcial y $S \\subseteq T \\subseteq A$. Entonces: (1) $C_S(T) \\subseteq C_S(S)$ y $C_I(T) \\subseteq C_I(S)$. (2) Si $\\sup(S)$ y $\\sup(T)$ existen, entonces $\\sup(S) \\preceq \\sup(T)$. (3) Si $\\inf(S)$ y $\\inf(T)$ existen, entonces $\\inf(T) \\preceq \\inf(S)$.",
+            "demostracion": "(1) Si $c$ domina a todos en $T$, también domina a todos en $S \\subseteq T$. (2) $\\sup(T)$ es cota superior de $T$, luego de $S$. Como $\\sup(S)$ es la menor cota superior de $S$, $\\sup(S) \\preceq \\sup(T)$. (3) Análogo."
+          }
+        ],
+        "resumen_relaciones": {
+          "titulo": "Resumen de implicaciones",
+          "items": [
+            "$\\max(S)$ existe $\\implies \\sup(S) = \\max(S)$ existe.",
+            "$\\min(S)$ existe $\\implies \\inf(S) = \\min(S)$ existe.",
+            "$\\sup(S) \\in S \\implies \\sup(S) = \\max(S)$.",
+            "$\\inf(S) \\in S \\implies \\inf(S) = \\min(S)$.",
+            "$\\max(S)$ existe $\\implies$ es el único maximal.",
+            "$\\min(S)$ existe $\\implies$ es el único minimal.",
+            "Puede haber maximales sin máximo (cuando hay varios maximales incomparables).",
+            "Puede haber minimales sin mínimo (cuando hay varios minimales incomparables)."
+          ]
+        }
+      },
+      "ejercicios": [
+        {
+          "id": "1.5-ej-01",
+          "nivel": 3,
+          "etiquetas": [
+            "teoria",
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[A, \\preceq]$ un orden parcial. Demuestre que si $S \\subseteq T \\subseteq A$ y ambos $\\sup(S)$, $\\sup(T)$ existen, entonces $\\sup(S) \\preceq \\sup(T)$.",
+          "tips": [
+            {
+              "titulo": "Usa la definición de supremo",
+              "contenido": "$\\sup(T)$ es cota superior de $T$, luego también de $S \\subseteq T$."
+            },
+            {
+              "titulo": "Menor cota superior",
+              "contenido": "$\\sup(S)$ es la menor cota superior de $S$. Como $\\sup(T)$ también es cota superior de $S$..."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cota superior de $T$",
+                "contenido": "Por definición, $\\sup(T)$ es cota superior de $T$, es decir, $\\forall t \\in T: t \\preceq \\sup(T)$."
+              },
+              {
+                "titulo": "Cota superior de $S$",
+                "contenido": "Como $S \\subseteq T$, todo $s \\in S$ satisface $s \\in T$, así que $s \\preceq \\sup(T)$. Por tanto, $\\sup(T) \\in C_S(S)$.",
+                "formula": "\\sup(T) \\in C_S(S)"
+              },
+              {
+                "titulo": "Comparación de supremos",
+                "contenido": "$\\sup(S)$ es la menor cota superior de $S$. Como $\\sup(T)$ es una cota superior de $S$, se tiene $\\sup(S) \\preceq \\sup(T)$.",
+                "formula": "\\sup(S) \\preceq \\sup(T)"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.5-ej-02",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Sea $[A, \\preceq]$ un orden parcial. Demuestre que si $S$ tiene ínfimo $m$ y $m \\in S$, entonces $m$ es el único minimal de $S$.",
+          "tips": [
+            {
+              "titulo": "Dos partes",
+              "contenido": "Primero demuestra que $m$ es minimal. Luego demuestra que no puede haber otro."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "$m$ es minimal",
+                "contenido": "Supongamos que existe $x \\in S$ con $x \\preceq m$ y $x \\neq m$. Como $m = \\inf(S)$, $m \\preceq x$ (pues $m$ es cota inferior). Entonces $x \\preceq m$ y $m \\preceq x$ implican $x = m$ (antisimetría). Contradicción. Por tanto, $m$ es minimal."
+              },
+              {
+                "titulo": "Unicidad",
+                "contenido": "Sea $x \\in S$ otro minimal. Como $m = \\inf(S)$, $m \\preceq x$. Si $m \\neq x$, entonces $m$ precede estrictamente a $x$, lo que contradice que $x$ sea minimal. Por tanto, $x = m$.",
+                "formula": "\\therefore \\quad m \\text{ es el único minimal de } S"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.5-ej-03",
+          "nivel": 3,
+          "etiquetas": [
+            "ejercicio"
+          ],
+          "enunciado": "Demuestre que en un orden parcial $[A, \\preceq]$, si $a \\preceq b$, entonces para todo $c \\in A$ se cumple $\\inf\\{a, c\\} \\preceq \\inf\\{b, c\\}$ (suponiendo que ambos ínfimos existen).",
+          "tips": [
+            {
+              "titulo": "Usa la definición de ínfimo",
+              "contenido": "$\\inf\\{a,c\\} \\preceq a$ y $\\inf\\{a,c\\} \\preceq c$. Como $a \\preceq b$, por transitividad $\\inf\\{a,c\\} \\preceq b$."
+            },
+            {
+              "titulo": "Cota inferior",
+              "contenido": "Si $\\inf\\{a,c\\} \\preceq b$ y $\\inf\\{a,c\\} \\preceq c$, entonces $\\inf\\{a,c\\}$ es cota inferior de $\\{b,c\\}$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Propiedades del ínfimo",
+                "contenido": "Por definición, $\\inf\\{a,c\\} \\preceq a$ y $\\inf\\{a,c\\} \\preceq c$."
+              },
+              {
+                "titulo": "Transitividad",
+                "contenido": "Como $\\inf\\{a,c\\} \\preceq a$ y $a \\preceq b$ (hipótesis), por transitividad del orden: $\\inf\\{a,c\\} \\preceq b$.",
+                "formula": "\\inf\\{a,c\\} \\preceq a \\preceq b \\implies \\inf\\{a,c\\} \\preceq b"
+              },
+              {
+                "titulo": "Cota inferior de $\\{b,c\\}$",
+                "contenido": "Tenemos $\\inf\\{a,c\\} \\preceq b$ y $\\inf\\{a,c\\} \\preceq c$. Por tanto, $\\inf\\{a,c\\}$ es cota inferior del conjunto $\\{b,c\\}$.",
+                "formula": "\\inf\\{a,c\\} \\in C_I(\\{b,c\\})"
+              },
+              {
+                "titulo": "Conclusión",
+                "contenido": "Como $\\inf\\{b,c\\}$ es la **mayor** cota inferior de $\\{b,c\\}$, cualquier otra cota inferior (incluyendo $\\inf\\{a,c\\}$) debe precederla.",
+                "formula": "\\inf\\{a,c\\} \\preceq \\inf\\{b,c\\}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1.5-ej-04",
+          "nivel": 2,
+          "etiquetas": [
+            "ejercicio",
+            "nuevo"
+          ],
+          "enunciado": "Sea $[\\mathbb{R}, \\leq]$ y $S = [1, 2) \\cup \\{3\\}$. Determine $\\inf(S)$, $\\sup(S)$, $\\min(S)$, $\\max(S)$, los minimales y los maximales de $S$.",
+          "tips": [
+            {
+              "titulo": "Analiza por partes",
+              "contenido": "$S$ tiene dos 'componentes': el intervalo $[1,2)$ y el punto aislado $3$."
+            }
+          ],
+          "solucion": {
+            "pasos": [
+              {
+                "titulo": "Cotas inferiores",
+                "contenido": "Todo $c \\leq 1$ es cota inferior. $C_I(S) = (-\\infty, 1]$.",
+                "formula": "C_I(S) = (-\\infty, 1]"
+              },
+              {
+                "titulo": "Ínfimo y mínimo",
+                "contenido": "$\\inf(S) = 1$. Como $1 \\in S$, $\\min(S) = 1$.",
+                "formula": "\\inf(S) = \\min(S) = 1"
+              },
+              {
+                "titulo": "Cotas superiores",
+                "contenido": "Todo $c \\geq 3$ es cota superior. $C_S(S) = [3, +\\infty)$.",
+                "formula": "C_S(S) = [3, +\\infty)"
+              },
+              {
+                "titulo": "Supremo y máximo",
+                "contenido": "$\\sup(S) = 3$. Como $3 \\in S$, $\\max(S) = 3$.",
+                "formula": "\\sup(S) = \\max(S) = 3"
+              },
+              {
+                "titulo": "Minimales",
+                "contenido": "En $[1,2)$, el 1 no tiene predecesor en $S$. El 3 tampoco tiene predecesor en $S$... espera, revisemos: en el orden total $\\leq$, todo elemento de $[1,2)$ es menor que 3, así que 3 SÍ tiene predecesores en $S$. Solo 1 no tiene predecesores en $S$.",
+                "formula": "\\text{Minimales} = \\{1\\}"
+              },
+              {
+                "titulo": "Maximales",
+                "contenido": "En $[1,2)$, ningún elemento es maximal porque todos tienen un sucesor en el intervalo (por densidad de $\\mathbb{R}$). El 3 no tiene sucesor en $S$ (no hay $x \\in S$ con $3 < x$). Por tanto, 3 es el único maximal.",
+                "formula": "\\text{Maximales} = \\{3\\}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
